@@ -1,0 +1,9 @@
+﻿{
+    "name": "回弹钮",
+    "parameters": [
+        {
+            "name": "name",
+            "value": "SYS_GIVE"
+        }
+    ]
+}

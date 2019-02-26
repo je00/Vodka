@@ -1,0 +1,21 @@
+﻿{
+    "name": "滑动条",
+    "parameters": [
+        {
+            "name": "name",
+            "value": "SYS_GIVE"
+        },
+        {
+            "name": "from",
+            "value": 0
+        },
+        {
+            "name": "to",
+            "value": 1000
+        },
+        {
+            "name": "stepSize",
+            "value": 1
+        }
+    ]
+}

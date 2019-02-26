@@ -1,0 +1,44 @@
+﻿{
+    "name": "立方",
+    "parameters": [
+        {
+            "name": "q0_name",
+            "value": "I0"
+        },
+        {
+            "name": "q1_name",
+            "value": "I1"
+        },
+        {
+            "name": "q2_name",
+            "value": "I2"
+        },
+        {
+            "name": "q3_name",
+            "value": ""
+        },       {
+            "name": "q3_name",
+            "value": ""
+        }, 
+        {
+            "name": "width",
+            "value": 226
+        }, 
+        {
+            "name": "height",
+            "value": 226
+        },        
+        {
+            "name": "r_rect_y",
+            "value": 0
+        },
+        {
+            "name": "g_rect_y",
+            "value": 108
+        },
+        {
+            "name": "b_rect_y",
+            "value": 216
+        }
+    ]
+}

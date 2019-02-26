@@ -1,0 +1,21 @@
+﻿{
+    "name": "状态灯",
+    "parameters": [
+        {
+            "name": "name",
+            "value": "SYS_GIVE"
+        },
+        {
+            "name": "top_value",
+            "value": 0
+        },
+        {
+            "name": "bottom_value",
+            "value": 0
+        },
+        {
+            "name": "value_visable",
+            "value": true
+        }
+    ]
+}
