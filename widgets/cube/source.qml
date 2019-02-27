@@ -364,7 +364,10 @@ Rectangle {
                 height: 20
                 TextInput {
                     anchors.verticalCenter: parent.verticalCenter
-                    anchors.horizontalCenter: parent.horizontalCenter
+                    anchors.left: parent.left
+                    anchors.right: parent.right
+                    verticalAlignment: TextInput.AlignVCenter
+                    horizontalAlignment: TextInput.AlignHCenter
                     id: q0_input
                     selectByMouse: true
                     color: "black"
@@ -405,7 +408,10 @@ Rectangle {
                 height: 20
                 TextInput {
                     anchors.verticalCenter: parent.verticalCenter
-                    anchors.horizontalCenter: parent.horizontalCenter
+                    anchors.left: parent.left
+                    anchors.right: parent.right
+                    verticalAlignment: TextInput.AlignVCenter
+                    horizontalAlignment: TextInput.AlignHCenter
                     id: q1_input
                     selectByMouse: true
                     color: "black"
@@ -447,7 +453,10 @@ Rectangle {
                 height: 20
                 TextInput {
                     anchors.verticalCenter: parent.verticalCenter
-                    anchors.horizontalCenter: parent.horizontalCenter
+                    anchors.left: parent.left
+                    anchors.right: parent.right
+                    verticalAlignment: TextInput.AlignVCenter
+                    horizontalAlignment: TextInput.AlignHCenter
                     id: q2_input
                     selectByMouse: true
                     color: "black"
@@ -490,7 +499,10 @@ Rectangle {
                 height: 20
                 TextInput {
                     anchors.verticalCenter: parent.verticalCenter
-                    anchors.horizontalCenter: parent.horizontalCenter
+                    anchors.left: parent.left
+                    anchors.right: parent.right
+                    verticalAlignment: TextInput.AlignVCenter
+                    horizontalAlignment: TextInput.AlignHCenter
                     id: q3_input
                     selectByMouse: true
                     color: "black"
