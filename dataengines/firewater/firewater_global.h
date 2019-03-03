@@ -1,0 +1,12 @@
+#ifndef FIREWATER_GLOBAL_H
+#define FIREWATER_GLOBAL_H
+
+#include <QtCore/qglobal.h>
+
+#if defined(FIREWATER_LIBRARY)
+#  define FIREWATERSHARED_EXPORT Q_DECL_EXPORT
+#else
+#  define FIREWATERSHARED_EXPORT Q_DECL_IMPORT
+#endif
+
+#endif // FIREWATER_GLOBAL_H
