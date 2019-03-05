@@ -47,6 +47,8 @@ Rectangle {
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenter: parent.verticalCenter
         color: "blue"
+        height: 26
+        width: 26
         MouseArea {
             anchors.fill: parent
             onClicked: {
