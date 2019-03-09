@@ -28,7 +28,6 @@ SOURCES += \
 HEADERS += \
         justfloat.h \
         justfloat.h \
-        justfloat_global.h \
         ../shared/dataengineinterface.h
 
 INCLUDEPATH += \
