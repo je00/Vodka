@@ -1,0 +1,13 @@
+﻿{
+    "name": "我的控件",
+    "parameters": [
+        {
+            "name": "my_parameter1",
+            "value": "hello"
+        },
+        {
+            "name": "my_parameter2",
+            "value": "world"
+        }
+    ]
+}
