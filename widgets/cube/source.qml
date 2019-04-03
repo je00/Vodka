@@ -624,28 +624,20 @@ Rectangle {
         }
     }
     function onBind() {
-        var tmp_q = [];
-        tmp_q[0] = q0_input.text.substring(1,q0_input.text.length);
-        tmp_q[1] = q1_input.text.substring(1,q1_input.text.length);
-        tmp_q[2] = q2_input.text.substring(1,q2_input.text.length);
-        tmp_q[3] = q3_input.text.substring(1,q3_input.text.length);
+        var rt_value = [];
+        rt_value[0] = sys_manager.find_rt_value_obj_by_name(q0_input.text);
+        rt_value[1] = sys_manager.find_rt_value_obj_by_name(q1_input.text);
+        rt_value[2] = sys_manager.find_rt_value_obj_by_name(q2_input.text);
+        rt_value[3] = sys_manager.find_rt_value_obj_by_name(q3_input.text);
 
-        var i = 0;
-        for (i = 0; i < 4; i++) {
-            tmp_q[i] = parseInt(tmp_q[i]);
-        }
-
-        if (q0_input.text.charAt(0) == 'I' && tmp_q[0] < sys_manager.lineNumber
-                && q1_input.text.charAt(0) == 'I' && tmp_q[1] < sys_manager.lineNumber
-                && q2_input.text.charAt(0) == 'I' && tmp_q[2] < sys_manager.lineNumber
-                ) {
-            q0_value = Qt.binding(function() { return sys_manager.rt_values[tmp_q[0]].value } );
-            q1_value = Qt.binding(function() { return sys_manager.rt_values[tmp_q[1]].value } );
-            q2_value = Qt.binding(function() { return sys_manager.rt_values[tmp_q[2]].value } );
+        if (rt_value[0] && rt_value[1] && rt_value[2]) {
+            q0_value = Qt.binding(function() { return rt_value[0].value } );
+            q1_value = Qt.binding(function() { return rt_value[1].value } );
+            q2_value = Qt.binding(function() { return rt_value[2].value } );
             bind = true;
         }
-        if (q3_input.text.charAt(0) == 'I' && tmp_q[3] < sys_manager.lineNumber) {
-            q3_value = Qt.binding(function() { return sys_manager.rt_values[tmp_q[3]].value } );
+        if (rt_value[3]) {
+            q3_value = Qt.binding(function() { return rt_value[3].value } );
             quaternion_mode = true;
         } else {
             quaternion_mode = false;

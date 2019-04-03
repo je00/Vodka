@@ -137,18 +137,18 @@ Rectangle {
         }
     }
     function onBind() {
-        var tmp = light_name.text.substring(1,light_name.text.length);
-        var id = parseInt(tmp);
-        if (light_name.text.charAt(0) == 'I' && id < sys_manager.lineNumber) {
+        var rt_value = sys_manager.find_rt_value_obj_by_name(light_name.text);
+        var line = sys_manager.find_line_obj_by_name(light_name.text);
+        if (rt_value && line) {
             light_bind.bind = true;
-            light_value.text = Qt.binding(function() { return "" + sys_manager.rt_values[id].value; })
+            light_value.text = Qt.binding(function() { return "" + rt_value.value; })
             if (light.bottom_value === light.top_value) {
-                light_bt.color = Qt.binding(function() { return sys_manager.lines[id].color });
-                light_bt.active = Qt.binding(function() { return (sys_manager.rt_values[id].value>=light.top_value)?true:false; } )
+                light_bt.color = Qt.binding(function() { return line.color });
+                light_bt.active = Qt.binding(function() { return (rt_value.value>=light.top_value)?true:false; } )
             } else if (light.bottom_value < light.top_value) {
                 light_bt.color = Qt.binding(function() {
-                    if (sys_manager.rt_values[id].value<=light.bottom_value) return "red";
-                    else if (sys_manager.rt_values[id].value > light.top_value) return "yellow";
+                    if (rt_value.value<=light.bottom_value) return "red";
+                    else if (rt_value.value > light.top_value) return "yellow";
                     else return "green";
                 });
                 light_bt.active = true;
@@ -199,6 +199,11 @@ Rectangle {
         font.family: theme_font
         font.pixelSize: theme_font_pixel_size
         font.bold: theme_font_bold
+        onFocusChanged: {
+            if (!focus && text.length == 0) {
+                text = "I0";
+            }
+        }
     }
     TextInput {
         id: light_bottom_value

@@ -42,6 +42,10 @@ Rectangle {
         font.family: theme_font
         font.pixelSize: theme_font_pixel_size
         font.bold: theme_font_bold
+        onAccepted: {
+            if (text.length == 0)
+                text = "" + ____from____;
+        }
     }
     TextInput {
         id: ctrl0_to
@@ -55,6 +59,10 @@ Rectangle {
         font.family: theme_font
         font.pixelSize: theme_font_pixel_size
         font.bold: theme_font_bold
+        onAccepted: {
+            if (text.length == 0)
+                text = "" + ____to____;
+        }
     }
     TextInput {
         id: ctrl0_name
@@ -64,7 +72,9 @@ Rectangle {
         enabled: (!sys_manager.lock)&&(!bind_text.bind)
         anchors.verticalCenter: ctrl0_spinbox.verticalCenter
         anchors.left: ctrl0_slider.left
-        font.bold: true
+        font.family: theme_font
+        font.pixelSize: 12
+        font.bold: theme_font_bold
     }
     Text {
         id: ctrl0_value
@@ -73,12 +83,12 @@ Rectangle {
         anchors.verticalCenter: ctrl0_name.verticalCenter
         anchors.left: ctrl0_name.right
         font.family: theme_font
-        font.pixelSize: theme_font_pixel_size
+        font.pixelSize: 12
         font.bold: theme_font_bold
     }
     Text {
         id: ctrl0_stepSize_text
-        text: "stepSize: "
+        text: "step: "
         anchors.left: ctrl0_from.right
         anchors.leftMargin: 10
         anchors.top: ctrl0_from.top
@@ -96,6 +106,10 @@ Rectangle {
         font.family: theme_font
         font.pixelSize: theme_font_pixel_size
         font.bold: theme_font_bold
+        onAccepted: {
+            if (text.length == 0)
+                text = "" + ____stepSize____;
+        }
     }
     QQC1.Slider {
         id: ctrl0_slider
@@ -123,6 +137,9 @@ Rectangle {
         stepSize: parent.stepSize
         onEditingFinished: {
             ctrl0_slider.value = value;
+            if (sys_manager.connected) {
+                sys_manager.send_string(ctrl0_name.text + ":" + value + '\n');
+            }
         }
         onValueChanged: {
             if (!focus) {
@@ -173,14 +190,13 @@ Rectangle {
         }
     }
     function onBind() {
-        var tmp = ctrl0_name.text.substring(1,ctrl0_name.text.length);
-        var id = parseInt(tmp);
-        if (ctrl0_name.text.charAt(0) == 'I' && id < sys_manager.lineNumber) {
+        var rt_value = sys_manager.find_rt_value_obj_by_name(ctrl0_name.text);
+        var line = sys_manager.find_line_obj_by_name(ctrl0_name.text);
+        if (rt_value && line) {
             bind_text.bind = true;
-            if (id < sys_manager.lineNumber) {
-                ctrl0_value.color = Qt.binding(function(){ return sys_manager.lines[id].color;})
-                ctrl0_value.text = Qt.binding(function() { return "| "+sys_manager.rt_values[id].value;})
-            }
+            ctrl0_name.color = Qt.binding(function(){ return line.color;})
+            ctrl0_value.color = Qt.binding(function(){ return line.color;})
+            ctrl0_value.text = Qt.binding(function() { return "| "+rt_value.value;})
         } else {
             bind_text.bind = false;
             ctrl0_name.color = "black";
