@@ -9,10 +9,11 @@ Rectangle {
     property bool value_visable: ____value_visable____
     property real bottom_value: parseFloat(light_bottom_value.text)
     property real top_value: parseFloat(light_top_value.text)
+    property var command: null
     x: ____x____
     y: ____y____
     height: 60
-    width: 40
+    width: Math.max(40, light_name.width + 10)
     color: "transparent"
     radius: 5
     border.color: "#1AAC19"
@@ -52,7 +53,7 @@ Rectangle {
         MouseArea {
             anchors.fill: parent
             onClicked: {
-                if (!light_bind.bind) {
+                if (!light_bind.value_bind) {
                     if (light.bottom_value === light.top_value) {
                         parent.active = !parent.active;
                         light_value.text = ((parent.active)?"1":"0");
@@ -72,8 +73,11 @@ Rectangle {
                             parent.color = "red";
                         }
                     }
-                    if (sys_manager.connected)
+                    if (!command)
                         sys_manager.send_string("" + light_name.text + ":" + light_value.text + "\n");
+                    else {
+                        sys_manager.send_command(command, parseFloat(light_value.text));
+                    }
                 }
                 else {
                     var s = light_value.text;
@@ -89,8 +93,11 @@ Rectangle {
                             s = "3";
                         }
                     }
-                    if (sys_manager.connected)
+                    if (!command)
                         sys_manager.send_string("" + light_name.text + ":" + s + "\n");
+                    else {
+                        sys_manager.send_command(command, parseFloat(s));
+                    }
                 }
             }
         }
@@ -117,6 +124,7 @@ Rectangle {
     Text {
         id: light_bind
         property bool bind: false
+        property bool value_bind: false
         color: "blue"
         font.family: theme_font
         font.pixelSize: theme_font_pixel_size
@@ -128,7 +136,6 @@ Rectangle {
         MouseArea {
             anchors.fill: parent
             onClicked: {
-                console.log("fuck here");
                 if (light_bind.bind == false)
                     light.onBind();
                 else
@@ -139,9 +146,19 @@ Rectangle {
     function onBind() {
         var rt_value = sys_manager.find_rt_value_obj_by_name(light_name.text);
         var line = sys_manager.find_line_obj_by_name(light_name.text);
+        var command = sys_manager.find_command_obj_by_name(light_name.text);
+
+        if (!((rt_value && line) || command)) {
+            onUnbind();
+            sys_manager.error_msg(light_name.text + ": No commands or data were found !");
+        }
+        light_bind.bind = true;
+
         if (rt_value && line) {
-            light_bind.bind = true;
+            light_bind.value_bind = true;
             light_value.text = Qt.binding(function() { return "" + rt_value.value; })
+            light_value.color = line.color;
+            light_name.color = line.color;
             if (light.bottom_value === light.top_value) {
                 light_bt.color = Qt.binding(function() { return line.color });
                 light_bt.active = Qt.binding(function() { return (rt_value.value>=light.top_value)?true:false; } )
@@ -153,18 +170,22 @@ Rectangle {
                 });
                 light_bt.active = true;
             }
-        } else {
-            light_bind.bind = false;
-            light_bt.color = "blue";
-            light_value.text = "0";
-            light_bt.active = false;
         }
+
+        if (command)
+            light.command = command;
+        else
+            light.command = null;
     }
     function onUnbind() {
         light_bind.bind = false;
+        light_bind.value_bind = false;
         light_bt.color = "blue";
         light_value.text = "0";
+        light_value.color = "black";
+        light_name.color = "black";
         light_bt.active = false;
+        light.command = null;
     }
     Text {
         id: light_value_show
@@ -192,12 +213,12 @@ Rectangle {
         color: "black"
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: 3
+        anchors.bottomMargin: 2
         text: "____name____"
 
         enabled: !light_bind.bind
         font.family: theme_font
-        font.pixelSize: theme_font_pixel_size
+        font.pixelSize: 15
         font.bold: theme_font_bold
         onFocusChanged: {
             if (!focus && text.length == 0) {
@@ -236,12 +257,12 @@ Rectangle {
     Text {
         id: light_value
         anchors.top: parent.top
-        anchors.topMargin: 3
+        anchors.topMargin: 2
         anchors.horizontalCenter: parent.horizontalCenter
         text: "0"
         visible: parent.value_visable
         font.family: theme_font
-        font.pixelSize: theme_font_pixel_size
+        font.pixelSize: 15
         font.bold: theme_font_bold
     }
 }

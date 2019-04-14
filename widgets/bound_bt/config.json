@@ -3,7 +3,7 @@
     "parameters": [
         {
             "name": "name",
-            "value": "SYS_GIVE"
+            "value": "双击↓命名"
         }
     ]
 }
