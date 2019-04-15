@@ -75,6 +75,7 @@ Rectangle {
         }
     }
     Rectangle {
+        color: "transparent"
         anchors.verticalCenter: ctrl0_spinbox.verticalCenter
         anchors.left: ctrl0_slider.left
         anchors.right: ctrl0_spinbox.left

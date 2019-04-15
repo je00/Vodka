@@ -12,7 +12,7 @@ Rectangle {
     property var command: null
     x: ____x____
     y: ____y____
-    height: 60
+    height: 68
     width: Math.max(40, light_name.width + 10)
     color: "transparent"
     radius: 5
