@@ -17,12 +17,6 @@ public:
     explicit RawData();
     ~RawData();
 
-    QVariantList ProcessingDatas(const QByteArray data);
-    QByteArray ProcessedDatas();
-    void ClearProcessedDatas();
-
-private:
-    QByteArray unprocessed_datas_;
-    QByteArray processed_datas_;
+    void ProcessingDatas(char *data, int count);
 };
 #endif // RawData_H

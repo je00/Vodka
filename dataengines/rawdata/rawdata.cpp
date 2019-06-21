@@ -14,23 +14,13 @@ RawData::~RawData()
 }
 
 
-QVariantList RawData::ProcessingDatas(const QByteArray data)
+void RawData::ProcessingDatas(char *data, int count)
 {
-    QVariantList datas_;
+    frame_datas_list_.clear();
+    frame_start_index_list_.clear();
+    frame_end_index_list_.clear();
 
-    processed_datas_.append(data);
+    frame_start_index_list_.append(count-1);
+    frame_end_index_list_.append(count-1);
 
-    return QVariantList();
 }
-
-QByteArray RawData::ProcessedDatas()
-{
-    return processed_datas_;
-}
-
-
-void RawData::ClearProcessedDatas()
-{
-    processed_datas_.clear();
-}
-

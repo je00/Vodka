@@ -14,68 +14,45 @@ JustFloat::~JustFloat()
 }
 
 
-QVariantList JustFloat::ProcessingFrame(QByteArray frame)
+bool JustFloat::ProcessingFrame(char *data, int count)
 {
-    QVariantList dd;
+    QVector<float> dd;
 
-    if (frame.size() <= 0) {
-        return QVariantList();
-    }
+    if (count <= 0)
+        return false;
 
-    if (frame.size() % 4 == 0) {
-        double max = std::numeric_limits<double>::min();
-        double min = std::numeric_limits<double>::max();
-        for (int i = 0; i < frame.length() - 4; i += 4) {
+    if (count % 4 == 0) {
+        for (int i = 0; i < count - 4; i += 4) {
 //            double value = datas[i].trimmed().toDouble();
-            double value = (double)(*((float*)&frame.data()[i]));
-            if (value > max)
-                max = value;
-            if (value < min)
-                min = value;
+            float value;
+            memcpy(&value, data + i, 4);
             dd.append(value);
         }
-        QVariantList max_min;
-        max_min.append(max);
-        max_min.append(min);
-        dd.append(static_cast<QVariant>(max_min));
-        if (!hide_data_packets())
-            processed_datas_.append(frame);
-    } else {
-        processed_datas_.append(frame);
+        frame_datas_list_.append(dd);
+        return true;
     }
-    return dd;
+    return false;
 }
 
-QVariantList JustFloat::ProcessingDatas(const QByteArray data)
+void JustFloat::ProcessingDatas(char *data, int count)
 {
-    QVariantList datas_;
+    frame_datas_list_.clear();
+    frame_start_index_list_.clear();
+    frame_end_index_list_.clear();
 
-    unprocessed_datas_.append(data);
     int begin = 0;
-    for (int i = 3; i < unprocessed_datas_.length(); i++) {
-        int d = *((int *)(&unprocessed_datas_.data()[i - 3]));
-        if (d == (int)0x7F800000) {
-            QByteArray tmp = unprocessed_datas_.mid(begin, (i - begin) + 1);
-            QVariant d = ProcessingFrame(tmp);
-            if (d.toList().length() > 0) {
-                datas_.append(d);
+    for (int i = 3; i < count; i++) {
+        char *data_ptr = data + i - 3;
+        int d;
+        memcpy(&d, data_ptr, 4);
+        if (d == static_cast<int>(0x7F800000)) {
+            if (ProcessingFrame(data + begin, (i - begin) + 1)) {
+                frame_start_index_list_.append(begin);
+                frame_end_index_list_.append(i);
             }
             begin = i+1;
         }
     }
-    unprocessed_datas_ = unprocessed_datas_.mid(begin);
-
-    return datas_;
 }
 
-QByteArray JustFloat::ProcessedDatas()
-{
-    return processed_datas_;
-}
-
-
-void JustFloat::ClearProcessedDatas()
-{
-    processed_datas_.clear();
-}
 
