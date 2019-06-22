@@ -17,6 +17,5 @@ public:
     explicit FireWater();
     ~FireWater();
     void ProcessingDatas(char *data, int count);
-    bool ProcessingFrame(char *data, int count);
 };
 #endif // FIREWATER_H

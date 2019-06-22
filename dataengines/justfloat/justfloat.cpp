@@ -38,6 +38,7 @@ void JustFloat::ProcessingDatas(char *data, int count)
 {
     frame_datas_list_.clear();
     frame_start_index_list_.clear();
+    frame_is_valid_list_.clear();
     frame_end_index_list_.clear();
 
     int begin = 0;
@@ -46,10 +47,10 @@ void JustFloat::ProcessingDatas(char *data, int count)
         int d;
         memcpy(&d, data_ptr, 4);
         if (d == static_cast<int>(0x7F800000)) {
-            if (ProcessingFrame(data + begin, (i - begin) + 1)) {
-                frame_start_index_list_.append(begin);
-                frame_end_index_list_.append(i);
-            }
+            bool frame_is_valid = ProcessingFrame(data + begin, (i - begin) + 1);
+            frame_start_index_list_.append(begin);
+            frame_end_index_list_.append(i);
+            frame_is_valid_list_.append(frame_is_valid);
             begin = i+1;
         }
     }

@@ -17,12 +17,14 @@ public:
 
     QVector<int> frame_start_index_list() { return frame_start_index_list_; }
     QVector<int> frame_end_index_list() { return frame_end_index_list_; }
+    QVector<bool> frame_is_valid_list() { return frame_is_valid_list_; }
     QVector<QVector<float>> frame_datas_list() { return frame_datas_list_; }
 
 protected:
     bool hide_data_packets_;
     QVector<int> frame_start_index_list_;
     QVector<int> frame_end_index_list_;
+    QVector<bool> frame_is_valid_list_;
     QVector<QVector<float>> frame_datas_list_;
 };
 
