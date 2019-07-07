@@ -7,8 +7,9 @@ Rectangle {
     id: root
     property string path: "cube"
     border.width: sys_manager.lock?0:1
-    width: right_bototm_rect.x + right_bototm_rect.width
-    height: right_bototm_rect.y + right_bototm_rect.width
+    border.color: "#d0d0d0"
+    width: right_bottom_rect.x + right_bottom_rect.width
+    height: right_bottom_rect.y + right_bottom_rect.width
     color: "transparent"
     x: ____x____
     y: ____y____
@@ -28,6 +29,13 @@ Rectangle {
     property real q3_value: 1
     property bool quaternion_mode: true
     property int cube_color: (color_r_rect.value * 0x10000 + color_g_rect.value * 0x100 + color_b_rect.value)
+
+    onXChanged: {
+        x = (x - x%4);
+    }
+    onYChanged: {
+        y = (y - y%4);
+    }
 
     onCube_colorChanged: {
         if (gl_code.cube)
@@ -234,7 +242,7 @@ Rectangle {
     }
 
     Rectangle {
-        id: right_bototm_rect
+        id: right_bottom_rect
         width: 10
         height: 10
         color: theme_color
@@ -244,6 +252,18 @@ Rectangle {
         MouseArea {
             anchors.fill: parent
             drag.target: parent
+            onPressed: {
+                parent.color = "blue";
+            }
+            onReleased: {
+                parent.color = theme_color;
+            }
+        }
+        onXChanged: {
+            x = (x - x%4);
+        }
+        onYChanged: {
+            y = (y - y%4);
         }
     }
 
@@ -260,6 +280,12 @@ Rectangle {
             drag.target: parent.parent
             drag.minimumX: -parent.parent.width/2
             drag.minimumY: 0
+            onPressed: {
+                parent.color = "blue";
+            }
+            onReleased: {
+                parent.color = theme_color;
+            }
         }
     }
 
@@ -521,7 +547,7 @@ Rectangle {
         anchors.bottom: parent.bottom
         width: 1
         //        anchors.leftMargin: -width/2
-        color: "black"
+        color: "transparent"
         visible: !sys_manager.lock
         property int origin_height: 0
         Component.onCompleted: {
@@ -619,7 +645,7 @@ Rectangle {
                 visible: color_b_rect_mouse.pressed
                 anchors.verticalCenter: parent.verticalCenter
                 color: "blue"
-                text: "" + parent.value
+                text: "" + parent.value + ", " + parent.y + ", " + parent.height
             }
         }
     }

@@ -16,7 +16,7 @@ Rectangle {
     width: Math.max(40, light_name.width + 10)
     color: "transparent"
     radius: 5
-    border.color: "#1AAC19"
+    border.color: "#D0D0D0"
     border.width: sys_manager.lock?0:1
     onXChanged: {
         x = (x - x%4)
@@ -36,10 +36,12 @@ Rectangle {
         hoverEnabled: true
         enabled: !sys_manager.lock
         onPressed: {
-            parent.border.width = Qt.binding(function(){return ((sys_manager.lock)?0:3)});
+            parent.border.color = theme_color;
+            parent.border.width = Qt.binding(function(){return ((sys_manager.lock)?0:2)});
         }
         onReleased: {
-            parent.border.width = Qt.binding(function(){return ((sys_manager.lock)?0:2)});
+            parent.border.color = "#D0D0D0";
+            parent.border.width = Qt.binding(function(){return ((sys_manager.lock)?0:1)});
         }
     }
     StatusIndicator {
