@@ -19,5 +19,8 @@ public:
 
     void ProcessingDatas(char *data, int count);
     bool ProcessingFrame(char *data, int count);
+    bool ProcessingImage(char *data, int count);
+private:
+    uint32_t image_count_mutation_count_ = 0;
 };
 #endif // JUSTFLOAT_H

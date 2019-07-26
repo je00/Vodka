@@ -9,6 +9,7 @@ Rectangle {
     property real stepSize: parseFloat((ctrl0_stepSize.text.length>0)?ctrl0_stepSize.text:0)
     property string name: ctrl0_name.text
     property var command: null
+    property real value: ctrl0_slider.value
     x: ____x____
     y: ____y____
     border.color: "grey"
@@ -148,6 +149,7 @@ Rectangle {
         anchors.leftMargin: 5
         anchors.top: ctrl0_from.bottom
         stepSize: parent.stepSize
+        value: ____value____
         onValueChanged: {
             ctrl0_spinbox.value = value;
         }
@@ -161,6 +163,7 @@ Rectangle {
         minimumValue: parent.from
         maximumValue: parent.to
         stepSize: parent.stepSize
+        value: ____value____
         onEditingFinished: {
             focus = false;
             ctrl0_slider.value = value;

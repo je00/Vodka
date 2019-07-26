@@ -1,0 +1,41 @@
+﻿{
+    "name": "图片",
+    "parameters": [
+        {
+            "name": "width",
+            "value": 300
+        },
+        {
+            "name": "height",
+            "value": 300
+        },	
+        {
+            "name": "title",
+            "value": "image"
+        },
+        {
+            "name": "image_index",
+            "value": -1
+        },
+        {
+            "name": "is_hide_name",
+            "value": false
+        },
+        {
+            "name": "is_hide_border",
+            "value": false
+        },
+        {
+            "name": "is_show_effect_setting",
+            "value": true
+        },
+        {
+            "name": "effect_file",
+            "value": "EffectPassThrough.qml.default"
+        },
+        {
+            "name": "parameters",
+            "value": "[]"
+        }
+    ]
+}

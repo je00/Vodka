@@ -17,5 +17,7 @@ public:
     explicit FireWater();
     ~FireWater();
     void ProcessingDatas(char *data, int count);
+private:
+    uint32_t image_count_mutation_count_ = 0;
 };
 #endif // FIREWATER_H

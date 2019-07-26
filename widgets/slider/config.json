@@ -16,6 +16,10 @@
         {
             "name": "stepSize",
             "value": 1
+        },
+        {
+            "name": "value",
+            "value": 0
         }
     ]
 }
