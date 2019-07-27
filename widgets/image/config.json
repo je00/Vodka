@@ -3,11 +3,11 @@
     "parameters": [
         {
             "name": "width",
-            "value": 300
+            "value": 226
         },
         {
             "name": "height",
-            "value": 300
+            "value": 226
         },	
         {
             "name": "title",
