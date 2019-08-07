@@ -115,6 +115,14 @@ Item {
     }
 
 
+    MouseArea {
+        anchors.fill: parent
+        cursorShape: Qt.SizeAllCursor
+        onPressed: {
+            sys_manager.increase_to_top(root);
+        }
+    }
+
     Rectangle {
         anchors.top: parent.top
         anchors.horizontalCenter: parent.horizontalCenter
@@ -125,13 +133,16 @@ Item {
         border.width: is_hide_border?2:0
         border.color: "white"
         MouseArea {
+            id: drag_mouse
             anchors.fill: parent
             drag.target: parent.parent
             drag.minimumX: -parent.parent.width/2
             drag.minimumY: 0
+            drag.threshold: 0
 
             onPressed: {
                 parent.color = "blue";
+                sys_manager.increase_to_top(root);
             }
             onReleased: {
                 parent.color = theme_color;
@@ -149,10 +160,14 @@ Item {
         border.width: is_hide_border?2:0
         border.color: "white"
         MouseArea {
+            id: right_bototm_mouse
             anchors.fill: parent
             drag.target: parent
+            drag.threshold: 0
+
             onPressed: {
                 parent.color = "blue";
+                sys_manager.increase_to_top(root);
             }
             onReleased: {
                 parent.color = theme_color;

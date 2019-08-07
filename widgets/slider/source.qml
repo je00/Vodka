@@ -32,6 +32,9 @@ Rectangle {
         drag.maximumX: ctrl0.parent.width - parent.width - 8
         drag.threshold: 0
         enabled: !sys_manager.lock
+        onPressed: {
+            sys_manager.increase_to_top(ctrl0);
+        }
     }
     TextInput {
         id: ctrl0_from

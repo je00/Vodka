@@ -38,6 +38,7 @@ Rectangle {
         onPressed: {
             parent.border.color = theme_color;
             parent.border.width = Qt.binding(function(){return ((sys_manager.lock)?0:2)});
+            sys_manager.increase_to_top(light);
         }
         onReleased: {
             parent.border.color = "#D0D0D0";

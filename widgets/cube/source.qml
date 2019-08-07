@@ -98,6 +98,8 @@ Rectangle {
 
             start_rotation_x = rotation_x;
             start_rotation_y = rotation_y;
+            sys_manager.increase_to_top(root);
+
         }
 
         onPositionChanged: {
@@ -252,8 +254,10 @@ Rectangle {
         MouseArea {
             anchors.fill: parent
             drag.target: parent
+            drag.threshold: 0
             onPressed: {
                 parent.color = "blue";
+                sys_manager.increase_to_top(root);
             }
             onReleased: {
                 parent.color = theme_color;
@@ -280,8 +284,11 @@ Rectangle {
             drag.target: parent.parent
             drag.minimumX: -parent.parent.width/2
             drag.minimumY: 0
+            drag.threshold: 0
+
             onPressed: {
                 parent.color = "blue";
+                sys_manager.increase_to_top(root);
             }
             onReleased: {
                 parent.color = theme_color;
@@ -578,6 +585,7 @@ Rectangle {
                 drag.threshold: 0
                 drag.minimumY: 0
                 drag.maximumY: parent.parent.height - parent.width
+                cursorShape: pressed?Qt.ClosedHandCursor:Qt.OpenHandCursor
 
             }
             Text {
@@ -645,7 +653,7 @@ Rectangle {
                 visible: color_b_rect_mouse.pressed
                 anchors.verticalCenter: parent.verticalCenter
                 color: "blue"
-                text: "" + parent.value + ", " + parent.y + ", " + parent.height
+                text: "" + parent.value
             }
         }
     }

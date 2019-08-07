@@ -77,6 +77,7 @@ Rectangle {
             drag.minimumX: -bound_bt.width/2
             drag.maximumX: root.width - bound_bt.width/2 -16
             drag.threshold: 0
+
             onDoubleClicked: {
                 editing = !editing;
                 bound_bt_name.focus = !bound_bt_name.focus;
@@ -86,6 +87,7 @@ Rectangle {
                     bound_bt_name.select(0,0);
             }
             onPressed: {
+                sys_manager.increase_to_top(bound_bt);
                 parent.opacity = 0.7;
             }
             onReleased: {
