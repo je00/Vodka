@@ -97,8 +97,11 @@ ShaderEffect {
     Rectangle {
         id: parameters_rect
         anchors.margins: 1
-        anchors.fill: parent
         color: "transparent"
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.bottom: parent.bottom
+        height: parameters_listview.count * 30
 
         ListView {
             id: parameters_listview
@@ -130,6 +133,7 @@ ShaderEffect {
 //                    width: 70
                 }
 
+
                 Slider {
                     value: model.value
                     anchors.left: parameter_name.right
@@ -143,4 +147,5 @@ ShaderEffect {
             }
         }
     }
+
 }

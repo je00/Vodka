@@ -64,6 +64,13 @@ Item {
         border.width: (is_hide_border?0:1)
         border.color: "#D0D0D0"
 
+        MouseArea {
+            anchors.fill: parent
+            cursorShape: Qt.SizeAllCursor
+            onPressed: {
+                sys_manager.increase_to_top(root);
+            }
+        }
         ShaderEffectSource {
             id: theSource
             smooth: true
@@ -85,6 +92,8 @@ Item {
             source: "image://data/" + image_index
             fillMode: Image.PreserveAspectFit
         }
+
+
         Rectangle {
             id: title_input_rect
             anchors.bottom: parent.bottom
@@ -115,13 +124,6 @@ Item {
     }
 
 
-    MouseArea {
-        anchors.fill: parent
-        cursorShape: Qt.SizeAllCursor
-        onPressed: {
-            sys_manager.increase_to_top(root);
-        }
-    }
 
     Rectangle {
         anchors.top: parent.top
