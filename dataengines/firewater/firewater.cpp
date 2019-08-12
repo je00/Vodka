@@ -2,7 +2,6 @@
 #include <QDebug>
 #include <limits>
 
-
 FireWater::FireWater()
 {
 
@@ -39,11 +38,13 @@ void FireWater::ProcessingDatas(char *data, int count)
                 QString name =  name_ndata[name_ndata.size()-2].trimmed();
                 QList<QString> datas = name_ndata[name_ndata.size()-1].trimmed().split(',');
                 if (name == "image") {
-                    if (datas.length() != 3)
+                    if (datas.length() != 5)
                         break;
                     int image_id = datas[0].toInt();
                     image_size =datas[1].toInt();
-                    QString image_format =datas[2];
+                    int image_width = datas[2].toInt();
+                    int image_height = datas[3].toInt();
+                    RawImage::Format image_format = static_cast<RawImage::Format>(datas[4].toInt());
                     if ((count - (i + 1)) < image_size)
                         return;
                     if (image_id > (image_list_.length() - 1)) {
@@ -57,7 +58,9 @@ void FireWater::ProcessingDatas(char *data, int count)
                         }
                     }
                     if (image_id < image_list_.length()) {
-                        image_list_[image_id]->set((uchar*)data + i + 1, image_size, image_format);
+                        image_list_[image_id]->set((uchar*)data + i + 1, image_size,
+                                                   image_width, image_height,
+                                                   image_format);
                         image_is_updated_list_[image_id] = true;
                     }
                     end = i + image_size;

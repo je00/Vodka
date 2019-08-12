@@ -84,12 +84,17 @@ void JustFloat::ProcessingDatas(char *data, int count)
                 // Two consecutive frame endings show that the picture is coming
                 i += 4;
 
-                if ((i - begin + 1) == 20) {
+                if ((i - begin + 1) == 28) {
                     int image_id;
-                    QString format;
-                    memcpy(&image_id, data + i - 19, 4);
-                    memcpy(&image_size, data + i - 15, 4);
-                    format = QString::fromLocal8Bit(data + i - 11, 4);
+                    int image_width;
+                    int image_height;
+                    RawImage::Format image_format;
+                    memcpy(&image_id, data + i - 27, 4);
+                    memcpy(&image_size, data + i - 23, 4);
+                    memcpy(&image_width, data + i - 19, 4);
+                    memcpy(&image_height, data + i - 15, 4);
+                    memcpy(&image_format, data + i - 11, 4);
+
 
                     if ((i + image_size) >= count) {
                         // The image has not been fully received yet.
@@ -106,7 +111,8 @@ void JustFloat::ProcessingDatas(char *data, int count)
                         }
                     }
                     if (image_id < image_list_.length()) {
-                        image_list_[image_id]->set((uchar*)data + i + 1, image_size, "format");
+                        image_list_[image_id]->set((uchar*)data + i + 1, image_size,
+                                                   image_width, image_height, image_format);
                         image_is_updated_list_[image_id] = true;
                     }
                     end = i + image_size;
