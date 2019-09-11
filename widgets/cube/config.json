@@ -16,10 +16,103 @@
         {
             "name": "q3_name",
             "value": ""
-        },       {
-            "name": "q3_name",
+        },
+        {
+            "name": "scale",
+            "value": 1
+        },
+        {
+            "name": "angle_offset_x",
+            "value": 0
+        },
+        {
+            "name": "angle_offset_y",
+            "value": 0
+        },
+        {
+            "name": "angle_offset_z",
+            "value": 0
+        },
+        {
+            "name": "position_offset_x",
+            "value": 0
+        },
+        {
+            "name": "position_offset_y",
+            "value": 0
+        },
+        {
+            "name": "position_offset_z",
+            "value": 0
+        },
+        {
+            "name": "center_point_x",
+            "value": 0
+        },
+        {
+            "name": "center_point_y",
+            "value": 0
+        },
+        {
+            "name": "center_point_z",
+            "value": 0
+        },
+        {
+            "name": "is_auto_center",
+            "value": true
+        },
+        {
+            "name": "is_show_obj_axis",
+            "value": true
+        },
+        {
+            "name": "is_show_world_axis",
+            "value": true
+        },
+        {
+            "name": "true_angle_else_radian",
+            "value": false
+        },
+        {
+            "name": "x_length",
+            "value": 100
+        },
+        {
+            "name": "y_length",
+            "value": 100
+        },
+        {
+            "name": "z_length",
+            "value": 100
+        },
+        {
+            "name": "x_length_world",
+            "value": 100
+        },
+        {
+            "name": "y_length_world",
+            "value": 100
+        },
+        {
+            "name": "z_length_world",
+            "value": 100
+        },
+        {
+            "name": "angle_x",
+            "value": 20
+        },
+        {
+            "name": "angle_y",
+            "value": -45
+        },
+        {
+            "name": "angle_z",
+            "value": -20
+        },
+        {
+            "name": "model_path",
             "value": ""
-        }, 
+        },
         {
             "name": "width",
             "value": 226
@@ -29,16 +122,28 @@
             "value": 226
         },        
         {
-            "name": "r_rect_y",
+            "name": "is_fill_parent",
+            "value": false
+        },
+        {
+            "name": "ctx_width",
+            "value": 226
+        },
+        {
+            "name": "ctx_height",
+            "value": 226
+        },
+        {
+            "name": "ctx_x",
             "value": 0
         },
         {
-            "name": "g_rect_y",
-            "value": 108
+            "name": "ctx_y",
+            "value": 0
         },
         {
-            "name": "b_rect_y",
-            "value": 221
+            "name": "cube_color",
+            "value": "#0080ff"
         }
     ]
 }

@@ -110,7 +110,7 @@ Rectangle {
         property bool bind: false
         color: "blue"
         font.family: theme_font
-        font.pixelSize: theme_font_pixel_size
+        font.pointSize: theme_font_point_size
         font.bold: theme_font_bold
         text: "[-]"
         visible: !sys_manager.lock
@@ -130,7 +130,7 @@ Rectangle {
         property bool value_bind: false
         color: "blue"
         font.family: theme_font
-        font.pixelSize: theme_font_pixel_size
+        font.pointSize: theme_font_point_size
         font.bold: theme_font_bold
         text: bind?"[★]":"[☆]"
         visible: !sys_manager.lock
@@ -153,7 +153,7 @@ Rectangle {
 
         if (!((rt_value && line) || command)) {
             onUnbind();
-            sys_manager.error_msg(light_name.text + ": No commands or data were found !");
+            return;
         }
         light_bind.bind = true;
 
@@ -197,7 +197,7 @@ Rectangle {
         color: "blue"
         //                font.underline: true
         font.family: theme_font
-        font.pixelSize: theme_font_pixel_size
+        font.pointSize: theme_font_point_size
         font.bold: theme_font_bold
         text: parent.value_visable?"[★]":"[☆]"
         visible: !sys_manager.lock
@@ -240,7 +240,7 @@ Rectangle {
         visible: !sys_manager.lock
         enabled: !light_bind.bind
         font.family: theme_font
-        font.pixelSize: theme_font_pixel_size
+        font.pointSize: theme_font_point_size
         font.bold: theme_font_bold
     }
     TextInput {
@@ -254,7 +254,7 @@ Rectangle {
         visible: !sys_manager.lock
         enabled: !light_bind.bind
         font.family: theme_font
-        font.pixelSize: theme_font_pixel_size
+        font.pointSize: theme_font_point_size
         font.bold: theme_font_bold
     }
     Text {

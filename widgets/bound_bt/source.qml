@@ -6,8 +6,8 @@ Rectangle {
     height: 30
     width: Math.max(bound_bt_name.width + 20, 50)
     radius: 5
-    color:  "#F5F5F5"
-    border.color:  theme_color
+    color: "#F5F5F5"
+    border.color: "#D0D0D0"
     border.width: 1
     x: ____x____
     y: ____y____
@@ -28,14 +28,23 @@ Rectangle {
         hoverEnabled: true
         propagateComposedEvents: true
         onEntered: {
-            parent.border.width = 2;
+//            parent.border.width = 2;
+//            parent.border.color = theme_color;
+            parent.color = "blue";
+            bound_bt_name.color = "white";
+            bound_bt_name.font.bold = true;
         }
         onExited: {
-            parent.border.width = 1;
+            parent.color = "#F5F5F5";
+            bound_bt_name.color = "blue";
+            bound_bt_name.font.bold = theme_font_bold;
+//            parent.border.width = 1;
+//            parent.border.color = "#D0D0D0";
         }
         onPressed: {
-            parent.color =  theme_color;
+            parent.color =  "#0080ff";
             bound_bt_name.color =  "white ";
+            bound_bt_name.font.bold = true;
             if (!command) {
                 sys_manager.send_string( "" + bound_bt_name.text +  ":1\n");
             } else if (command.support_arg) {
@@ -43,8 +52,9 @@ Rectangle {
             }
         }
         onReleased: {
-            parent.color =  "#F5F5F5";
-            bound_bt_name.color =  "blue";
+            parent.color = "blue";
+            bound_bt_name.color = "white";
+            bound_bt_name.font.bold = true;
             if (!command) {
                 sys_manager.send_string( "" + bound_bt_name.text +  ":0\n");
             } else if (command.support_arg) {
@@ -128,7 +138,7 @@ Rectangle {
         id: delete_bt
         color:  "blue "
         font.family: theme_font
-        font.pixelSize: theme_font_pixel_size
+        font.pointSize: theme_font_point_size
         font.bold: theme_font_bold
         text:  "[ - ] "
         visible: !sys_manager.lock
@@ -146,7 +156,7 @@ Rectangle {
         id: bind_bt
         color:  "blue "
         font.family: theme_font
-        font.pixelSize: theme_font_pixel_size
+        font.pointSize: theme_font_point_size
         font.bold: theme_font_bold
         text:  bind?"[★]":"[☆]"
         visible: !sys_manager.lock
@@ -169,7 +179,6 @@ Rectangle {
             bound_bt.command = command;
         } else {
             bind = false;
-            sys_manager.error_msg(bound_bt.name + ": No commands was found !");
         }
     }
 

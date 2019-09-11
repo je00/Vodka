@@ -12,7 +12,7 @@ Rectangle {
     property real value: ctrl0_slider.value
     x: ____x____
     y: ____y____
-    border.color: "grey"
+    border.color: "#D0D0D0"
     height: 55
     width: 204
     radius: 5
@@ -33,8 +33,15 @@ Rectangle {
         drag.threshold: 0
         enabled: !sys_manager.lock
         onPressed: {
+            parent.border.color = theme_color;
+            parent.border.width = 2;
             sys_manager.increase_to_top(ctrl0);
         }
+        onReleased: {
+            parent.border.color = "#D0D0D0";
+            parent.border.width = 1;
+        }
+
     }
     TextInput {
         id: ctrl0_from
@@ -45,7 +52,7 @@ Rectangle {
         anchors.topMargin: 5
         anchors.top: parent.top
         font.family: theme_font
-        font.pixelSize: theme_font_pixel_size
+        font.pointSize: theme_font_point_size
         font.bold: theme_font_bold
         onAccepted: {
             focus = false;
@@ -66,7 +73,7 @@ Rectangle {
         anchors.right: ctrl0_slider.right
         anchors.top: ctrl0_from.top
         font.family: theme_font
-        font.pixelSize: theme_font_pixel_size
+        font.pointSize: theme_font_point_size
         font.bold: theme_font_bold
         onAccepted: {
             focus = false;
@@ -118,7 +125,7 @@ Rectangle {
         anchors.leftMargin: 10
         anchors.top: ctrl0_from.top
         font.family: theme_font
-        font.pixelSize: theme_font_pixel_size
+        font.pointSize: theme_font_point_size
         font.bold: theme_font_bold
     }
     TextInput {
@@ -129,7 +136,7 @@ Rectangle {
         anchors.left: ctrl0_stepSize_text.right
         anchors.top: ctrl0_stepSize_text.top
         font.family: theme_font
-        font.pixelSize: theme_font_pixel_size
+        font.pointSize: theme_font_point_size
         font.bold: theme_font_bold
         onFocusChanged: {
             if (!focus)
@@ -193,7 +200,7 @@ Rectangle {
         anchors.bottom: ctrl0_to.bottom
         visible: !sys_manager.lock
         font.family: theme_font
-        font.pixelSize: theme_font_pixel_size
+        font.pointSize: theme_font_point_size
         font.bold: theme_font_bold
         MouseArea {
             anchors.fill: parent
@@ -213,7 +220,7 @@ Rectangle {
         property bool value_bind: false
         visible: !sys_manager.lock
         font.family: theme_font
-        font.pixelSize: theme_font_pixel_size
+        font.pointSize: theme_font_point_size
         font.bold: theme_font_bold
         MouseArea {
             anchors.fill: parent
@@ -231,7 +238,6 @@ Rectangle {
         var line = sys_manager.find_line_obj_by_name(ctrl0_name.text);
         if (!((rt_value && line) || command)) {
             onUnbind();
-            sys_manager.error_msg(ctrl0_name.text + ": No commands or data were found !");
             return;
         }
         bind_text.bind = true;

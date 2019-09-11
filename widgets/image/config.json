@@ -36,6 +36,26 @@
         {
             "name": "parameters",
             "value": "[]"
+        },
+        {
+            "name": "is_fill_parent",
+            "value": false
+        },
+        {
+            "name": "ctx_width",
+            "value": 221
+        },
+        {
+            "name": "ctx_height",
+            "value": 221
+        },
+        {
+            "name": "ctx_x",
+            "value": 0
+        },
+        {
+            "name": "ctx_y",
+            "value": 0
         }
     ]
 }

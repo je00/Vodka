@@ -4,11 +4,11 @@ import "file:///____source_path____/effects"
 
 Item {
     id: root
+    x: ____x____
+    y: ____y____
     property string path:  "image"
     property string title: title_input.text
     property int image_index: ____image_index____
-    width: right_bototm_rect.x + right_bototm_rect.width
-    height: right_bototm_rect.y + right_bototm_rect.width
     property int default_width: ____width____
     property int default_height: ____height____
     property bool is_hide_name: is_hide_name_menu.notify_on
@@ -16,8 +16,26 @@ Item {
     property bool is_show_effect_setting: is_show_effect_setting_menu.notify_on
     property string effect_file: effect_loader.file_name
     property var parameters: []
-    x: ____x____
-    y: ____y____
+    property bool is_fill_parent: ____is_fill_parent____
+    property int ctx_width: ____ctx_width____
+    property int ctx_height: ____ctx_height____
+    property int ctx_x: ____ctx_x____
+    property int ctx_y: ____ctx_y____
+
+    onXChanged: {
+        if (!is_fill_parent)
+            x = (x - x%4);
+    }
+    onYChanged: {
+        if (!is_fill_parent)
+            y = (y - y%4);
+    }
+    onWidthChanged: {
+        right_bottom_rect.x = width - right_bottom_rect.width;
+    }
+    onHeightChanged: {
+        right_bottom_rect.y = height - right_bottom_rect.height;
+    }
 
     Connections {
         id: connections
@@ -126,6 +144,7 @@ Item {
 
 
     Rectangle {
+        id: drag_rect
         anchors.top: parent.top
         anchors.horizontalCenter: parent.horizontalCenter
         height: 10 + border.width*2
@@ -137,32 +156,73 @@ Item {
         MouseArea {
             id: drag_mouse
             anchors.fill: parent
-            drag.target: parent.parent
+            drag.target: is_fill_parent?null:root
             drag.minimumX: -parent.parent.width/2
             drag.minimumY: 0
             drag.threshold: 0
+            property real ctx_mouse_x
+            property real ctx_mouse_y
 
             onPressed: {
                 parent.color = "blue";
                 sys_manager.increase_to_top(root);
+                ctx_mouse_x = mouseX;
+                ctx_mouse_y = mouseY;
             }
             onReleased: {
                 parent.color = theme_color;
             }
+            onDoubleClicked: {
+                is_fill_parent = !is_fill_parent;
+                if (is_fill_parent) {
+                    root.ctx_width = root.width;
+                    root.ctx_height = root.height;
+                    root.ctx_x = root.x;
+                    root.ctx_y = root.y;
+                    sys_manager.fill_parent(root);
+                } else {
+                    root.width = root.ctx_width;
+                    root.height = root.ctx_height;
+                    root.x = root.ctx_x;
+                    root.y = root.ctx_y;
+                }
+            }
+
+            function unfill() {
+                if (is_fill_parent) {
+                    var gap_width = root.width - root.ctx_width;
+                    var gap_height = root.height - root.ctx_height;
+                    root.x = root.x + gap_width/2 + mouseX - drag_rect.width/2;
+                    root.y = root.y + mouseY;
+                    root.width = root.ctx_width;
+                    root.height = root.ctx_height;
+                    is_fill_parent = false;
+                }
+            }
+
+            onMouseXChanged: {
+                if (Math.abs((mouseX - ctx_mouse_x)) > 10)
+                    unfill();
+            }
+
+            onMouseYChanged: {
+                if (Math.abs((mouseX - ctx_mouse_x)) > 10)
+                    unfill();
+            }
         }
     }
     Rectangle {
-        id: right_bototm_rect
+        id: right_bottom_rect
         width: 10 + border.width*2
         height: 10 + border.width*2
         color: theme_color
         x: default_width - width
         y: default_height - height
-        visible: !sys_manager.lock
+        visible: !sys_manager.lock && !root.is_fill_parent
         border.width: is_hide_border?2:0
         border.color: "white"
         MouseArea {
-            id: right_bototm_mouse
+            id: right_bottom_mouse
             anchors.fill: parent
             drag.target: parent
             drag.threshold: 0
@@ -176,10 +236,16 @@ Item {
             }
         }
         onXChanged: {
+            if (is_fill_parent)
+                return;
             x = (x - x%4);
+            root.width = right_bottom_rect.x + right_bottom_rect.width;
         }
         onYChanged: {
+            if (is_fill_parent)
+                return;
             y = (y - y%4);
+            root.height = right_bottom_rect.y + right_bottom_rect.height;
         }
 
     }
@@ -214,7 +280,7 @@ Item {
             title: qsTr("特效")
             width: 80
             MyMenuItem {
-                font_pixel_size: 15
+                font_point_size: theme_font_point_size
                 custom_triggered_action: true
                 width: parent.width
                 property string file_name: "EffectPassThrough.qml.default"
@@ -267,7 +333,7 @@ Item {
             id: effect_menu_component
             MyMenuItem {
                 id: effect_menu_item
-                font_pixel_size: 15
+                font_point_size: theme_font_point_size
                 custom_triggered_action: true
                 width: parent.width
                 property string file_name
@@ -287,7 +353,7 @@ Item {
                 property int index
                 notify_on: (image_index === index)
                 width: (parent?parent.width:80)
-                font_pixel_size: 15
+                font_point_size: theme_font_point_size
                 notify_color: "red"
                 custom_triggered_action: true
 
@@ -358,6 +424,9 @@ Item {
     Component.onCompleted: {
         menu.update_ch_menu();
         menu.update_effect_menu();
+        if (is_fill_parent) {
+            sys_manager.fill_parent(root);
+        }
     }
 
     function refresh() {

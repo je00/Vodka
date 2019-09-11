@@ -49,6 +49,8 @@ public:
         memcpy(data_.data(), data, len);
         length_ = len;
         format_ = format;
+        width_ = width;
+        height_ = height;
     }
     uchar *data() { return data_.data(); }
     int length() { return length_; }
