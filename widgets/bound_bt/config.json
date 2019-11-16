@@ -4,6 +4,10 @@
         {
             "name": "name",
             "value": "双击↓命名"
+        },
+        {
+            "name": "bind",
+            "value": false
         }
     ]
 }

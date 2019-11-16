@@ -1,4 +1,4 @@
-import QtQuick 2.0
+import QtQuick 2.12
 
 import "file:///____source_path____/effects"
 
@@ -15,18 +15,44 @@ Item {
     property bool is_hide_border: is_hide_border_menu.notify_on
     property bool is_show_effect_setting: is_show_effect_setting_menu.notify_on
     property string effect_file: effect_loader.file_name
-    property var parameters: []
     property bool is_fill_parent: ____is_fill_parent____
+    property bool is_fill_parent_: false
     property int ctx_width: ____ctx_width____
     property int ctx_height: ____ctx_height____
     property int ctx_x: ____ctx_x____
     property int ctx_y: ____ctx_y____
+    property var parameters: []
+    property var parent_container
+    states: [
+        State {
+            when: is_fill_parent_
+            ParentChange {
+                target: root
+                parent: parent_container?parent_container:null
+            }
+            AnchorChanges {
+                target: root
+                anchors {
+                    top: parent.top
+                    bottom: parent.bottom
+                    left: parent.left
+                    right: parent.right
+                }
+            }
+        }
+    ]
 
     onXChanged: {
+        if (!enabled)
+            return;
+
         if (!is_fill_parent)
             x = (x - x%4);
     }
     onYChanged: {
+        if (!enabled)
+            return;
+
         if (!is_fill_parent)
             y = (y - y%4);
     }
@@ -39,6 +65,7 @@ Item {
 
     Connections {
         id: connections
+        target: null
         onDataChanged: {
             var parameters = [];
             for (var i = 0; i < target.count; i++) {
@@ -68,10 +95,14 @@ Item {
             if (first_load && file_name === "____effect_file____") {
                 var parameters = [____parameters____];
                 first_load = false;
+                if (item.parameters.count === 0)
+                    return;
                 for (var i = 0; i < parameters.length; i++) {
                     item.parameters.setProperty(i, "value", parameters[i]);
                 }
             }
+            if (item.parameters.count === 0)
+                return;
             connections.target = item.parameters;
         }
     }
@@ -81,6 +112,7 @@ Item {
         anchors.fill: parent
         border.width: (is_hide_border?0:1)
         border.color: "#D0D0D0"
+        color: sys_manager.background_color
 
         MouseArea {
             anchors.fill: parent
@@ -157,7 +189,7 @@ Item {
             id: drag_mouse
             anchors.fill: parent
             drag.target: is_fill_parent?null:root
-            drag.minimumX: -parent.parent.width/2
+            drag.minimumX: 0
             drag.minimumY: 0
             drag.threshold: 0
             property real ctx_mouse_x
@@ -173,41 +205,24 @@ Item {
                 parent.color = theme_color;
             }
             onDoubleClicked: {
-                is_fill_parent = !is_fill_parent;
-                if (is_fill_parent) {
-                    root.ctx_width = root.width;
-                    root.ctx_height = root.height;
-                    root.ctx_x = root.x;
-                    root.ctx_y = root.y;
+                if (!is_fill_parent) {
                     sys_manager.fill_parent(root);
                 } else {
-                    root.width = root.ctx_width;
-                    root.height = root.ctx_height;
-                    root.x = root.ctx_x;
-                    root.y = root.ctx_y;
+                    sys_manager.unfill_parent(root);
                 }
             }
-
-            function unfill() {
-                if (is_fill_parent) {
-                    var gap_width = root.width - root.ctx_width;
-                    var gap_height = root.height - root.ctx_height;
-                    root.x = root.x + gap_width/2 + mouseX - drag_rect.width/2;
-                    root.y = root.y + mouseY;
-                    root.width = root.ctx_width;
-                    root.height = root.ctx_height;
-                    is_fill_parent = false;
-                }
-            }
-
             onMouseXChanged: {
-                if (Math.abs((mouseX - ctx_mouse_x)) > 10)
-                    unfill();
+                if (!is_fill_parent)
+                    return;
+                if (Math.abs((mouseX - ctx_mouse_x)) > 10 && is_fill_parent)
+                    sys_manager.unfill_parent(root, mouseX, mouseY, drag_rect.width);
             }
 
             onMouseYChanged: {
-                if (Math.abs((mouseX - ctx_mouse_x)) > 10)
-                    unfill();
+                if (!is_fill_parent)
+                    return;
+                if (Math.abs((mouseY - ctx_mouse_y)) > 10 && is_fill_parent)
+                    sys_manager.unfill_parent(root, mouseX, mouseY, drag_rect.width);
             }
         }
     }

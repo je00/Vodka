@@ -1,4 +1,4 @@
-import Qt3D.Render 2.0
+import Qt3D.Render 2.12
 
 Mesh {
 //    id: cube_mesh

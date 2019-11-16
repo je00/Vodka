@@ -2,6 +2,10 @@
     "name": "滑动条",
     "parameters": [
         {
+            "name": "bind",
+            "value": false
+        },
+        {
             "name": "name",
             "value": "SYS_GIVE"
         },

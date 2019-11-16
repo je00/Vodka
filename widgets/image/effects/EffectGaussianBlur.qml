@@ -50,7 +50,7 @@
 
 // Based on http://www.geeks3d.com/20100909/shader-library-gaussian-blur-post-processing-filter-in-glsl/
 
-import QtQuick 2.0
+import QtQuick 2.12
 import QtQuick.Controls 1.4
 
 Item {

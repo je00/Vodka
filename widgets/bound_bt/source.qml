@@ -1,5 +1,5 @@
-import QtQuick 2.5;
-import QtQuick.Controls 2.4
+import QtQuick 2.12;
+import QtQuick.Controls 2.12
 
 Rectangle {
     id: bound_bt
@@ -12,22 +12,44 @@ Rectangle {
     x: ____x____
     y: ____y____
     property string path:  "bound_bt"
+    property bool bind: ____bind____
     property string name: bound_bt_name.text
     property bool editing: false
-    property bool bind: false
     property var command: null
+    property bool fix_size: true
+
+    Component.onCompleted: {
+        if (bind)
+            onBind();
+    }
+
     onXChanged: {
+        if (!enabled)
+            return;
         x = (x - x%4);
     }
     onYChanged: {
+        if (!enabled)
+            return;
         y = (y - y%4);
     }
 
+    Connections {
+        target: sys_manager
+        onName_changed: {
+            if (bound_bt.command)
+                bound_bt_name.text = bound_bt.command.name;
+        }
+    }
+
     MouseArea {
+        id: bt_mouse
         anchors.fill: parent
         hoverEnabled: true
         propagateComposedEvents: true
         onEntered: {
+            if (editing)
+                return;
 //            parent.border.width = 2;
 //            parent.border.color = theme_color;
             parent.color = "blue";
@@ -46,6 +68,8 @@ Rectangle {
             bound_bt_name.color =  "white ";
             bound_bt_name.font.bold = true;
             if (!command) {
+                if (bind)
+                    onUnbind();
                 sys_manager.send_string( "" + bound_bt_name.text +  ":1\n");
             } else if (command.support_arg) {
                 sys_manager.send_command(command, 1);
@@ -56,13 +80,12 @@ Rectangle {
             bound_bt_name.color = "white";
             bound_bt_name.font.bold = true;
             if (!command) {
+                if (bind)
+                    onUnbind();
                 sys_manager.send_string( "" + bound_bt_name.text +  ":0\n");
             } else if (command.support_arg) {
                 sys_manager.send_command(command, 0);
-            }
-        }
-        onClicked: {
-            if (command && !command.support_arg) {
+            } else {
                 sys_manager.send_command(command);
             }
         }
@@ -82,15 +105,17 @@ Rectangle {
             anchors.fill: parent
             drag.target: bound_bt
             drag.axis: (!sys_manager.lock)?Drag.XAndYAxis:Drag.None
-            drag.minimumY: -bound_bt.height/2
-            drag.maximumY: ctrl_panel.height - bound_bt.height/2
-            drag.minimumX: -bound_bt.width/2
-            drag.maximumX: root.width - bound_bt.width/2 -16
+            drag.minimumY: 0
+            drag.minimumX: 0
             drag.threshold: 0
 
             onDoubleClicked: {
+                bound_bt_name.cursorPosition = bound_bt_name.text.length;
                 editing = !editing;
-                bound_bt_name.focus = !bound_bt_name.focus;
+                if (bound_bt_name.focus)
+                    bound_bt_name.focus = false;
+                else
+                    sys_manager.focus_on(bound_bt_name);
                 if (editing)
                     bound_bt_name.selectAll();
                 else
@@ -173,7 +198,8 @@ Rectangle {
         }
     }
     function onBind() {
-        var command = sys_manager.find_command_obj_by_name(bound_bt.name);
+        bound_bt_name.focus = false;
+        var command = sys_manager.find_command_by_name(bound_bt.name);
         if (command) {
             bind = true;
             bound_bt.command = command;
@@ -183,6 +209,7 @@ Rectangle {
     }
 
     function onUnbind() {
+        bound_bt_name.focus = false;
         bind = false;
         bound_bt.command = null;
     }

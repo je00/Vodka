@@ -1,15 +1,19 @@
-import QtQuick 2.5
-import QtQuick.Controls 2.4
+import QtQuick 2.12
+import QtQuick.Controls 2.12
 import QtQuick.Extras 1.4
 
 Rectangle {
     id: light
     property string path:  "light"
+    property bool bind: ____bind____
+    property bool value_bind: false
     property string name: light_name.text
     property bool value_visable: ____value_visable____
     property real bottom_value: parseFloat(light_bottom_value.text)
     property real top_value: parseFloat(light_top_value.text)
     property var command: null
+    property bool fix_size: true
+
     x: ____x____
     y: ____y____
     height: 68
@@ -18,20 +22,37 @@ Rectangle {
     radius: 5
     border.color: "#D0D0D0"
     border.width: sys_manager.lock?0:1
+    Component.onCompleted: {
+        if (bind)
+            onBind();
+    }
+
     onXChanged: {
+        if (!enabled)
+            return;
+
         x = (x - x%4)
     }
     onYChanged: {
+        if (!enabled)
+            return;
+
         y = (y - y%4)
     }
+    Connections {
+        target: sys_manager
+        onName_changed: {
+            if (light.command)
+                light_name.text = light.command.name;
+        }
+    }
+
     MouseArea {
         anchors.fill: parent
         drag.target: parent
         drag.axis: Drag.XAndYAxis
-        drag.minimumY: -light.height/2
-        drag.maximumY: ctrl_panel.height - light.height/2
-        drag.minimumX: -light.width/2
-        drag.maximumX: root.width - light.width/2 -16
+        drag.minimumY: 0
+        drag.minimumX: 0
         drag.threshold: 0
         hoverEnabled: true
         enabled: !sys_manager.lock
@@ -56,7 +77,7 @@ Rectangle {
         MouseArea {
             anchors.fill: parent
             onClicked: {
-                if (!light_bind.value_bind) {
+                if (!value_bind) {
                     if (light.bottom_value === light.top_value) {
                         parent.active = !parent.active;
                         light_value.text = ((parent.active)?"1":"0");
@@ -76,9 +97,11 @@ Rectangle {
                             parent.color = "red";
                         }
                     }
-                    if (!command)
+                    if (!command) {
+                        if (bind)
+                            onUnbind();
                         sys_manager.send_string("" + light_name.text + ":" + light_value.text + "\n");
-                    else {
+                    } else {
                         sys_manager.send_command(command, parseFloat(light_value.text));
                     }
                 }
@@ -96,9 +119,11 @@ Rectangle {
                             s = "3";
                         }
                     }
-                    if (!command)
+                    if (!command) {
+                        if (bind)
+                            onUnbind();
                         sys_manager.send_string("" + light_name.text + ":" + s + "\n");
-                    else {
+                    } else {
                         sys_manager.send_command(command, parseFloat(s));
                     }
                 }
@@ -107,7 +132,6 @@ Rectangle {
     }
     Text {
         id: light_delete
-        property bool bind: false
         color: "blue"
         font.family: theme_font
         font.pointSize: theme_font_point_size
@@ -126,8 +150,6 @@ Rectangle {
     }
     Text {
         id: light_bind
-        property bool bind: false
-        property bool value_bind: false
         color: "blue"
         font.family: theme_font
         font.pointSize: theme_font_point_size
@@ -139,7 +161,7 @@ Rectangle {
         MouseArea {
             anchors.fill: parent
             onClicked: {
-                if (light_bind.bind == false)
+                if (bind == false)
                     light.onBind();
                 else
                     light.onUnbind();
@@ -147,28 +169,27 @@ Rectangle {
         }
     }
     function onBind() {
-        var rt_value = sys_manager.find_rt_value_obj_by_name(light_name.text);
-        var line = sys_manager.find_line_obj_by_name(light_name.text);
-        var command = sys_manager.find_command_obj_by_name(light_name.text);
+        var settings_obj = sys_manager.find_settings_obj_by_name(light_name.text);
+        var command = sys_manager.find_command_by_name(light_name.text);
 
-        if (!((rt_value && line) || command)) {
+        if (!(settings_obj || command)) {
             onUnbind();
             return;
         }
-        light_bind.bind = true;
+        bind = true;
 
-        if (rt_value && line) {
-            light_bind.value_bind = true;
-            light_value.text = Qt.binding(function() { return "" + rt_value.value; })
-            light_value.color = line.color;
-            light_name.color = line.color;
+        if (settings_obj) {
+            value_bind = true;
+            light_value.text = Qt.binding(function() { return settings_obj.value.toFixed(5); })
+            light_value.color = Qt.binding(function() { return settings_obj.color });
+            light_name.color = Qt.binding(function() { return settings_obj.color });
             if (light.bottom_value === light.top_value) {
-                light_bt.color = Qt.binding(function() { return line.color });
-                light_bt.active = Qt.binding(function() { return (rt_value.value>=light.top_value)?true:false; } )
+                light_bt.color = Qt.binding(function() { return settings_obj.color });
+                light_bt.active = Qt.binding(function() { return (settings_obj.value>=light.top_value)?true:false; } )
             } else if (light.bottom_value < light.top_value) {
                 light_bt.color = Qt.binding(function() {
-                    if (rt_value.value<=light.bottom_value) return "red";
-                    else if (rt_value.value > light.top_value) return "yellow";
+                    if (settings_obj.value<=light.bottom_value) return "red";
+                    else if (settings_obj.value > light.top_value) return "yellow";
                     else return "green";
                 });
                 light_bt.active = true;
@@ -180,9 +201,10 @@ Rectangle {
         else
             light.command = null;
     }
+
     function onUnbind() {
-        light_bind.bind = false;
-        light_bind.value_bind = false;
+        bind = false;
+        value_bind = false;
         light_bt.color = "blue";
         light_value.text = "0";
         light_value.color = "black";
@@ -192,7 +214,6 @@ Rectangle {
     }
     Text {
         id: light_value_show
-        property bool bind: false
         //                color: bind?"red":"black"
         color: "blue"
         //                font.underline: true
@@ -219,7 +240,7 @@ Rectangle {
         anchors.bottomMargin: 2
         text: "____name____"
 
-        enabled: !light_bind.bind
+        enabled: !bind
         font.family: theme_font
         font.pixelSize: 15
         font.bold: theme_font_bold
@@ -238,7 +259,7 @@ Rectangle {
         anchors.rightMargin: 3
         text: "____bottom_value____"
         visible: !sys_manager.lock
-        enabled: !light_bind.bind
+        enabled: !bind
         font.family: theme_font
         font.pointSize: theme_font_point_size
         font.bold: theme_font_bold
@@ -252,7 +273,7 @@ Rectangle {
         anchors.leftMargin: 3
         text: "____top_value____"
         visible: !sys_manager.lock
-        enabled: !light_bind.bind
+        enabled: !bind
         font.family: theme_font
         font.pointSize: theme_font_point_size
         font.bold: theme_font_bold

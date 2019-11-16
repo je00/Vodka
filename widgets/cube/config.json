@@ -2,6 +2,10 @@
     "name": "立方",
     "parameters": [
         {
+            "name": "bind",
+            "value": false
+        },
+        {
             "name": "q0_name",
             "value": "I0"
         },

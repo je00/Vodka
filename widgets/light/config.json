@@ -2,6 +2,10 @@
     "name": "状态灯",
     "parameters": [
         {
+            "name": "bind",
+            "value": false
+        },
+        {
             "name": "name",
             "value": "SYS_GIVE"
         },

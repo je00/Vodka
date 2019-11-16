@@ -1,24 +1,25 @@
 ﻿import QtQuick 2.12
 //import QtCanvas3D 1.0
-import Qt3D.Core 2.0
-import Qt3D.Render 2.0
-import QtQuick.Scene3D 2.0
+import Qt3D.Core 2.12
+import Qt3D.Render 2.12
+import QtQuick.Scene3D 2.12
 import Qt3D.Extras 2.12
-import QtQuick.Controls 2.5
+import QtQuick.Controls 2.12
 import "file:///____widgets_path____/common"
 import "file:///____source_path____/"
 
 Rectangle {
     id: root
+    property bool bind: ____bind____
     property string path: "cube"
     border.width: sys_manager.lock?0:1
     border.color: "#d0d0d0"
     color: "transparent"
     x: ____x____
     y: ____y____
+    property bool not_support_change_window_: true
     property int default_width: ____width____
     property int default_height: ____height____
-    property bool bind: false
     property string q0_name: q0_input.text
     property string q1_name: q1_input.text
     property string q2_name: q2_input.text
@@ -30,6 +31,7 @@ Rectangle {
     property bool quaternion_mode: true
     property string cube_color: "____cube_color____"
     property bool is_fill_parent: ____is_fill_parent____
+    property bool is_fill_parent_: false
     property int ctx_width: ____ctx_width____
     property int ctx_height: ____ctx_height____
     property int ctx_x: ____ctx_x____
@@ -64,161 +66,49 @@ Rectangle {
                                            ____position_offset_x____,
                                            ____position_offset_y____,
                                            ____position_offset_z____)
-    //                                source: "file:///____source_path____/cube.stl"
     property vector3d center_point: Qt.vector3d(
                                         ____center_point_x____,
                                         ____center_point_y____,
                                         ____center_point_z____)
+    property var parent_container
+    states: [
+        State {
+            when: is_fill_parent_
+            ParentChange {
+                target: root
+                parent: parent_container?parent_container:null
+            }
+            AnchorChanges {
+                target: root
+                anchors {
+                    top: parent.top
+                    bottom: parent.bottom
+                    left: parent.left
+                    right: parent.right
+                }
+            }
+        }
+    ]
 
     Component.onCompleted: {
         if (is_fill_parent) {
             sys_manager.fill_parent(root);
         }
+        if (bind)
+            onBind();
     }
 
     onModel_pathChanged: {
         cube_entity.update_model();
     }
 
-    function reset_mesh() {
-        x_length_world = 100;
-        y_length_world = 100;
-        z_length_world = 100;
-        x_length = 100;
-        y_length = 100;
-        z_length = 100;
-        cube_transform.scale = 1;
-        center_point = Qt.vector3d(0, 0, 0);
-        position_offset = Qt.vector3d(0, 0, 0);
-        cube_rotation_offset_transform.rotation = Qt.quaternion(1, 0, 0, 0);
-        cube_transform.translation = Qt.vector3d(0, 0, 0);
-    }
-
-    function update_mesh_world_length() {
-        var quaternion = cube_rotation_offset_transform.rotation;
-
-        var list = sys_manager.three_tools.bounding_positioin(cube_entity.obj_mesh,
-                                                              Qt.vector4d(quaternion.x,
-                                                                          quaternion.y,
-                                                                          quaternion.z,
-                                                                          quaternion.scalar
-                                                                          ),
-                                                              position_offset
-                                                              );
-        if (list.lenght === 0)
-            return;
-        x_length_world = list[6];
-        y_length_world = list[7];
-        z_length_world = list[8];
-    }
-
-    function center_mesh() {
-        var quaternion = cube_rotation_offset_transform.rotation;
-
-        var list = sys_manager.three_tools.bounding_positioin(cube_entity.obj_mesh,
-                                                              Qt.vector4d(quaternion.x,
-                                                                          quaternion.y,
-                                                                          quaternion.z,
-                                                                          quaternion.scalar
-                                                                          ),
-                                                              Qt.vector3d(0, 0, 0)
-                                                              );
-        if (list.lenght === 0)
-            return;
-
-        x_length = list[3];
-        y_length = list[4];
-        z_length = list[5];
-        x_length_world = list[6];
-        y_length_world = list[7];
-        z_length_world = list[8];
-
-        var max_length = Math.max(x_length,
-                                  y_length,
-                                  z_length);
-
-        cube_transform.scale = 150/max_length;
-        position_offset = Qt.vector3d(0, 0, 0);
-        center_point = Qt.vector3d(list[0], list[1], list[2]);
-        cube_transform.translation = center_point.times(-1).plus(
-                    position_offset).times(cube_transform.scale);
-
-    }
-
-    //    function update_model() {
-
-    //    }
-
-    function cross_product(q1, q2) {
-        var result = Qt.quaternion(
-                    q1.scalar*q2.scalar - q1.x*q2.x      - q1.y*q2.y - q1.z*q2.z,
-                    q1.scalar*q2.x      + q1.x*q2.scalar + q1.y*q2.z - q1.z*q2.y,
-                    q1.scalar*q2.y      + q1.y*q2.scalar + q1.z*q2.x - q1.x*q2.z,
-                    q1.scalar*q2.z      + q1.z*q2.scalar + q1.x*q2.y - q1.y*q2.x
-                    );
-
-        return result;
-
-    }
-
-    // called by color_dialog
-    function set_color(color) {
-        cube_color = "" + color;
-    }
-
-    onXChanged: {
-        if (!is_fill_parent)
-            x = (x - x%4);
-    }
-    onYChanged: {
-        if (!is_fill_parent)
-            y = (y - y%4);
-    }
-
-    onWidthChanged: {
-        right_bottom_rect.x = width - right_bottom_rect.width;
-    }
-    onHeightChanged: {
-        right_bottom_rect.y = height - right_bottom_rect.height;
-    }
-
-    function update_cube_rotate() {
-        if (!bind)
-            return;
-        if (!quaternion_mode) {
-            if (true_angle_else_radian) {
-                obj_transform.rotationX = q0_value;
-                obj_transform.rotationY = q1_value;
-                obj_transform.rotationZ = q2_value;
-            } else {
-                obj_transform.rotationX = q0_value*180/Math.PI;
-                obj_transform.rotationY = q1_value*180/Math.PI;
-                obj_transform.rotationZ = q2_value*180/Math.PI;
-            }
-        } else {
-            obj_transform.rotation = Qt.quaternion(q0_value, q1_value, q2_value, q3_value);
-        }
-    }
-
-    onQ0_valueChanged: {
-        update_cube_rotate();
-    }
-    onQ1_valueChanged: {
-        update_cube_rotate();
-    }
-    onQ2_valueChanged: {
-        update_cube_rotate();
-    }
-    onQ3_valueChanged: {
-        update_cube_rotate();
-    }
-
-
     Scene3D {
         id: scene3d
         anchors.fill: parent
         aspects: "input"
         visible: (height > 0 && width > 0)
+        Component.onCompleted: {
+        }
 
         Entity {
             //            components: [ root_transform ]
@@ -254,6 +144,7 @@ Rectangle {
             Entity {
                 id: sceneRoot
                 components: [ root_transform ]
+
                 Transform {
                     id: root_transform
                     scale: 1
@@ -469,6 +360,147 @@ Rectangle {
         }
     }
 
+    function reset_mesh() {
+        x_length_world = 100;
+        y_length_world = 100;
+        z_length_world = 100;
+        x_length = 100;
+        y_length = 100;
+        z_length = 100;
+        cube_transform.scale = 1;
+        center_point = Qt.vector3d(0, 0, 0);
+        position_offset = Qt.vector3d(0, 0, 0);
+        cube_rotation_offset_transform.rotation = Qt.quaternion(1, 0, 0, 0);
+        cube_transform.translation = Qt.vector3d(0, 0, 0);
+    }
+
+    function update_mesh_world_length() {
+        var quaternion = cube_rotation_offset_transform.rotation;
+
+        var list = sys_manager.three_tools.bounding_positioin(cube_entity.obj_mesh,
+                                                              Qt.vector4d(quaternion.x,
+                                                                          quaternion.y,
+                                                                          quaternion.z,
+                                                                          quaternion.scalar
+                                                                          ),
+                                                              position_offset
+                                                              );
+        if (list.lenght === 0)
+            return;
+        x_length_world = list[6];
+        y_length_world = list[7];
+        z_length_world = list[8];
+    }
+
+    function center_mesh() {
+        var quaternion = cube_rotation_offset_transform.rotation;
+
+        var list = sys_manager.three_tools.bounding_positioin(cube_entity.obj_mesh,
+                                                              Qt.vector4d(quaternion.x,
+                                                                          quaternion.y,
+                                                                          quaternion.z,
+                                                                          quaternion.scalar
+                                                                          ),
+                                                              Qt.vector3d(0, 0, 0)
+                                                              );
+        if (list.lenght === 0)
+            return;
+
+        x_length = list[3];
+        y_length = list[4];
+        z_length = list[5];
+        x_length_world = list[6];
+        y_length_world = list[7];
+        z_length_world = list[8];
+
+        var max_length = Math.max(x_length,
+                                  y_length,
+                                  z_length);
+
+        cube_transform.scale = 150/max_length;
+        position_offset = Qt.vector3d(0, 0, 0);
+        center_point = Qt.vector3d(list[0], list[1], list[2]);
+        cube_transform.translation = center_point.times(-1).plus(
+                    position_offset).times(cube_transform.scale);
+
+    }
+
+    //    function update_model() {
+
+    //    }
+
+    function cross_product(q1, q2) {
+        var result = Qt.quaternion(
+                    q1.scalar*q2.scalar - q1.x*q2.x      - q1.y*q2.y - q1.z*q2.z,
+                    q1.scalar*q2.x      + q1.x*q2.scalar + q1.y*q2.z - q1.z*q2.y,
+                    q1.scalar*q2.y      + q1.y*q2.scalar + q1.z*q2.x - q1.x*q2.z,
+                    q1.scalar*q2.z      + q1.z*q2.scalar + q1.x*q2.y - q1.y*q2.x
+                    );
+
+        return result;
+
+    }
+
+    // called by color_dialog
+    function set_color(color) {
+        cube_color = "" + color;
+    }
+
+    onXChanged: {
+        if (!enabled)
+            return;
+
+        if (!is_fill_parent)
+            x = (x - x%4);
+    }
+    onYChanged: {
+        if (!enabled)
+            return;
+
+        if (!is_fill_parent)
+            y = (y - y%4);
+    }
+
+    onWidthChanged: {
+        right_bottom_rect.x = width - right_bottom_rect.width;
+    }
+    onHeightChanged: {
+        right_bottom_rect.y = height - right_bottom_rect.height;
+    }
+
+    function update_cube_rotate() {
+        if (!bind)
+            return;
+        if (!quaternion_mode) {
+            if (true_angle_else_radian) {
+                obj_transform.rotationX = q0_value;
+                obj_transform.rotationY = q1_value;
+                obj_transform.rotationZ = q2_value;
+            } else {
+                obj_transform.rotationX = q0_value*180/Math.PI;
+                obj_transform.rotationY = q1_value*180/Math.PI;
+                obj_transform.rotationZ = q2_value*180/Math.PI;
+            }
+        } else {
+            obj_transform.rotation = Qt.quaternion(q0_value, q1_value, q2_value, q3_value);
+        }
+    }
+
+    onQ0_valueChanged: {
+        update_cube_rotate();
+    }
+    onQ1_valueChanged: {
+        update_cube_rotate();
+    }
+    onQ2_valueChanged: {
+        update_cube_rotate();
+    }
+    onQ3_valueChanged: {
+        update_cube_rotate();
+    }
+
+    default property alias content: root.children
+
     MouseArea {
         anchors.fill: parent
         property int start_x: -999
@@ -601,7 +633,7 @@ Rectangle {
         MouseArea {
             anchors.fill: parent
             drag.target: is_fill_parent?null:root
-            drag.minimumX: -parent.parent.width/2
+            drag.minimumX: 0
             drag.minimumY: 0
             drag.threshold: 0
             property real ctx_mouse_x
@@ -619,40 +651,25 @@ Rectangle {
             }
 
             onDoubleClicked: {
-                is_fill_parent = !is_fill_parent;
-                if (is_fill_parent) {
-                    root.ctx_width = root.width;
-                    root.ctx_height = root.height;
-                    root.ctx_x = root.x;
-                    root.ctx_y = root.y;
+                if (!is_fill_parent) {
                     sys_manager.fill_parent(root);
                 } else {
-                    root.width = root.ctx_width;
-                    root.height = root.ctx_height;
-                    root.x = root.ctx_x;
-                    root.y = root.ctx_y;
+                    sys_manager.unfill_parent(root);
                 }
             }
 
-            function unfill(trigger_by_double_click) {
-                if (is_fill_parent) {
-                    var gap_width = root.width - root.ctx_width;
-                    var gap_height = root.height - root.ctx_height;
-                    root.x = root.x + gap_width/2 + mouseX - drag_rect.width/2;
-                    root.y = root.y + mouseY;
-                    root.width = root.ctx_width;
-                    root.height = root.ctx_height;
-                    is_fill_parent = false;
-                }
-            }
             onMouseXChanged: {
-                if (Math.abs(mouseX - ctx_mouse_x) > 10)
-                    unfill();
+                if (!is_fill_parent)
+                    return;
+                if (Math.abs((mouseX - ctx_mouse_x)) > 10 && is_fill_parent)
+                    sys_manager.unfill_parent(root, mouseX, mouseY, drag_rect.width);
             }
 
             onMouseYChanged: {
-                if (Math.abs(mouseY - ctx_mouse_y) > 10)
-                    unfill();
+                if (!is_fill_parent)
+                    return;
+                if (Math.abs((mouseY - ctx_mouse_y)) > 10 && is_fill_parent)
+                    sys_manager.unfill_parent(root, mouseX, mouseY, drag_rect.width);
             }
         }
     }
@@ -817,22 +834,22 @@ Rectangle {
                             angle_input.focus = false;
                         }
                     }
-                    Connections {
-                        target: cube_rotation_offset_transform
-                        onRotationXChanged: {
-                            if (action_id === 0)
-                                angle_input.text = cube_rotation_offset_transform.rotationX;
-                        }
-                        onRotationYChanged: {
-                            if (action_id === 1)
-                                angle_input.text = cube_rotation_offset_transform.rotationY;
-                        }
-                        onRotationZChanged: {
-                            if (action_id === 2)
-                                angle_input.text = cube_rotation_offset_transform.rotationZ;
-                        }
+//                    Connections {
+//                        target: cube_rotation_offset_transform
+//                        onRotationXChanged: {
+//                            if (action_id === 0)
+//                                angle_input.text = cube_rotation_offset_transform.rotationX;
+//                        }
+//                        onRotationYChanged: {
+//                            if (action_id === 1)
+//                                angle_input.text = cube_rotation_offset_transform.rotationY;
+//                        }
+//                        onRotationZChanged: {
+//                            if (action_id === 2)
+//                                angle_input.text = cube_rotation_offset_transform.rotationZ;
+//                        }
 
-                    }
+//                    }
 
                     onWheel: {
                         var sign = (value < 0)?-1:1;
@@ -962,8 +979,8 @@ Rectangle {
                             position_offset.z = parseFloat(text);
                             break;
                         }
-                        cube_transform.translation = center_point.times(-1).plus(
-                                    position_offset).times(cube_transform.scale);
+//                        cube_transform.translation = center_point.times(-1).plus(
+//                                    position_offset).times(cube_transform.scale);
 
                     }
                     Component.onCompleted: {
@@ -1297,24 +1314,26 @@ Rectangle {
     }
 
     function onBind() {
-        var rt_value = [];
-        rt_value[0] = sys_manager.find_rt_value_obj_by_name(q0_input.text);
-        rt_value[1] = sys_manager.find_rt_value_obj_by_name(q1_input.text);
-        rt_value[2] = sys_manager.find_rt_value_obj_by_name(q2_input.text);
-        rt_value[3] = sys_manager.find_rt_value_obj_by_name(q3_input.text);
+        var settings_obj_list = [];
+        settings_obj_list[0] = sys_manager.find_settings_obj_by_name(q0_input.text);
+        settings_obj_list[1] = sys_manager.find_settings_obj_by_name(q1_input.text);
+        settings_obj_list[2] = sys_manager.find_settings_obj_by_name(q2_input.text);
+        settings_obj_list[3] = sys_manager.find_settings_obj_by_name(q3_input.text);
 
-        if (rt_value[0] && rt_value[1] && rt_value[2]) {
-            q0_value = Qt.binding(function() { return rt_value[0].value } );
-            q1_value = Qt.binding(function() { return rt_value[1].value } );
-            q2_value = Qt.binding(function() { return rt_value[2].value } );
+
+        if (settings_obj_list[0] && settings_obj_list[1] && settings_obj_list[2]) {
+            q0_value = Qt.binding(function() { return settings_obj_list[0].value } );
+            q1_value = Qt.binding(function() { return settings_obj_list[1].value } );
+            q2_value = Qt.binding(function() { return settings_obj_list[2].value } );
             bind = true;
         }
-        if (rt_value[3]) {
-            q3_value = Qt.binding(function() { return rt_value[3].value } );
+        if (settings_obj_list[3]) {
+            q3_value = Qt.binding(function() { return settings_obj_list[3].value } );
             quaternion_mode = true;
         } else {
             quaternion_mode = false;
         }
+        update_cube_rotate();
     }
     function onUnbind() {
         bind = false;
