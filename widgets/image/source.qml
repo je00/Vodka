@@ -390,7 +390,7 @@ Item {
                             );
             }
             while ((ch_menu.count) < sys_manager.image_count) {
-                ch_menu.addItem(ch_menu_component.createObject(ch_menu));
+                ch_menu.addItem(ch_menu_component.createObject(ch_menu.contentItem));
             }
             var start = 0;
             var items = ch_menu.contentData;
@@ -408,7 +408,7 @@ Item {
                         file_name.substring(0, 6) === "Effect" &&
                         file_name.substring(file_name.length-4, file_name.length) === ".qml") {
                     var name = file_name.substring(6, file_name.length-4);
-                    var item = effect_menu_component.createObject(effect_menu);
+                    var item = effect_menu_component.createObject(effect_menu.contentItem);
                     effect_menu.addItem(item);
                     item.show_text = name;
                     item.file_name = file_name;
