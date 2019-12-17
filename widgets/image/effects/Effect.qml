@@ -49,7 +49,9 @@
 ****************************************************************************/
 
 import QtQuick 2.12
-import QtQuick.Controls 1.4
+import QtQuick.Controls 1.4 as QQC_1_4
+import QtQuick.Controls 2.5
+import QtGraphicalEffects 1.13
 
 ShaderEffect {
     id: root
@@ -62,6 +64,8 @@ ShaderEffect {
     property string fragmentShaderFilename
     property string vertexShaderFilename
     property bool is_show_setting: true
+    property var appTheme
+    property var tips_component: undefined
 
     QtObject {
         id: d
@@ -91,7 +95,6 @@ ShaderEffect {
         var shader = sys_manager.file_reader.read();
         if (shader.length > 0)
             vertexShader = shader;
-
     }
 
     Rectangle {
@@ -101,21 +104,36 @@ ShaderEffect {
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.bottom: parent.bottom
-        height: parameters_listview.count * 30
+        height: parameters_listview.count *
+                appTheme?appTheme.applyVScale(30):30
 
         ListView {
             id: parameters_listview
             anchors.fill: parent
             visible: is_show_setting
             model: parameters
-            //        contentHeight: 50
-            //        contentWidth: 200
+            interactive: false
             verticalLayoutDirection: ListView.BottomToTop
-            delegate: Rectangle{
-                height: 30
+            delegate: Rectangle {
+                id: parameter_rect
+                height: appTheme?appTheme.applyVScale(30):30
                 anchors.left: parent.left
                 anchors.right: parent.right
                 color: "transparent"
+
+                Loader {
+                    sourceComponent: root.tips_component
+                    active: parameter_slider.pressed ||
+                            parameter_slider.hovered
+                    onLoaded: {
+                        item.parent = parameter_rect;
+                        item.text = Qt.binding(function(){
+                            return model.name + ":" + model.value.toFixed(2);
+                        });
+                        item.delay = 0;
+                        item.visible = true;
+                    }
+                }
 
                 Rectangle {
                     anchors.fill: parent
@@ -123,23 +141,15 @@ ShaderEffect {
                     opacity: 0.6
                 }
 
-                Text {
-                    id: parameter_name
-                    anchors.left: parent.left
-                    font.pixelSize: 15
-                    font.family: theme_font
-                    text: name
-                    anchors.verticalCenter: parent.verticalCenter
-//                    width: 70
-                }
-
-
-                Slider {
+                QQC_1_4.Slider {
+                    id: parameter_slider
+                    stepSize: 0.01
                     value: model.value
-                    anchors.left: parameter_name.right
-                    anchors.leftMargin: 2
-                    anchors.right: parent.right
-                    anchors.verticalCenter: parent.verticalCenter
+                    anchors {
+                        left: parent.left
+                        right: parent.right
+                        verticalCenter: parent.verticalCenter
+                    }
                     onValueChanged: {
                         parameters.setProperty(index, "value", value);
                     }

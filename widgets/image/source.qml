@@ -2,65 +2,35 @@ import QtQuick 2.12
 
 import "file:///____source_path____/effects"
 
-Item {
+ResizableRectangle {
     id: root
-    x: ____x____
-    y: ____y____
+    width: appTheme.applyHScale(226)
+    height: appTheme.applyHScale(226)
+    border.width: (is_hide_border?0:1)
+    border.color: "#D0D0D0"
     property string path:  "image"
-    property string title: title_input.text
-    property int image_index: ____image_index____
-    property int default_width: ____width____
-    property int default_height: ____height____
-    property bool is_hide_name: is_hide_name_menu.notify_on
-    property bool is_hide_border: is_hide_border_menu.notify_on
-    property bool is_show_effect_setting: is_show_effect_setting_menu.notify_on
+    property string title: "image"
+    property int img_index: -1
+    property int default_width: 300
+    property int default_height: 300
+    property bool is_hide_name: false
+    property bool is_hide_border: false
+    property bool is_show_effect_setting: true
     property string effect_file: effect_loader.file_name
-    property bool is_fill_parent: ____is_fill_parent____
-    property bool is_fill_parent_: false
-    property int ctx_width: ____ctx_width____
-    property int ctx_height: ____ctx_height____
-    property int ctx_x: ____ctx_x____
-    property int ctx_y: ____ctx_y____
     property var parameters: []
     property var parent_container
-    states: [
-        State {
-            when: is_fill_parent_
-            ParentChange {
-                target: root
-                parent: parent_container?parent_container:null
-            }
-            AnchorChanges {
-                target: root
-                anchors {
-                    top: parent.top
-                    bottom: parent.bottom
-                    left: parent.left
-                    right: parent.right
-                }
-            }
+    tips_text: qsTr("双击可全屏，右键可弹出设置菜单")
+
+    onClicked: {
+        if (mouse.button === Qt.RightButton)
+            menu.popup();
+    }
+
+    Component {
+        id: tips_component
+        MyToolTip {
+
         }
-    ]
-
-    onXChanged: {
-        if (!enabled)
-            return;
-
-        if (!is_fill_parent)
-            x = (x - x%4);
-    }
-    onYChanged: {
-        if (!enabled)
-            return;
-
-        if (!is_fill_parent)
-            y = (y - y%4);
-    }
-    onWidthChanged: {
-        right_bottom_rect.x = width - right_bottom_rect.width;
-    }
-    onHeightChanged: {
-        right_bottom_rect.y = height - right_bottom_rect.height;
     }
 
     Connections {
@@ -75,52 +45,14 @@ Item {
         }
     }
 
-    Loader {
-        id: effect_loader
-        property string file_name: "____effect_file____"
-        property bool first_load: true
-        source: "file:///____source_path____/effects/" + ((file_name.length>0)?file_name:"EffectPassThrough.qml.default")
-        onSourceChanged: {
-            item.targetWidth = image.width;
-            item.targetHeight = image.height;
-            item.fragmentShaderFilename = "____source_path____/shaders/" + item.fragmentShaderFilename;
-            item.vertexShaderFilename = "____source_path____/shaders/" + item.vertexShaderFilename;
-            item.parent = image_rect;
-            item.anchors.fill = image;
-//            item.anchors.topMargin = (image.height - image.paintedHeight)/2;
-//            item.anchors.leftMargin = (iamge.width - image.paintedWidth)/2;
-            item.source = theSource;
-            item.dividerValue = 1;
-            item.is_show_setting = Qt.binding(function() { return is_show_effect_setting_menu.notify_on; } );
-            if (first_load && file_name === "____effect_file____") {
-                var parameters = [____parameters____];
-                first_load = false;
-                if (item.parameters.count === 0)
-                    return;
-                for (var i = 0; i < parameters.length; i++) {
-                    item.parameters.setProperty(i, "value", parameters[i]);
-                }
-            }
-            if (item.parameters.count === 0)
-                return;
-            connections.target = item.parameters;
-        }
-    }
 
-    Rectangle {
+    Item {
         id: image_rect
-        anchors.fill: parent
-        border.width: (is_hide_border?0:1)
-        border.color: "#D0D0D0"
-        color: sys_manager.background_color
-
-        MouseArea {
-            anchors.fill: parent
-            cursorShape: Qt.SizeAllCursor
-            onPressed: {
-                sys_manager.increase_to_top(root);
-            }
+        anchors {
+            fill: parent
+            margins: appTheme.applyVScale(12)
         }
+
         ShaderEffectSource {
             id: theSource
             smooth: true
@@ -130,219 +62,129 @@ Item {
 
         Image {
             id: image
-            anchors.top: parent.top
-            anchors.left: parent.left
-            anchors.right: parent.right
-            anchors.topMargin: is_hide_border?0:12
-            anchors.leftMargin: is_hide_border?0:12
-            anchors.rightMargin: is_hide_border?0:12
-            anchors.bottom: title_input_rect.top
-            anchors.bottomMargin: !is_hide_name?0:anchors.topMargin
+            anchors {
+                top: parent.top
+                left: parent.left
+                right: parent.right
+                bottom: title_input.bottom
+                bottomMargin: is_hide_name?0:title_input.height
+            }
             cache: false
-            source: "image://data/" + image_index
+            source: "image://data/" + img_index
             fillMode: Image.PreserveAspectFit
         }
 
-
-        Rectangle {
-            id: title_input_rect
+        MyText {
+            id: title_input
+            text: root.title
+            editable: true
+            tips_text: qsTr("点击此处可修改图片标题")
             anchors.bottom: parent.bottom
             anchors.horizontalCenter: parent.horizontalCenter
-            height: !is_hide_name?24:0
-            TextInput {
-                id: title_input
-                text: "____title____"
-                font.family: theme_font
-                font.pixelSize: 15
-                anchors.verticalCenter: parent.verticalCenter
-                anchors.horizontalCenter: parent.horizontalCenter
-                color: "black"
-                visible: !is_hide_name
-                selectByMouse: true
-                onAccepted: {
-                    focus = false;
-                }
-                onFocusChanged: {
-                    if (focus)
-                        selectAll();
-                    else if (text.length === 0)
-                        text = "image";
-
-                }
+            color: "black"
+            visible: !is_hide_name
+            horizontalAlignment: Text.AlignHCenter
+            onText_inputed: {
+                root.title = text;
             }
         }
     }
 
-
-
-    Rectangle {
-        id: drag_rect
-        anchors.top: parent.top
-        anchors.horizontalCenter: parent.horizontalCenter
-        height: 10 + border.width*2
-        width: 30 + border.width*2
-        color: theme_color
-        visible: !sys_manager.lock
-        border.width: is_hide_border?2:0
-        border.color: "white"
-        MouseArea {
-            id: drag_mouse
-            anchors.fill: parent
-            drag.target: is_fill_parent?null:root
-            drag.minimumX: 0
-            drag.minimumY: 0
-            drag.threshold: 0
-            property real ctx_mouse_x
-            property real ctx_mouse_y
-
-            onPressed: {
-                parent.color = "blue";
-                sys_manager.increase_to_top(root);
-                ctx_mouse_x = mouseX;
-                ctx_mouse_y = mouseY;
-            }
-            onReleased: {
-                parent.color = theme_color;
-            }
-            onDoubleClicked: {
-                if (!is_fill_parent) {
-                    sys_manager.fill_parent(root);
-                } else {
-                    sys_manager.unfill_parent(root);
+    Loader {
+        id: effect_loader
+        property string file_name: root.effect_file
+        property bool first_load: true
+        source: "file:///____source_path____/effects/" + ((file_name.length>0)?file_name:"EffectPassThrough.qml.default")
+        onSourceChanged: {
+            item.targetWidth = image.width;
+            item.targetHeight = image.height;
+            item.fragmentShaderFilename = "____source_path____/shaders/" + item.fragmentShaderFilename;
+            item.vertexShaderFilename = "____source_path____/shaders/" + item.vertexShaderFilename;
+            item.parent = image_rect;
+            item.anchors.fill = image;
+            //            item.anchors.topMargin = (image.height - image.paintedHeight)/2;
+            //            item.anchors.leftMargin = (iamge.width - image.paintedWidth)/2;
+            item.source = theSource;
+            item.dividerValue = 1;
+            item.is_show_setting = Qt.binding(function() { return is_show_effect_setting_menu.checked; } );
+            if (root.parameters.length > 0) {
+                first_load = false;
+                if (item.parameters.count === 0)
+                    return;
+                for (var i = 0; i < parameters.length; i++) {
+                    item.parameters.setProperty(i, "value", parameters[i]);
                 }
+                root.parameters = [];
             }
-            onMouseXChanged: {
-                if (!is_fill_parent)
-                    return;
-                if (Math.abs((mouseX - ctx_mouse_x)) > 10 && is_fill_parent)
-                    sys_manager.unfill_parent(root, mouseX, mouseY, drag_rect.width);
-            }
-
-            onMouseYChanged: {
-                if (!is_fill_parent)
-                    return;
-                if (Math.abs((mouseY - ctx_mouse_y)) > 10 && is_fill_parent)
-                    sys_manager.unfill_parent(root, mouseX, mouseY, drag_rect.width);
-            }
-        }
-    }
-    Rectangle {
-        id: right_bottom_rect
-        width: 10 + border.width*2
-        height: 10 + border.width*2
-        color: theme_color
-        x: default_width - width
-        y: default_height - height
-        visible: !sys_manager.lock && !root.is_fill_parent
-        border.width: is_hide_border?2:0
-        border.color: "white"
-        MouseArea {
-            id: right_bottom_mouse
-            anchors.fill: parent
-            drag.target: parent
-            drag.threshold: 0
-
-            onPressed: {
-                parent.color = "blue";
-                sys_manager.increase_to_top(root);
-            }
-            onReleased: {
-                parent.color = theme_color;
-            }
-        }
-        onXChanged: {
-            if (is_fill_parent)
+            ;
+            if (item.parameters.count === 0)
                 return;
-            x = (x - x%4);
-            root.width = right_bottom_rect.x + right_bottom_rect.width;
+            connections.target = item.parameters;
+            item.appTheme = appTheme;
+            item.tips_component = tips_component;
         }
-        onYChanged: {
-            if (is_fill_parent)
-                return;
-            y = (y - y%4);
-            root.height = right_bottom_rect.y + right_bottom_rect.height;
-        }
-
     }
 
     MyMenu { // 右键菜单
         id: menu
         visible: false
-        //            height: (count - 1)*30
-        //            background_color: ""
-        width: 120
         MyMenuItem {
             id: menu_delete
-            width: parent.width
-            show_text: qsTr("删除")
+            text: qsTr("删除")
             color: "red"
             custom_triggered_action: true
-            onCustom_triggered: {
+            onTriggered: {
                 root.destroy();
             }
         }
         MyMenu {
             id: ch_menu
-            width: 80
-            //                height: count*30
-
             title: qsTr("指定图片")
-            //                background_color: chart_menu.background_color
-            //                visible: true
         }
         MyMenu {
             id: effect_menu
             title: qsTr("特效")
-            width: 80
             MyMenuItem {
                 font_point_size: theme_font_point_size
                 custom_triggered_action: true
-                width: parent.width
                 property string file_name: "EffectPassThrough.qml.default"
-                notify_on: effect_loader.file_name === file_name
-                show_text: qsTr("None")
-                onCustom_triggered: {
-                    effect_loader.file_name = file_name;
+                checked: root.effect_file === file_name
+                text: qsTr("None")
+                onTriggered: {
+                    root.effect_file = file_name;
                 }
             }
         }
         MyMenuItem {
             id: is_show_effect_setting_menu
-            show_text: qsTr("显示特效参数")
-            width: parent.width
+            text: qsTr("显示特效参数")
             custom_triggered_action: true
-            notify_on: ____is_show_effect_setting____
-            onCustom_triggered: {
-                notify_on = !notify_on;
+            checked: root.is_show_effect_setting
+            onTriggered: {
+                root.is_show_effect_setting =
+                        !root.is_show_effect_setting;
             }
         }
-
-        MyMenu {
-            id: settings_menu
-            title: qsTr("设置")
-            width: 80
-            MyMenuItem {
-                id: is_hide_name_menu
-                width: parent.width
-                show_text: qsTr("隐藏标题")
-                notify_on: ____is_hide_name____
-                custom_triggered_action: true
-                onCustom_triggered: {
-                    notify_on = !notify_on;
-                }
-            }
-            MyMenuItem {
-                id: is_hide_border_menu
-                width: parent.width
-                show_text: qsTr("隐藏外框")
-                notify_on: ____is_hide_border____
-                custom_triggered_action: true
-                onCustom_triggered: {
-                    notify_on = !notify_on;
-                }
+        MyMenuItem {
+            id: is_hide_name_menu
+            text: qsTr("隐藏标题")
+            checked: root.is_hide_name
+            custom_triggered_action: true
+            onTriggered: {
+                root.is_hide_name =
+                        !root.is_hide_name;
             }
         }
-
+        MyMenuItem {
+            id: is_hide_border_menu
+            text: qsTr("隐藏外框")
+            checked: root.is_hide_border
+            custom_triggered_action: true
+            onTriggered: {
+                root.is_hide_border =
+                        !root.is_hide_border;
+            }
+        }
 
         Component {
             id: effect_menu_component
@@ -350,14 +192,13 @@ Item {
                 id: effect_menu_item
                 font_point_size: theme_font_point_size
                 custom_triggered_action: true
-                width: parent.width
                 property string file_name
-                notify_on: effect_loader.file_name === file_name
-                onCustom_triggered: {
-                    if (!notify_on)
-                        effect_loader.file_name = file_name;
+                checked: root.effect_file === file_name
+                onTriggered: {
+                    if (!checked)
+                        root.effect_file = file_name;
                     else
-                        effect_loader.file_name = "";
+                        root.effect_file = "";
                 }
             }
         }
@@ -366,17 +207,15 @@ Item {
             MyMenuItem {
                 id: ch_menu_item
                 property int index
-                notify_on: (image_index === index)
-                width: (parent?parent.width:80)
+                checked: (img_index === index)
                 font_point_size: theme_font_point_size
-                notify_color: "red"
                 custom_triggered_action: true
 
-                onCustom_triggered: {
-                    if (image_index !== index)
-                        image_index = index;
+                onTriggered: {
+                    if (img_index !== index)
+                        img_index = index;
                     else
-                        image_index = -1;
+                        img_index = -1;
 
                     refresh();
                 }
@@ -395,7 +234,7 @@ Item {
             var start = 0;
             var items = ch_menu.contentData;
             for (var i = start; i < items.length; i++) {
-                items[i].show_text = "img" + i;
+                items[i].text = "img" + i;
                 items[i].index = i - start;
             }
         }
@@ -410,12 +249,11 @@ Item {
                     var name = file_name.substring(6, file_name.length-4);
                     var item = effect_menu_component.createObject(effect_menu.contentItem);
                     effect_menu.addItem(item);
-                    item.show_text = name;
+                    item.text = name;
                     item.file_name = file_name;
-                    text_max_length = Math.max(item.show_text.length, text_max_length);
+                    text_max_length = Math.max(item.text.length, text_max_length);
                 }
             }
-            effect_menu.width = Math.max(80, 32 + text_max_length * 10);
         }
     }
 
@@ -426,13 +264,6 @@ Item {
         }
         onNeed_update: {
             refresh();
-        }
-    }
-    MouseArea {
-        anchors.fill: parent
-        acceptedButtons: Qt.RightButton
-        onClicked: {
-            menu.popup();
         }
     }
 
@@ -446,8 +277,8 @@ Item {
 
     function refresh() {
         image.source = "";
-        //        if (image_index >= 0)
-        image.source = "image://data/" + image_index;
+        //        if (img_index >= 0)
+        image.source = "image://data/" + img_index;
     }
 
 
@@ -458,5 +289,28 @@ Item {
 
     function onUnbind() {
 
+    }
+
+    function widget_ctx() {
+        root.parameters = effect_loader.item.parameters?
+                    effect_loader.item.parameters:[];
+        var ctx = {
+            "path": path,
+            "ctx": [
+                {P:'ctx',                    V: get_ctx()                   },
+                {P:'title',                  V: root.title                  },
+                {P:'img_index',              V: root.img_index              },
+                {P:'is_hide_name',           V: root.is_hide_name           },
+                {P:'is_hide_border',         V: root.is_hide_border         },
+                {P:'is_show_effect_setting', V: root.is_show_effect_setting },
+                {P:'parameters',             V: root.parameters             },
+                {P:'effect_file',            V: root.effect_file            },
+            ]};
+        return ctx;
+    }
+
+    function apply_widget_ctx(ctx) {
+        effect_loader.first_load = true;
+        __set_ctx__(root, ctx.ctx);
     }
 }

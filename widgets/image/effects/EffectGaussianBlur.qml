@@ -51,7 +51,8 @@
 // Based on http://www.geeks3d.com/20100909/shader-library-gaussian-blur-post-processing-filter-in-glsl/
 
 import QtQuick 2.12
-import QtQuick.Controls 1.4
+import QtQuick.Controls 1.4 as QQC_1_4
+import QtQuick.Controls 2.5
 
 Item {
     id: root
@@ -60,6 +61,8 @@ Item {
     property string fragmentShaderFilename: ""
     property string vertexShaderFilename: ""
     property bool is_show_setting: true
+    property var tips_component: undefined
+    property var appTheme
 
     property ListModel parameters: ListModel {
         ListElement {
@@ -128,12 +131,28 @@ Item {
             model: parameters
             //        contentHeight: 50
             //        contentWidth: 200
+            interactive: false
             verticalLayoutDirection: ListView.BottomToTop
-            delegate: Rectangle{
+            delegate: Rectangle {
+                id: parameter_rect
                 height: 30
                 anchors.left: parent.left
                 anchors.right: parent.right
                 color: "transparent"
+
+                Loader {
+                    sourceComponent: root.tips_component
+                    active: parameter_slider.pressed ||
+                            parameter_slider.hovered
+                    onLoaded: {
+                        item.parent = parameter_rect;
+                        item.text = Qt.binding(function(){
+                            return model.name + ":" + model.value.toFixed(2);
+                        });
+                        item.delay = 0;
+                        item.visible = true;
+                    }
+                }
 
                 Rectangle {
                     anchors.fill: parent
@@ -141,22 +160,15 @@ Item {
                     opacity: 0.6
                 }
 
-                Text {
-                    id: parameter_name
-                    anchors.left: parent.left
-                    font.pixelSize: 15
-                    font.family: theme_font
-                    text: name
-                    anchors.verticalCenter: parent.verticalCenter
-//                    width: 70
-                }
-
-                Slider {
+                QQC_1_4.Slider {
+                    id: parameter_slider
+                    stepSize: 0.01
                     value: model.value
-                    anchors.left: parameter_name.right
-                    anchors.leftMargin: 2
-                    anchors.right: parent.right
-                    anchors.verticalCenter: parent.verticalCenter
+                    anchors {
+                        left: parent.left
+                        right: parent.right
+                        verticalCenter: parent.verticalCenter
+                    }
                     onValueChanged: {
                         parameters.setProperty(index, "value", value);
                     }
