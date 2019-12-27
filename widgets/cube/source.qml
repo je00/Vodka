@@ -10,6 +10,7 @@ import "file:///____source_path____/"
 
 ResizableRectangle {
     id: root
+    tips_text: qsTr("双击可全屏，右键可弹出设置菜单")
     property var id_map: {
         "angle_offset":     angle_offset,
         "position_offset":  position_offset,
@@ -74,10 +75,6 @@ ResizableRectangle {
                                         0,
                                         0)
     property var parent_container
-
-    Component.onCompleted: {
-        ch_updated(-1);
-    }
 
     onModel_pathChanged: {
         cube_entity.update_model();
@@ -388,7 +385,7 @@ ResizableRectangle {
 
     }
 
-    // called by color_dialog
+    // called by sys_manager
     function set_color(color) {
         cube_color = "" + color;
     }
@@ -703,13 +700,8 @@ ResizableRectangle {
         visible: false
         //            height: (count - 1)*30
         //            background_color: ""
-        MyMenuItem {
-            id: menu_delete
-            text: qsTr("删除")
-            color: "red"
-            onTriggered: {
-                root.destroy();
-            }
+        DeleteMenuItem {
+            target: root
         }
 
         MyMenuItem {
@@ -733,19 +725,12 @@ ResizableRectangle {
                 update_cube_rotate();
             }
         }
-        MyMenu {
+        ChMenu {
             id: scalar_menu
             checked: bind_obj
             color: bind_obj?bind_obj.color:"orange"
             indicator_color: "orange"
             title: "scalar" + (bind_obj?(" → "+bind_obj.name):"")
-            property int index: -1
-            property var bind_obj: {
-                if (sys_manager.settings_obj.count > index)
-                    sys_manager.settings_obj.itemAtIndex(index)
-                else
-                    undefined
-            }
             onParentChanged: {
                 parent.visible = Qt.binding(function(){
                     return quaternion_mode;
@@ -753,49 +738,28 @@ ResizableRectangle {
             }
         }
 
-        MyMenu {
+        ChMenu {
             id: x_menu
             checked: bind_obj
             color: bind_obj?bind_obj.color:"#ff0000"
             indicator_color: "#ff0000"
             title: "X" + (bind_obj?(" → "+bind_obj.name):"")
-            property int index: -1
-            property var bind_obj: {
-                if (sys_manager.settings_obj.count > index)
-                    sys_manager.settings_obj.itemAtIndex(index)
-                else
-                    undefined
-            }
         }
 
-        MyMenu {
+        ChMenu {
             id: y_menu
             checked: bind_obj
             color: bind_obj?bind_obj.color:"#00ff00"
             indicator_color: "#00ff00"
             title: "Y" + (bind_obj?(" → "+bind_obj.name):"")
-            property int index: -1
-            property var bind_obj: {
-                if (sys_manager.settings_obj.count > index)
-                    sys_manager.settings_obj.itemAtIndex(index)
-                else
-                    undefined
-            }
         }
 
-        MyMenu {
+        ChMenu {
             id: z_menu
             checked: bind_obj
             color: bind_obj?bind_obj.color:"#0000ff"
             indicator_color: "#0000ff"
             title: "Z" + (bind_obj?(" → "+bind_obj.name):"")
-            property int index: -1
-            property var bind_obj: {
-                if (sys_manager.settings_obj.count > index)
-                    sys_manager.settings_obj.itemAtIndex(index)
-                else
-                    undefined
-            }
         }
 
 
@@ -984,10 +948,11 @@ ResizableRectangle {
             text: qsTr("模型颜色")
             color: root.cube_color
             onTriggered: {
-                color_dialog.color = cube_color;
-                color_dialog.target_obj = root;
-                color_dialog.parameter = null;
-                color_dialog.open();
+                sys_manager.open_color_dialog(
+                            root,
+                            null,
+                            cube_color
+                            );
                 main_menu.visible = false;
             }
         }
@@ -1002,90 +967,6 @@ ResizableRectangle {
             checked: false
             onTriggered: checked = !checked;
         }
-    }
-
-    Connections {
-        target: sys_manager
-        onName_changed: {
-            ch_updated(-1);
-        }
-        onColor_changed: {
-            ch_updated(-1);
-        }
-    }
-    Component {
-        id: ch_menu_component
-        MyMenuItem {
-            id: ch_menu_item
-            property int index
-            checked: ch_menu_item.menu.index === index
-            indicator_color: color
-
-            onTriggered: {
-                ch_menu_item.menu.index =
-                        (ch_menu_item.menu.index !== index)?
-                            index:
-                            -1
-            }
-        }
-    }
-
-
-    function set_menu(target_menu, text_list, color_list) {
-        while (target_menu.count > text_list.length) {
-            target_menu.removeItem(
-                        target_menu.itemAt(target_menu.count-1)
-                        );
-        }
-        while (target_menu.count < text_list.length) {
-            target_menu.addItem(ch_menu_component.createObject(target_menu.contentItem));
-        }
-        var items = target_menu.contentData;
-        for (var i = 0; i < items.length; i++) {
-            items[i].text = text_list[i];
-            items[i].color = color_list[i];
-            items[i].index = i;
-        }
-    }
-
-    function set_menu_color(target_menu, index, color) {
-        var items = target_menu.contentData;
-        if (index < items.length)
-            items[index].color = color;
-    }
-
-    function set_menu_name(target_menu, index, text) {
-        var items = target_menu.contentData;
-        if (index < items.length)
-            items[index].text = text;
-    }
-
-    function ch_updated(index) {
-        if (index >= 0) {
-            set_menu_name(x_menu, index, name);
-            set_menu_name(y_menu, index, name);
-            set_menu_name(z_menu, index, name);
-            set_menu_name(scalar_menu, index, name);
-            return;
-        }
-
-        if (sys_manager.settings_model.count <= 0)
-            return;
-        var text_list = [];
-        var color_list = [];
-        var index_list = [];
-        var element;
-        for (var i = 0; i < sys_manager.settings_model.count; i++) {
-            var tmp = i;
-            element = sys_manager.settings_model.get(tmp);
-            text_list[i] = element.name;
-            color_list[i] = "" + element.color;
-            index_list[i] = tmp;
-        }
-        set_menu(x_menu, text_list, color_list);
-        set_menu(y_menu, text_list, color_list);
-        set_menu(z_menu, text_list, color_list);
-        set_menu(scalar_menu, text_list, color_list);
     }
 
     function widget_ctx() {

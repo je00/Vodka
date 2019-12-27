@@ -4,6 +4,7 @@ import "file:///____source_path____/effects"
 
 ResizableRectangle {
     id: root
+    tips_text: qsTr("双击可全屏，右键可弹出设置菜单")
     width: appTheme.applyHScale(226)
     height: appTheme.applyHScale(226)
     border.width: (is_hide_border?0:1)
@@ -19,7 +20,6 @@ ResizableRectangle {
     property string effect_file: effect_loader.file_name
     property var parameters: []
     property var parent_container
-    tips_text: qsTr("双击可全屏，右键可弹出设置菜单")
 
     onClicked: {
         if (mouse.button === Qt.RightButton)
@@ -128,15 +128,10 @@ ResizableRectangle {
     MyMenu { // 右键菜单
         id: menu
         visible: false
-        MyMenuItem {
-            id: menu_delete
-            text: qsTr("删除")
-            color: "red"
-            custom_triggered_action: true
-            onTriggered: {
-                root.destroy();
-            }
+        DeleteMenuItem {
+            target: root
         }
+
         MyMenu {
             id: ch_menu
             title: qsTr("指定图片")
@@ -146,7 +141,6 @@ ResizableRectangle {
             title: qsTr("特效")
             MyMenuItem {
                 font_point_size: theme_font_point_size
-                custom_triggered_action: true
                 property string file_name: "EffectPassThrough.qml.default"
                 checked: root.effect_file === file_name
                 text: qsTr("None")
@@ -158,7 +152,6 @@ ResizableRectangle {
         MyMenuItem {
             id: is_show_effect_setting_menu
             text: qsTr("显示特效参数")
-            custom_triggered_action: true
             checked: root.is_show_effect_setting
             onTriggered: {
                 root.is_show_effect_setting =
@@ -169,7 +162,6 @@ ResizableRectangle {
             id: is_hide_name_menu
             text: qsTr("隐藏标题")
             checked: root.is_hide_name
-            custom_triggered_action: true
             onTriggered: {
                 root.is_hide_name =
                         !root.is_hide_name;
@@ -179,7 +171,6 @@ ResizableRectangle {
             id: is_hide_border_menu
             text: qsTr("隐藏外框")
             checked: root.is_hide_border
-            custom_triggered_action: true
             onTriggered: {
                 root.is_hide_border =
                         !root.is_hide_border;
@@ -191,7 +182,6 @@ ResizableRectangle {
             MyMenuItem {
                 id: effect_menu_item
                 font_point_size: theme_font_point_size
-                custom_triggered_action: true
                 property string file_name
                 checked: root.effect_file === file_name
                 onTriggered: {
@@ -209,7 +199,6 @@ ResizableRectangle {
                 property int index
                 checked: (img_index === index)
                 font_point_size: theme_font_point_size
-                custom_triggered_action: true
 
                 onTriggered: {
                     if (img_index !== index)
