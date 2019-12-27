@@ -135,7 +135,7 @@ ResizableRectangle {
                     float_value: 0
                     hex_value: "00 00 00 00"
                     enabled: true
-                    changable: false
+                    changable: true
                 }
             }
         }
