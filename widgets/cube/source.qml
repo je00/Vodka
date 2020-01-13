@@ -33,6 +33,7 @@ ResizableRectangle {
 
     width: 226
     height: 226
+    height_width_ratio: 1
     property string path: "cube"
     property bool not_support_change_window_: true
     property int default_width: width
@@ -728,8 +729,8 @@ ResizableRectangle {
         ChMenu {
             id: scalar_menu
             checked: bind_obj
-            color: bind_obj?bind_obj.color:"orange"
-            indicator_color: "orange"
+            indicator_color: bind_obj?bind_obj.color:"orange"
+            color: "orange"
             title: "scalar" + (bind_obj?(" → "+bind_obj.name):"")
             onParentChanged: {
                 parent.visible = Qt.binding(function(){
@@ -741,24 +742,24 @@ ResizableRectangle {
         ChMenu {
             id: x_menu
             checked: bind_obj
-            color: bind_obj?bind_obj.color:"#ff0000"
-            indicator_color: "#ff0000"
+            indicator_color: bind_obj?bind_obj.color:"#ff0000"
+            color: "#ff0000"
             title: "X" + (bind_obj?(" → "+bind_obj.name):"")
         }
 
         ChMenu {
             id: y_menu
             checked: bind_obj
-            color: bind_obj?bind_obj.color:"#00ff00"
-            indicator_color: "#00ff00"
+            indicator_color: bind_obj?bind_obj.color:"#00ff00"
+            color: "#00ff00"
             title: "Y" + (bind_obj?(" → "+bind_obj.name):"")
         }
 
         ChMenu {
             id: z_menu
             checked: bind_obj
-            color: bind_obj?bind_obj.color:"#0000ff"
-            indicator_color: "#0000ff"
+            indicator_color: bind_obj?bind_obj.color:"#0000ff"
+            color: "#0000ff"
             title: "Z" + (bind_obj?(" → "+bind_obj.name):"")
         }
 
@@ -946,7 +947,8 @@ ResizableRectangle {
 
         MyMenuItem {
             text: qsTr("模型颜色")
-            color: root.cube_color
+            color_mark_on: true
+            indicator_color: root.cube_color
             onTriggered: {
                 sys_manager.open_color_dialog(
                             root,
@@ -973,10 +975,10 @@ ResizableRectangle {
         var ctx = {
             "path": path,
             "ctx": [
-                { T:'scalar_menu',        P:'index',                 V: scalar_menu.index        },
-                { T:'x_menu',             P:'index',                 V: x_menu.index             },
-                { T:'y_menu',             P:'index',                 V: y_menu.index             },
-                { T:'z_menu',             P:'index',                 V: z_menu.index             },
+                { T:'scalar_menu',        P:'ctx',                   V: scalar_menu.get_ctx()    },
+                { T:'x_menu',             P:'ctx',                   V: x_menu.get_ctx()         },
+                { T:'y_menu',             P:'ctx',                   V: y_menu.get_ctx()         },
+                { T:'z_menu',             P:'ctx',                   V: z_menu.get_ctx()         },
                 { T:'pos_offset_menu',    P:'checked',               V: pos_offset_menu.checked  },
                 {                         P:'scale',                 V: root.scale               },
                 {                         P:'quaternion_mode',       V: root.quaternion_mode     },

@@ -1,4 +1,4 @@
-import QtQuick 2.12;
+﻿import QtQuick 2.12;
 import QtQuick.Controls 2.12
 import QtQml 2.13
 import QtGraphicalEffects 1.0
@@ -56,8 +56,6 @@ ResizableRectangle {
         onReleased: send_command(1)
         function send_command(argment_index) {
             var press_argument = argument_model.get(argment_index);
-            if (!press_argument.enabled)
-                return;
             sys_manager.send_command(root.name,
                                      cmd_menu.bind_obj,
                                      press_argument,
@@ -113,7 +111,6 @@ ResizableRectangle {
                 menu.visible = false;
             }
         }
-
         CmdMenu {
             id: cmd_menu
             title: qsTr("绑定命令")
@@ -182,7 +179,7 @@ ResizableRectangle {
             onValue_inputed: {
                 var tmp = parseInt(text);
                 if (isNaN(tmp))
-                    tmp = 0;
+                    tmp = -1;
                 font_size = tmp;
             }
         }
@@ -191,6 +188,7 @@ ResizableRectangle {
             title: qsTr("配色")
             MyMenuItem {
                 text: qsTr("重置")
+                tips_text: qsTr("恢复默认配色")
                 onTriggered: {
                     color_border = "#D0D0D0";
                     color_normal = "#F5F5F5";
@@ -233,12 +231,13 @@ ResizableRectangle {
                 delegate: MyMenuItem {
                     text: model.text
                     property string color_: root[model.parameter]
-                    checked: true
+                    color_mark_on: true
                     //                    selected: sys_manager.color_dialog.target_obj === this
                     selected: (sys_manager.color_dialog.parameter ===
                                model.parameter)
                     indicator_color: color_.length>0?
                                          color_:appTheme.lineColor
+                    tips_text: text + ":" + indicator_color
                     onTriggered: {
                         sys_manager.open_color_dialog(
                                     root,

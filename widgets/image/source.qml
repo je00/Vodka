@@ -9,6 +9,7 @@ ResizableRectangle {
     height: appTheme.applyHScale(226)
     border.width: (is_hide_border?0:1)
     border.color: "#D0D0D0"
+    height_width_ratio: 1
     property string path:  "image"
     property string title: "image"
     property int img_index: -1
