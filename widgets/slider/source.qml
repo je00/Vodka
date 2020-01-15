@@ -1,30 +1,32 @@
-import QtQuick 2.12;
+﻿import QtQuick 2.12;
 import QtQuick.Controls 2.12
+import QtQuick.Layouts 1.12
 import QtQuick.Controls 1.4 as QQC1
-Rectangle {
-    id: ctrl0
-    color: sys_manager.background_color
-
-    property string path: "slider"
-    property bool bind: ____bind____
-    property bool value_bind: false
-    property real from: parseFloat((ctrl0_from.text.length>0)?ctrl0_from.text:0)
-    property real to: parseFloat((ctrl0_to.text.length>0)?ctrl0_to.text:0)
-    property real stepSize: parseFloat((ctrl0_stepSize.text.length>0)?ctrl0_stepSize.text:0)
-    property string name: ctrl0_name.text
-    property var command: null
-    property real value: ctrl0_slider.value
-    property bool fix_size: true
-    x: ____x____
-    y: ____y____
-    border.color: "#D0D0D0"
-    height: 55
-    width: 204
-    radius: 5
-    Component.onCompleted: {
-        if (bind)
-            onBind();
+ResizableRectangle {
+    id: root
+    property var id_map: {
+        'slider':        slider,
+        'argument_menu': argument_menu,
+        'cmd_menu':      cmd_menu,
+        'ch_menu':       ch_menu,
+        'value_menu':    value_menu,
+        'name_menu':     name_menu
     }
+    property string path: "slider"
+    property real from: 0
+    property real to: 1000
+    property real step_size: 1
+    property real value: 0
+    property bool fix_size: true
+    border.color: "#D0D0D0"
+    height: minimumHeight
+    width: appTheme.applyHScale(204)
+    minimumHeight: slider.height +
+                   name_text.height + appTheme.applyVScale(16) + radius +
+                   value_text.height
+    minimumWidth: appTheme.applyHScale(204)
+    radius: appTheme.applyHScale(5)
+    border.width: appTheme.applyHScale(1)
 
     onXChanged: {
         if (!enabled)
@@ -38,252 +40,203 @@ Rectangle {
 
         y = (y - y%4)
     }
-    Connections {
-        target: sys_manager
-        onName_changed: {
-            if (ctrl0.command)
-                ctrl0_name.text = ctrl0.command.name;
-        }
+
+    onClicked: {
+        if (mouse.button === Qt.RightButton)
+            menu.popup();
     }
 
-    MouseArea {
-        anchors.fill: parent
-        drag.target: parent
-        drag.axis: Drag.XAndYAxis
-        drag.minimumY: 0
-        drag.minimumX: 0
-        drag.threshold: 0
-        enabled: !sys_manager.lock
-        onPressed: {
-            parent.border.color = theme_color;
-            parent.border.width = 2;
-            sys_manager.increase_to_top(ctrl0);
-        }
-        onReleased: {
-            parent.border.color = "#D0D0D0";
-            parent.border.width = 1;
+
+    Item {
+        //        border.width: 1
+        anchors {
+            bottom: slider.top
+            //            bottomMargin: appTheme.applyVScale(2)
+            left: slider.left
+            right: slider.right
+            top: parent.top
         }
 
-    }
-    TextInput {
-        id: ctrl0_from
-        selectByMouse: true
-        text:"" + ____from____
-        enabled: !sys_manager.lock
-        anchors.left: ctrl0_slider.left
-        anchors.topMargin: 5
-        anchors.top: parent.top
-        font.family: theme_font
-        font.pointSize: theme_font_point_size
-        font.bold: theme_font_bold
-        onAccepted: {
-            focus = false;
-        }
-        onFocusChanged: {
-            if (!focus)
-                if (text.length == 0)
-                    text = "" + ____from____;
-        }
-    }
-    TextInput {
-        id: ctrl0_to
-        selectByMouse: true
-        text:"" + ____to____
-        horizontalAlignment : TextInput.AlignRight
-        width: 40
-        enabled: !sys_manager.lock
-        anchors.right: ctrl0_slider.right
-        anchors.top: ctrl0_from.top
-        font.family: theme_font
-        font.pointSize: theme_font_point_size
-        font.bold: theme_font_bold
-        onAccepted: {
-            focus = false;
-        }
-        onFocusChanged: {
-            if (!focus)
-                if (text.length == 0)
-                    text = "" + ____to____;
-
-        }
-    }
-    Rectangle {
-        color: "transparent"
-        anchors.verticalCenter: ctrl0_spinbox.verticalCenter
-        anchors.left: ctrl0_slider.left
-        anchors.right: ctrl0_spinbox.left
-        height: ctrl0_name.height
-        TextInput {
-            id: ctrl0_name
-            selectByMouse: true
-            anchors.horizontalCenter: parent.horizontalCenter
-            text: "____name____"
-            //        width: 20
-            enabled: (!sys_manager.lock)&&(!bind)
-            font.family: theme_font
-            font.pixelSize: 15
-            font.bold: theme_font_bold
-            onAccepted: {
-                focus = false;
+        MyText {
+            id: value_text
+            visible: value_menu.attr.visible
+            text: (ch_menu.bind_obj?
+                       ch_menu.bind_obj.value:
+                       slider.value).toFixed(value_menu.attr.decimal)
+            color: value_menu.attr.color
+            enabled: !sys_manager.lock
+            font.pixelSize: value_menu.attr.font_size
+            anchors {
+                verticalCenter: parent.verticalCenter
+                horizontalCenter: parent.horizontalCenter
             }
-        }
-    }
-    Text {
-        id: ctrl0_value
-        text: "|"
-        enabled: !sys_manager.lock
-        anchors.bottom: parent.top
-        anchors.bottomMargin: 2
-        anchors.left: parent.left
-        font.family: theme_font
-        font.pixelSize: 15
-        font.bold: theme_font_bold
-        visible: value_bind
-    }
-    Text {
-        id: ctrl0_stepSize_text
-        text: "step: "
-        anchors.left: ctrl0_from.right
-        anchors.leftMargin: 10
-        anchors.top: ctrl0_from.top
-        font.family: theme_font
-        font.pointSize: theme_font_point_size
-        font.bold: theme_font_bold
-    }
-    TextInput {
-        id: ctrl0_stepSize
-        selectByMouse: true
-        text:"" + ____stepSize____
-        width: 40
-        anchors.left: ctrl0_stepSize_text.right
-        anchors.top: ctrl0_stepSize_text.top
-        font.family: theme_font
-        font.pointSize: theme_font_point_size
-        font.bold: theme_font_bold
-        onFocusChanged: {
-            if (!focus)
-                if (text.length == 0)
-                    text = "" + ____stepSize____;
-        }
-
-        onAccepted: {
-            focus = true;
         }
     }
     QQC1.Slider {
-        id: ctrl0_slider
-        height: 10
-        minimumValue: parent.from
-        maximumValue: parent.to
-        anchors.left: parent.left
-        anchors.right: parent.right
-        anchors.rightMargin: 5
-        anchors.leftMargin: 5
-        anchors.top: ctrl0_from.bottom
-        stepSize: parent.stepSize
-        value: ____value____
+        id: slider
+        height: appTheme.applyVScale(10)
+        anchors {
+            left: parent.left
+            right: parent.right
+            verticalCenter: parent.verticalCenter
+            leftMargin: root.radius
+            rightMargin: anchors.leftMargin
+        }
+
+        minimumValue: root.from
+        maximumValue: root.to
+        stepSize: root.step_size
         onValueChanged: {
-            ctrl0_spinbox.value = value;
+            root_spinbox.value = value;
+            argument_model.get(0).hex_value = sys_manager.float_to_hex(value);
+            argument_model.get(0).float_value = value;
+
+            var press_argument = argument_model.get(0);
+            sys_manager.send_command(name_menu.attr.name,
+                                     cmd_menu.bind_obj,
+                                     press_argument,
+                                     argument_menu.hex_on
+                                     );
+
         }
     }
-    QQC1.SpinBox {
-        id: ctrl0_spinbox
-        anchors.right: ctrl0_slider.right
-        anchors.top: ctrl0_slider.bottom
-        decimals: 5
-        width: 100
-        minimumValue: parent.from
-        maximumValue: parent.to
-        stepSize: parent.stepSize
-        value: ____value____
-        onEditingFinished: {
-            focus = false;
-            ctrl0_slider.value = value;
-            if (!command) {
-                if (bind)
-                    onUnbind();
-                sys_manager.send_string(ctrl0_name.text + ":" + value + '\n');
-            } else
-                sys_manager.send_command(command, value);
+
+    Item {
+        //        border.width: 1
+        anchors {
+            top: slider.bottom
+            left: slider.left
+            right: slider.right
+            bottom: parent.bottom
         }
-        onValueChanged: {
-            if (!focus) {
-                ctrl0_slider.value = value;
-                if (!command) {
-                    if (bind)
-                        onUnbind();
-                    sys_manager.send_string(ctrl0_name.text + ":" + value + '\n');
-                } else
-                    sys_manager.send_command(command, value);
+        MyText {
+            id: name_text
+            visible: name_menu.attr.visible
+            anchors {
+                verticalCenter: parent.verticalCenter
+                left: parent.left
+            }
+            font.pixelSize: name_menu.attr.font_size
+            color: name_menu.attr.color
+            width: parent.width/2
+            elide: Text.ElideMiddle
+            editable: name_menu.attr.editable
+            tips_text: name_menu.attr.tips_text
+            text: name_menu.attr.name
+            onText_inputed: name_menu.set_name(text);
+        }
+        QQC1.SpinBox {
+            id: root_spinbox
+            anchors {
+                verticalCenter: parent.verticalCenter
+                right: parent.right
+            }
+            width: parent.width/2
+            decimals: value_menu.attr.decimal
+            minimumValue: root.from
+            maximumValue: root.to
+            stepSize: root.step_size
+            horizontalAlignment: Qt.AlignLeft
+            onEditingFinished: {
+                focus = false;
+                slider.value = value;
+            }
+            onValueChanged: {
+                if (!focus) {
+                    slider.value = value;
+                }
             }
         }
     }
-    Text {
-        id: delete_text
-        text: "[-]"
-        color: "blue"
-        anchors.right: ctrl0_to.left
-        anchors.bottom: ctrl0_to.bottom
-        visible: !sys_manager.lock
-        font.family: theme_font
-        font.pointSize: theme_font_point_size
-        font.bold: theme_font_bold
-        MouseArea {
-            anchors.fill: parent
-            onClicked: {
-                ctrl0.destroy();
+
+    MyMenu {
+        id: menu
+        DeleteMenuItem {
+            target: root
+        }
+        CmdMenu {
+            id: cmd_menu
+            title: qsTr("绑定命令")
+        }
+        ChMenu {
+            id: ch_menu
+            checked: bind_obj
+            indicator_color: bind_obj?bind_obj.color:"red"
+        }
+        ArgumentMenu {
+            id: argument_menu
+            cmd_obj: cmd_menu.bind_obj
+            model: ListModel {
+                id: argument_model
+                ListElement {
+                    name: qsTr("滑动条数值更新时发送，当前")
+                    float_value: 0
+                    hex_value: "00 00 00 00"
+                    enabled: true
+                    changable: false
+                }
+            }
+        }
+        ValueMenu {
+            id: value_menu
+            ch_menu: ch_menu
+        }
+        NameMenu {
+            id: name_menu
+            ch_menu: ch_menu
+            cmd_menu: cmd_menu
+        }
+        MyMenuItem {
+            text_center: true
+            text: qsTr("step size:")
+            plus_minus_on: true
+            value_text: "" + root.step_size
+            value_editable: true
+            onPlus_triggered: {
+                root.step_size = root.step_size + 1;
+            }
+            onMinus_triggered: {
+                root.step_size = Math.max(
+                            0,
+                            root.step_size - 1
+                            );
+            }
+            onValue_inputed: {
+                root.step_size = Math.max(
+                            0,
+                            parseFloat(text)
+                            );
             }
         }
     }
-    Text {
-        id: bind_text
-        text: bind?"[★]":"[☆]"
-        color: "blue"
-        anchors.right: delete_text.left
-        anchors.rightMargin: 8
-        anchors.bottom: ctrl0_to.bottom
-        visible: !sys_manager.lock
-        font.family: theme_font
-        font.pointSize: theme_font_point_size
-        font.bold: theme_font_bold
-        MouseArea {
-            anchors.fill: parent
-            onClicked: {
-                if (bind == false)
-                    ctrl0.onBind();
-                else
-                    ctrl0.onUnbind();
-            }
-        }
-    }
+
+
     function onBind() {
-        var command = sys_manager.find_command_by_name(ctrl0_name.text);
-        var settings_obj = sys_manager.find_settings_obj_by_name(ctrl0_name.text);
-        if (!(settings_obj|| command)) {
-            onUnbind();
-            return;
-        }
-        bind = true;
-
-        if (settings_obj) {
-            value_bind = true;
-            ctrl0_name.color = Qt.binding(function(){ return settings_obj.color;})
-            ctrl0_value.color = Qt.binding(function(){ return settings_obj.color;})
-            ctrl0_value.text = Qt.binding(function() { return "| "+settings_obj.value.toFixed(5);})
-        }
-
-        if (command)
-            ctrl0.command = command;
-        else
-            ctrl0.command = null;
 
     }
     function onUnbind() {
-        bind = false;
-        value_bind = false;
-        ctrl0_name.color = "black";
-        ctrl0_value.color = "black";
-        ctrl0_value.text = "|";
-        ctrl0.command = null;
     }
+    function widget_ctx() {
+        var ctx = {
+            "path": path,
+            "ctx": [
+                {                    P:'ctx',       V: get_ctx()                },
+                {                    P:'from',      V: from                     },
+                {                    P:'to',        V: to                       },
+                {                    P:'step_size', V: step_size                },
+                { T:"slider",        P:'value',     V: slider.value             },
+                { T:"argument_menu", P:'ctx',       V: argument_menu.get_ctx()  },
+                { T:"cmd_menu",      P:'ctx',       V: cmd_menu.get_ctx()       },
+                { T:"ch_menu",       P:'ctx',       V: ch_menu.get_ctx()        },
+                { T:"value_menu",    P:'ctx',       V: value_menu.get_ctx()     },
+                { T:"name_menu",     P:'ctx',       V: name_menu.get_ctx()      }
+
+            ]};
+        return ctx;
+    }
+
+    function apply_widget_ctx(ctx) {
+        __set_ctx__(root, ctx.ctx);
+    }
+
 }

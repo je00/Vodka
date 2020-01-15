@@ -8,14 +8,16 @@ ResizableRectangle {
     property var id_map: {
         'argument_menu': argument_menu,
         'cmd_menu':      cmd_menu,
-        'ch_menu':       ch_menu
+        'ch_menu':       ch_menu,
+        'value_menu':    value_menu,
+        'name_menu':     name_menu
     }
-    height: 40
-    width: 40
-    minimumWidth: 40
-    minimumHeight: 40
-    support_fill_parent: false
-    radius: 5
+    height: appTheme.applyHScale(40)
+    width: appTheme.applyHScale(40)
+    minimumWidth: appTheme.applyHScale(40)
+    minimumHeight: appTheme.applyHScale(40)
+//    support_fill_parent: false
+    radius: appTheme.applyHScale(5)
     color: "transparent"
     border {
         color: "#D0D0D0"
@@ -25,48 +27,10 @@ ResizableRectangle {
     height_width_ratio: 1
 
     property string path:  "light"
-    property string name: "light"
-    property string name_:  {
-        if (name_link_ch && ch_menu.bind_obj)
-            ch_menu.bind_obj.name
-        else if (name_link_cmd && cmd_menu.bind_obj)
-            cmd_menu.bind_obj.name
-        else
-            name
-    }
-    property bool value_visable: true
-    property bool name_visable: true
     property real bottom_value: -1
     property real top_value: 1
     property var command: null
     property bool fix_size: true
-    property int value_font_size: -1
-    property int value_font_size_: (value_font_size > 0)?
-                                       value_font_size:appTheme.fontPixelSizeNormal
-    property string value_color: "black"
-    property string value_color_: {
-        if (v_color_link_ch && ch_menu.bind_obj)
-            ch_menu.bind_obj.color
-        else
-            value_color
-    }
-    property int value_decimal: 5
-    property bool v_color_link_ch: true
-
-    property int name_font_size: -1
-    property int name_font_size_: (name_font_size > 0)?
-                                      name_font_size:
-                                      appTheme.fontPixelSizeNormal
-    property string name_color: "black"
-    property string name_color_:  {
-        if (n_color_link_ch && ch_menu.bind_obj)
-            ch_menu.bind_obj.color
-        else
-            name_color
-    }
-    property bool name_link_ch: false
-    property bool name_link_cmd: false
-    property bool n_color_link_ch: true
 
     property bool three_color_mode: false
     property bool light_color_link_ch: true
@@ -83,7 +47,7 @@ ResizableRectangle {
     property color light_color2: "yellow"
     property color light_color3: "green"
     property real value: ch_menu.bind_obj?
-                             ch_menu.bind_obj.value.toFixed(value_decimal):
+                             ch_menu.bind_obj.value.toFixed(value_menu.attr.decimal):
                              "0"
     property var threshold_model_ctx
 
@@ -210,37 +174,32 @@ ResizableRectangle {
             horizontalCenter: parent.horizontalCenter
         }
         text: ch_menu.bind_obj?
-                  ch_menu.bind_obj.value.toFixed(value_decimal):
+                  ch_menu.bind_obj.value.toFixed(value_menu.attr.decimal):
                   "0"
-        visible: parent.value_visable
-        font.pixelSize: value_font_size_
-        color: value_color_
+        visible: value_menu.attr.visible
+        font.pixelSize: value_menu.attr.font_size
+        color: value_menu.attr.color
     }
 
     MyText {
         id: name_text
-        editable: !(root.name_link_ch || root.name_link_cmd)
-        tips_text: {
-            if (root.name_link_ch)
-                qsTr("名称由已绑定频道决定")
-            else if (root.name_link_cmd)
-                qsTr("名称由已绑定命令决定")
-            else
-                qsTr("点击可修改名称。通过右键菜单设置，\n可将名称可与已绑定频道或命令绑定。")
-        }
+        editable: name_menu.attr.editable
+        tips_text: name_menu.attr.tips_text
         anchors {
             top: parent.bottom
             horizontalCenter: parent.horizontalCenter
         }
-        text: root.name_
-        visible: root.name_visable
-        font.pixelSize: root.name_font_size_
-        color: name_color_
-        onText_inputed: root.name = text
+        text: name_menu.attr.name
+        visible: name_menu.attr.visible
+        font.pixelSize: name_menu.attr.font_size
+        color: name_menu.attr.color
+        onText_inputed: name_menu.set_name(text);
     }
 
     MyMenu {
         id: menu
+        text_center: false
+
         DeleteMenuItem {
             target: root
         }
@@ -255,6 +214,7 @@ ResizableRectangle {
         }
         ArgumentMenu {
             id: argument_menu
+            text_center: false
             cmd_obj: cmd_menu.bind_obj
             model: ListModel {
                 id: argument_model
@@ -268,200 +228,55 @@ ResizableRectangle {
                 ListElement {
                     name: qsTr("亮灭模式 灯亮时点击")
                     float_value: 1
-                    hex_value: "3F 80 00 00"
+                    hex_value: "00 00 80 3f"
                     enabled: true
                     changable: true
                 }
                 ListElement {
                     name: qsTr("三色模式 颜色1时点击")
                     float_value: 1
-                    hex_value: "3F 80 00 00"
+                    hex_value: "00 00 80 3f"
                     enabled: true
                     changable: true
                 }
                 ListElement {
                     name: qsTr("三色模式 颜色2时点击")
                     float_value: 2
-                    hex_value: "40 00 00 00"
+                    hex_value: "00 00 00 40"
                     enabled: true
                     changable: true
                 }
                 ListElement {
                     name: qsTr("三色模式 颜色3时点击")
                     float_value: 3
-                    hex_value: "40 40 00 00"
+                    hex_value: "00 00 40 40"
                     enabled: true
                     changable: true
                 }
             }
         }
 
-        MyMenu {
-            title: (qsTr("显示数值") + (binded?" <ch>":""))
-            property bool binded: value_color_menu.binded
-            tips_text: binded?qsTr("颜色由已绑定频道决定"):""
-            indicator_color: value_color_
-            checked: root.value_visable
-            onTriggered: root.value_visable = !root.value_visable
-            MyMenuItem {
-                text: qsTr("字体大小:")
-                plus_minus_on: true
-                value_text: "" + value_font_size_
-                value_editable: true
-                onPlus_triggered: {
-                    value_font_size = value_font_size_ + 1;
-                }
-                onMinus_triggered: {
-                    value_font_size = Math.max(
-                                appTheme.fontPixelSizeNormal,
-                                value_font_size_ - 1
-                                );
-                }
-                onValue_inputed: {
-                    var tmp = parseInt(text);
-                    if (isNaN(tmp))
-                        tmp = -1;
-                    value_font_size = tmp;
-                }
-            }
-            MyMenuItem {
-                text: qsTr("保留小数点后位数:")
-                plus_minus_on: true
-                value_text: "" + value_decimal
-                value_editable: true
-                onPlus_triggered: value_decimal = value_decimal + 1;
-                onMinus_triggered: {
-                    value_decimal = Math.max(
-                                0,
-                                value_decimal - 1
-                                );
-                }
-                onValue_inputed: {
-                    var tmp = parseInt(text);
-                    if (isNaN(tmp))
-                        tmp = 0;
-                    value_decimal = tmp;
-                }
-            }
-
-            MyMenuItem {
-                id: value_color_menu
-                text: (qsTr("颜色") + (binded?" <ch>":""))
-                property bool binded: v_color_link_ch &&
-                                      ch_menu.bind_obj
-                tips_text: (binded?qsTr("颜色由已绑定频道决定"):text)
-                           + ":" + color
-                indicator_color: value_color_
-                color_mark_on: true
-                value_editable: true
-                onTriggered: {
-                    if (binded)
-                        return;
-                    sys_manager.open_color_dialog(
-                                root,
-                                "value_color",
-                                value_color
-                                );
-                    menu.visible = false;
-                }
-            }
-            MyMenuItem {
-                text: qsTr("允许颜色由已绑定频道决定")
-                checked: v_color_link_ch
-                onTriggered: v_color_link_ch = !v_color_link_ch;
-            }
+        ValueMenu {
+            id: value_menu
+            ch_menu: ch_menu
         }
-        MyMenu {
-            title: (qsTr("显示名称") +
-                    (name_color_menu.binded?" <ch>":"") +
-                    ((name_ch_binded ||
-                      name_cmd_binded)?" <cmd>":"")
-                    )
-            property bool binded: name_color_menu.binded ||
-                                  name_ch_binded ||
-                                  name_cmd_binded
-            property bool name_ch_binded: name_link_ch && ch_menu.bind_obj
-            property bool name_cmd_binded: name_link_cmd && cmd_menu.bind_obj
-            tips_text: ((name_color_menu.binded?
-                             qsTr("颜色由已绑定频道决定"):"") +
-                        (name_ch_binded?
-                             (name_color_menu.binded?"\n":"") +
-                             qsTr("名称由已绑定频道决定"):
-                             name_cmd_binded?
-                                 (name_color_menu.binded?"\n":"") +
-                                 qsTr("名称由已绑定命令决定"):
-                                 "")
-                        )
-
-            indicator_color: name_color_
-            checked: root.name_visable
-            onTriggered: root.name_visable = !root.name_visable
-            MyMenuItem {
-                text: qsTr("名称字体大小:")
-                plus_minus_on: true
-                value_text: "" + name_font_size_
-                value_editable: true
-                onPlus_triggered: {
-                    name_font_size = name_font_size_ + 1;
-                }
-                onMinus_triggered: {
-                    name_font_size = Math.max(
-                                appTheme.fontPixelSizeNormal,
-                                name_font_size - 1
-                                );
-                }
-            }
-
-            MyMenuItem {
-                id: name_color_menu
-                text: (qsTr("颜色") + (binded?" <ch>":""))
-                tips_text: (binded?qsTr("颜色由已绑定频道决定"):text) +
-                           ":" + color
-                property bool binded: (n_color_link_ch &&
-                                       ch_menu.bind_obj)
-                indicator_color: name_color_
-                color_mark_on: true
-                value_editable: true
-                onTriggered: {
-                    if (binded)
-                        return;
-                    sys_manager.open_color_dialog(
-                                root,
-                                "name_color",
-                                name_color_
-                                );
-                    menu.visible = false;
-                }
-            }
-            MyMenuItem {
-                text: qsTr("允许名称由已绑定频道决定")
-                checked: name_link_ch
-                onTriggered: {
-                    name_link_ch = !name_link_ch;
-                    if (name_link_ch)
-                        name_link_cmd = false;
-                }
-            }
-            MyMenuItem {
-                text: qsTr("允许名称由已绑定命令决定")
-                checked: name_link_cmd
-                onTriggered: {
-                    name_link_cmd = !name_link_cmd;
-                    if (name_link_cmd)
-                        name_link_ch = false;
-                }
-            }
-
-            MyMenuItem {
-                text: qsTr("允许颜色由已绑定频道决定")
-                checked: n_color_link_ch
-                onTriggered: n_color_link_ch = !n_color_link_ch;
-            }
+        NameMenu {
+            id: name_menu
+            ch_menu: ch_menu
+            cmd_menu: cmd_menu
         }
         MyMenu {
             id: light_menu
-            title: qsTr("指示灯模式")
+            text_center: false
+            title: (qsTr("指示灯模式配置") +
+                   ((light_color_menuitem.binded&&
+                     !three_color_mode)?
+                       " <C-ch>":""))
+            tips_text: ((light_color_menuitem.binded&&
+                         !three_color_mode)?
+                           qsTr("颜色<C>由已绑定频道决定"):"")
             MyMenuItem {
+                text_center: true
                 text: three_color_mode?qsTr("三色模式"):qsTr("亮灭模式")
                 tips_text: three_color_mode?
                                qsTr("点击可切换为亮灭模式"):
@@ -469,6 +284,7 @@ ResizableRectangle {
                 onTriggered: three_color_mode = !three_color_mode
             }
             MyMenuItem {
+                text_center: true
                 visible: !three_color_mode
                 text: reverse_logic?
                           qsTr("< 阈值时灯亮"):
@@ -482,6 +298,7 @@ ResizableRectangle {
                 onObjectRemoved: light_menu.removeItem(object)
                 delegate: MyMenuItem {
                     id: ch_menu_item
+                    text_center: true
                     property int index: model.index
                     text: model.name + ":"
                     value_text: model.value
@@ -498,9 +315,11 @@ ResizableRectangle {
                 }
             }
             MyMenuItem {
+                id: light_color_menuitem
+                text_center: true
                 visible: !three_color_mode
                 text: (qsTr("颜色") + (binded?" <ch>":""))
-                tips_text: (binded?qsTr("颜色由已绑定频道决定"):text) +
+                tips_text: (binded?qsTr("颜色<C>由已绑定频道决定"):text) +
                            ":" + color
                 property bool binded: light_color_link_ch &&
                                       ch_menu.bind_obj
@@ -517,12 +336,14 @@ ResizableRectangle {
                 }
             }
             MyMenuItem {
+                text_center: true
                 visible: !three_color_mode
                 text: qsTr("允许颜色由已绑定频道决定")
                 checked: light_color_link_ch
                 onTriggered: light_color_link_ch = !light_color_link_ch
             }
             MyMenuItem {
+                text_center: true
                 visible: three_color_mode
                 text: qsTr("颜色 ( -∞ ,阈值1)")
                 tips_text: text + ":" + color
@@ -538,6 +359,7 @@ ResizableRectangle {
                 }
             }
             MyMenuItem {
+                text_center: true
                 visible: three_color_mode
                 text: qsTr("颜色 [阈值1,阈值2)")
                 tips_text: text + ":" + color
@@ -553,6 +375,7 @@ ResizableRectangle {
                 }
             }
             MyMenuItem {
+                text_center: true
                 visible: three_color_mode
                 text: qsTr("颜色 (阈值2, +∞ )")
                 tips_text: text + ":" + color
@@ -600,17 +423,6 @@ ResizableRectangle {
                 {                    P:'ctx',                   V: get_ctx()                },
                 {                    P:'top_value',             V: top_value                },
                 {                    P:'bottom_value',          V: bottom_value             },
-                {                    P:'value_visable',         V: value_visable            },
-                {                    P:'value_color',           V: value_color              },
-                {                    P:'value_font_size',       V: value_font_size          },
-                {                    P:'value_decimal',         V: value_decimal            },
-                {                    P:'v_color_link_ch',       V: v_color_link_ch          },
-                {                    P:'name',                  V: name                     },
-                {                    P:'name_visable',          V: name_visable             },
-                {                    P:'name_color',            V: name_color               },
-                {                    P:'name_link_ch',          V: name_link_ch             },
-                {                    P:'name_link_cmd',         V: name_link_cmd            },
-                {                    P:'n_color_link_ch',       V: n_color_link_ch          },
                 {                    P:'three_color_mode',      V: three_color_mode         },
                 {                    P:'light_color_link_ch',   V: light_color_link_ch      },
                 {                    P:'light_color',           V: light_color              },
@@ -618,8 +430,9 @@ ResizableRectangle {
                 {                    P:'threshold_model_ctx',   V: get_threshold_model_ctx()},
                 { T:"argument_menu", P:'ctx',                   V: argument_menu.get_ctx()  },
                 { T:"cmd_menu",      P:'ctx',                   V: cmd_menu.get_ctx()       },
-                { T:"ch_menu",       P:'ctx',                   V: ch_menu.get_ctx()        }
-
+                { T:"ch_menu",       P:'ctx',                   V: ch_menu.get_ctx()        },
+                { T:"value_menu",    P:'ctx',                   V: value_menu.get_ctx()     },
+                { T:"name_menu",     P:'ctx',                   V: name_menu.get_ctx()      }
             ]};
         return ctx;
     }

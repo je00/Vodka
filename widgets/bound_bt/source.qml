@@ -123,7 +123,7 @@ ResizableRectangle {
                 ListElement {
                     name: qsTr("按下")
                     float_value: 1
-                    hex_value: "3F 80 00 00"
+                    hex_value: "00 00 80 3f"
                     enabled: true
                     changable: true
                 }
@@ -138,6 +138,7 @@ ResizableRectangle {
         }
 
         MyMenuItem {
+            text_center: true
             text: qsTr("边框宽度:")
             plus_minus_on: true
             value_text: border_width
@@ -160,6 +161,7 @@ ResizableRectangle {
             }
         }
         MyMenuItem {
+            text_center: true
             text: qsTr("字体大小(px):")
             plus_minus_on: true
             value_text: font_size > 0?
@@ -185,6 +187,7 @@ ResizableRectangle {
         }
         MyMenu {
             id: color_menu
+            text_center: true
             title: qsTr("配色")
             MyMenuItem {
                 text: qsTr("重置")

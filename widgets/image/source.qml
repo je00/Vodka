@@ -1,4 +1,4 @@
-import QtQuick 2.12
+﻿import QtQuick 2.12
 
 import "file:///____source_path____/effects"
 
@@ -7,14 +7,11 @@ ResizableRectangle {
     tips_text: qsTr("双击可全屏，右键可弹出设置菜单")
     width: appTheme.applyHScale(226)
     height: appTheme.applyHScale(226)
-    border.width: (is_hide_border?0:1)
+    border.width: ((is_hide_border&&!hovered)?0:appTheme.applyHScale(1))
     border.color: "#D0D0D0"
-    height_width_ratio: 1
     property string path:  "image"
     property string title: "image"
     property int img_index: -1
-    property int default_width: 300
-    property int default_height: 300
     property bool is_hide_name: false
     property bool is_hide_border: false
     property bool is_show_effect_setting: true

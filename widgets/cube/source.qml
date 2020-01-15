@@ -26,15 +26,15 @@ ResizableRectangle {
     }
 
     border {
-        width: sys_manager.lock?0:1
+        width: ((is_hide_border&&!hovered)?0:appTheme.applyHScale(1))
         color: "#d0d0d0"
     }
     color: "transparent"
 
-    width: 226
-    height: 226
-    height_width_ratio: 1
+    width: appTheme.applyHScale(226)
+    height: appTheme.applyHScale(226)
     property string path: "cube"
+    property bool is_hide_border: false
     property bool not_support_change_window_: true
     property int default_width: width
     property int default_height: height
@@ -969,6 +969,15 @@ ResizableRectangle {
             checked: false
             onTriggered: checked = !checked;
         }
+        MyMenuItem {
+            id: is_hide_border_menu
+            text: qsTr("隐藏外框")
+            checked: root.is_hide_border
+            onTriggered: {
+                root.is_hide_border =
+                        !root.is_hide_border;
+            }
+        }
     }
 
     function widget_ctx() {
@@ -980,6 +989,7 @@ ResizableRectangle {
                 { T:'y_menu',             P:'ctx',                   V: y_menu.get_ctx()         },
                 { T:'z_menu',             P:'ctx',                   V: z_menu.get_ctx()         },
                 { T:'pos_offset_menu',    P:'checked',               V: pos_offset_menu.checked  },
+                {                         P:'is_hide_border',        V: root.is_hide_border      },
                 {                         P:'scale',                 V: root.scale               },
                 {                         P:'quaternion_mode',       V: root.quaternion_mode     },
                 {                         P:'angle_or_radian',       V: root.angle_or_radian     },
