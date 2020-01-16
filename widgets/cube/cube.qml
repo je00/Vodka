@@ -5,8 +5,8 @@ import Qt3D.Render 2.12
 import QtQuick.Scene3D 2.12
 import Qt3D.Extras 2.12
 import QtQuick.Controls 2.12
-import "file:///____widgets_path____/common"
-import "file:///____source_path____/"
+import MyModules 1.0
+import "./"
 
 ResizableRectangle {
     id: root
@@ -287,14 +287,14 @@ ResizableRectangle {
 
                             function update_model() {
                                 cube_entity.components = [];
-                                var component = Qt.createComponent("file:///____source_path____/Mesh.qml");
+                                var component = Qt.createComponent("./Mesh.qml");
                                 var new_mesh  = component.createObject(cube_entity);
 
                                 sys_manager.file_reader.source = sys_manager.config_path + "/" + model_path;
                                 if (model_path.length > 0 && sys_manager.file_reader.exist()) {
                                     new_mesh.source = "file:///" + sys_manager.file_reader.source;
                                 } else {
-                                    new_mesh.source = "file:///____source_path____/cube.stl";
+                                    new_mesh.source = "./cube.stl";
                                 }
                                 var tmp_mesh = obj_mesh;
                                 obj_mesh = new_mesh;
@@ -531,7 +531,7 @@ ResizableRectangle {
             verticalAlignment: TextInput.AlignVCenter
             horizontalAlignment: TextInput.AlignHCenter
             color: border_color
-            tips_text: qsTr("角度偏置 ") +
+            tips_text: QT_TR_NOOP("角度偏置 ") +
                        ((model.index === 0)?
                             "X":(model.index===1)?
                                 "Y":"Z") + "\n" +
@@ -707,7 +707,7 @@ ResizableRectangle {
 
         MyMenuItem {
             id: mode_menu
-            text: quaternion_mode?qsTr("四元数模式"):qsTr("欧拉角模式")
+            text: quaternion_mode?QT_TR_NOOP("四元数模式"):QT_TR_NOOP("欧拉角模式")
             tips_text: (qsTr("点击可切换为") +
                         (quaternion_mode?qsTr("欧拉角模式"):qsTr("四元数模式")))
             onTriggered: {

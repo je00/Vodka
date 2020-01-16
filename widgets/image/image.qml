@@ -1,6 +1,7 @@
 ﻿import QtQuick 2.12
+import MyModules 1.0
 
-import "file:///____source_path____/effects"
+import "./effects"
 
 ResizableRectangle {
     id: root
@@ -92,12 +93,12 @@ ResizableRectangle {
         id: effect_loader
         property string file_name: root.effect_file
         property bool first_load: true
-        source: "file:///____source_path____/effects/" + ((file_name.length>0)?file_name:"EffectPassThrough.qml.default")
+        source: "./effects/" + ((file_name.length>0)?file_name:"EffectPassThrough.qml.default")
         onSourceChanged: {
             item.targetWidth = image.width;
             item.targetHeight = image.height;
-            item.fragmentShaderFilename = "____source_path____/shaders/" + item.fragmentShaderFilename;
-            item.vertexShaderFilename = "____source_path____/shaders/" + item.vertexShaderFilename;
+            item.fragmentShaderFilename = "./shaders/" + item.fragmentShaderFilename;
+            item.vertexShaderFilename = "./shaders/" + item.vertexShaderFilename;
             item.parent = image_rect;
             item.anchors.fill = image;
             //            item.anchors.topMargin = (image.height - image.paintedHeight)/2;

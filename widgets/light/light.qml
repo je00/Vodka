@@ -2,6 +2,7 @@
 import QtQuick.Controls 2.12
 import QtQuick.Extras 1.4
 import QtQml 2.13
+import MyModules 1.0
 
 ResizableRectangle {
     id: root

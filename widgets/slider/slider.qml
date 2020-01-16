@@ -2,6 +2,8 @@
 import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
 import QtQuick.Controls 1.4 as QQC1
+import MyModules 1.0
+
 ResizableRectangle {
     id: root
     property var id_map: {
