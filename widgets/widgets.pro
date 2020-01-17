@@ -1,4 +1,4 @@
 RESOURCES += \
     widgets.qrc
 
-TRANSLATIONS += English.ts
+TRANSLATIONS += english.ts simplifiedchinese.ts traditionalchinese.ts
