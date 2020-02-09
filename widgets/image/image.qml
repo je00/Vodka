@@ -229,8 +229,6 @@ ResizableRectangle {
         }
         function update_effect_menu() {
             var file_list = sys_manager.file_reader.filesInDirectory(current_directory + "/effects");
-            console.log("yoyoyoy", current_directory + "/effects")
-            console.log("file_list.length", file_list.length)
             var text_max_length=0;
             for (var i = 0; i < file_list.length; i++) {
                 var file_name = file_list[i];
@@ -285,8 +283,6 @@ ResizableRectangle {
     }
 
     function widget_ctx() {
-        root.parameters = effect_loader.item.parameters?
-                    effect_loader.item.parameters:[];
         var ctx = {
             "path": path,
             "ctx": [
@@ -299,11 +295,16 @@ ResizableRectangle {
                 {P:'parameters',             V: root.parameters             },
                 {P:'effect_file',            V: root.effect_file            },
             ]};
+
         return ctx;
     }
 
     function apply_widget_ctx(ctx) {
         effect_loader.first_load = true;
         __set_ctx__(root, ctx.ctx);
+
+        for (var i = 0; i < root.parameters.length; i++) {
+            effect_loader.item.parameters.get(i).value = root.parameters[i];
+        }
     }
 }
