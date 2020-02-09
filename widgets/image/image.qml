@@ -12,6 +12,7 @@ ResizableRectangle {
     border.color: "#D0D0D0"
     property string path:  "image"
     property string title: "image"
+    property string current_directory: ""   // set by system
     property int img_index: -1
     property bool is_hide_name: false
     property bool is_hide_border: false
@@ -97,8 +98,8 @@ ResizableRectangle {
         onSourceChanged: {
             item.targetWidth = image.width;
             item.targetHeight = image.height;
-            item.fragmentShaderFilename = "./shaders/" + item.fragmentShaderFilename;
-            item.vertexShaderFilename = "./shaders/" + item.vertexShaderFilename;
+            item.fragmentShaderFilename = current_directory + "/shaders/" + item.fragmentShaderFilename;
+            item.vertexShaderFilename = current_directory + "/shaders/" + item.vertexShaderFilename;
             item.parent = image_rect;
             item.anchors.fill = image;
             //            item.anchors.topMargin = (image.height - image.paintedHeight)/2;
@@ -227,7 +228,9 @@ ResizableRectangle {
             }
         }
         function update_effect_menu() {
-            var file_list = sys_manager.file_reader.filesInDirectory("____source_path____/effects");
+            var file_list = sys_manager.file_reader.filesInDirectory(current_directory + "/effects");
+            console.log("yoyoyoy", current_directory + "/effects")
+            console.log("file_list.length", file_list.length)
             var text_max_length=0;
             for (var i = 0; i < file_list.length; i++) {
                 var file_name = file_list[i];
@@ -257,11 +260,13 @@ ResizableRectangle {
 
     Component.onCompleted: {
         menu.update_ch_menu();
-        menu.update_effect_menu();
         if (is_fill_parent) {
             sys_manager.fill_parent(root);
         }
     }
+
+    onCurrent_directoryChanged: menu.update_effect_menu();
+
 
     function refresh() {
         image.source = "";
