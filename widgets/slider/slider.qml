@@ -1,34 +1,43 @@
 ﻿import QtQuick 2.12;
 import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
-import QtQuick.Controls 1.4 as QQC1
 import MyModules 1.0
 
 ResizableRectangle {
     id: root
+    color: "transparent"
     property var id_map: {
         'slider':        slider,
         'argument_menu': argument_menu,
         'cmd_menu':      cmd_menu,
         'ch_menu':       ch_menu,
         'value_menu':    value_menu,
-        'name_menu':     name_menu
+        'name_menu':     name_menu,
+        "theme":         theme
     }
     property string path: "slider"
     property real from: 0
     property real to: 1000
     property real step_size: 1
-    property real value: 0
-    property bool fix_size: true
-    border.color: "#D0D0D0"
+    border.color: appTheme.lineColor
+    border.width: (hovered||!theme.hideBorder)?appTheme.applyHScale(1):0
     height: minimumHeight
     width: appTheme.applyHScale(204)
-    minimumHeight: slider.height +
-                   name_text.height + appTheme.applyVScale(16) + radius +
-                   value_text.height
+    minimumHeight:
+                   (name_text.height + appTheme.applyVScale(16) + radius +
+                   value_text.height)/(5/6)
     minimumWidth: appTheme.applyHScale(204)
     radius: appTheme.applyHScale(5)
-    border.width: appTheme.applyHScale(1)
+
+    Rectangle {
+        anchors {
+            fill: parent
+            margins: parent.border.width
+        }
+        radius: parent.radius
+        opacity: theme.opacity
+        color: theme.bgColor_
+    }
 
     onXChanged: {
         if (!enabled)
@@ -46,6 +55,37 @@ ResizableRectangle {
     onClicked: {
         if (mouse.button === Qt.RightButton)
             menu.popup();
+    }
+
+    Item {
+        id: theme
+        property bool bgColorFollow: true
+        property color bgColor: appTheme.bgColor
+        property color bgColor_: bgColorFollow?appTheme.bgColor:bgColor
+        property bool hideBorder: false
+        property var ctx
+        function get_ctx() {
+            var ctx = [
+                        { P:'bgColorFollow',    V: bgColorFollow    },
+                        { P:'bgColor',          V: "" + bgColor     },
+                        { P:'opacity',          V: opacity          },
+                        { P:'hideBorder',       V: hideBorder       },
+                    ];
+            return ctx;
+
+        }
+        function apply_ctx(ctx) {
+            if (ctx) {
+                __set_ctx__(theme, ctx);
+            }
+        }
+
+        onCtxChanged: {
+            if (ctx) {
+                apply_ctx(ctx);
+                ctx = undefined;
+            }
+        }
     }
 
 
@@ -74,9 +114,9 @@ ResizableRectangle {
             }
         }
     }
-    QQC1.Slider {
+    MySlider {
         id: slider
-        height: appTheme.applyVScale(10)
+        height: root.height/6
         anchors {
             left: parent.left
             right: parent.right
@@ -84,10 +124,11 @@ ResizableRectangle {
             leftMargin: root.radius
             rightMargin: anchors.leftMargin
         }
-
-        minimumValue: root.from
-        maximumValue: root.to
+        from: root.from
+        to: root.to
         stepSize: root.step_size
+        value: 500
+//        Component.onCompleted: value = 500;
         onValueChanged: {
             root_spinbox.value = value;
             argument_model.get(0).hex_value = sys_manager.float_to_hex(value);
@@ -99,12 +140,11 @@ ResizableRectangle {
                                      press_argument,
                                      argument_menu.hex_on
                                      );
-
         }
     }
 
-    Item {
-        //        border.width: 1
+    Rectangle {
+        color: "transparent"
         anchors {
             top: slider.bottom
             left: slider.left
@@ -127,27 +167,20 @@ ResizableRectangle {
             text: name_menu.attr.name
             onText_inputed: name_menu.set_name(text);
         }
-        QQC1.SpinBox {
+        MySpinBox {
             id: root_spinbox
             anchors {
                 verticalCenter: parent.verticalCenter
                 right: parent.right
             }
+            font.pixelSize: Math.max(appTheme.fontPixelSizeNormal,
+                                     value_menu.attr.font_size/2)
             width: parent.width/2
             decimals: value_menu.attr.decimal
-            minimumValue: root.from
-            maximumValue: root.to
-            stepSize: root.step_size
-            horizontalAlignment: Qt.AlignLeft
-            onEditingFinished: {
-                focus = false;
-                slider.value = value;
-            }
-            onValueChanged: {
-                if (!focus) {
-                    slider.value = value;
-                }
-            }
+            value: 0
+            from: root.from
+            to: root.to
+            onValueChanged: slider.value = value;
         }
     }
 
@@ -188,9 +221,75 @@ ResizableRectangle {
             ch_menu: ch_menu
             cmd_menu: cmd_menu
         }
+
+        MyMenu {
+            id: theme_menu
+            title: qsTr("主题")
+            MyMenuItem {
+                text_center: true
+                text: qsTr("不透明度:")
+                plus_minus_on: true
+                value_text: theme.opacity.toFixed(2)
+                value_editable: true
+                onPlus_triggered: {
+                    theme.opacity = Math.min(1, theme.opacity + 0.1);
+                }
+                onMinus_triggered: {
+                    theme.opacity = Math.max(0, theme.opacity - 0.1);
+                }
+
+                onValue_inputed: {
+                    var tmp = parseFloat(text);
+                    if (isNaN(tmp))
+                        return;
+                    tmp = Math.max(0, tmp);
+                    tmp = Math.min(1, tmp);
+                    theme.opacity = tmp;
+                }
+            }
+            MyMenuItem {
+                text: qsTr("自定义背景颜色")
+                color_mark_on: true
+                //                    selected: sys_manager.color_dialog.target_obj === this
+                indicator_color: theme.bgColor
+                tips_text: checked?
+                               qsTr("已选中，再点击可修改颜色"):
+                               qsTr("点击可选中自定义颜色，再点击可修改颜色")
+                checked: !theme.bgColorFollow
+                onTriggered: {
+                    if (checked) {
+                        sys_manager.open_color_dialog(
+                                    theme,
+                                    "bgColor",
+                                    indicator_color
+                                    );
+                    }
+                    theme.bgColorFollow = false;
+                }
+
+            }
+            MyMenuItem {
+                text: qsTr("跟随") + appTheme.colorName["bgColor"]
+                color_mark_on: true
+                indicator_color: appTheme.bgColor
+                checked: theme.bgColorFollow
+                onTriggered: {
+                    theme.bgColorFollow = !checked;
+                }
+            }
+            MyMenuItem {
+                text: qsTr("隐藏外框")
+                checked: theme.hideBorder
+                onTriggered: {
+                    theme.hideBorder =
+                            !theme.hideBorder;
+                }
+            }
+        }
+
         MyMenuItem {
             text_center: true
-            text: qsTr("step size:")
+            text: "step size:"
             plus_minus_on: true
             value_text: "" + root.step_size
             value_editable: true
@@ -210,6 +309,52 @@ ResizableRectangle {
                             );
             }
         }
+        MyMenuItem {
+            text_center: true
+            text: "from:"
+            plus_minus_on: true
+            value_text: "" + root.from
+            value_editable: true
+            onPlus_triggered: {
+                root.from = root.from + 1;
+            }
+            onMinus_triggered: {
+                root.from = Math.max(
+                            0,
+                            root.from - 1
+                            );
+            }
+            onValue_inputed: {
+                root.from = Math.max(
+                            0,
+                            parseFloat(text)
+                            );
+            }
+        }
+
+        MyMenuItem {
+            text_center: true
+            text: "to:"
+            plus_minus_on: true
+            value_text: "" + root.to
+            value_editable: true
+            onPlus_triggered: {
+                root.to = root.to + 1;
+            }
+            onMinus_triggered: {
+                root.to = Math.max(
+                            0,
+                            root.to - 1
+                            );
+            }
+            onValue_inputed: {
+                root.to = Math.max(
+                            0,
+                            parseFloat(text)
+                            );
+            }
+        }
+
     }
 
 
@@ -231,7 +376,8 @@ ResizableRectangle {
                 { T:"cmd_menu",      P:'ctx',       V: cmd_menu.get_ctx()       },
                 { T:"ch_menu",       P:'ctx',       V: ch_menu.get_ctx()        },
                 { T:"value_menu",    P:'ctx',       V: value_menu.get_ctx()     },
-                { T:"name_menu",     P:'ctx',       V: name_menu.get_ctx()      }
+                { T:"name_menu",     P:'ctx',       V: name_menu.get_ctx()      },
+                { T:"theme",         P:'ctx',       V: theme.get_ctx()          }
 
             ]};
         return ctx;

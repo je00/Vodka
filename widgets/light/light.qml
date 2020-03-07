@@ -6,6 +6,8 @@ import MyModules 1.0
 
 ResizableRectangle {
     id: root
+    border.width: ((hovered||ligth_mouse.containsMouse)
+                   &&!is_fill_parent)?appTheme.applyHScale(1):0
     property var id_map: {
         'argument_menu': argument_menu,
         'cmd_menu':      cmd_menu,
@@ -24,7 +26,6 @@ ResizableRectangle {
         color: "#D0D0D0"
         width: hovered?appTheme.applyHScale(1):0
     }
-    tips_text: qsTr("右键可弹出菜单")
     height_width_ratio: 1
 
     property string path:  "light"
@@ -56,7 +57,7 @@ ResizableRectangle {
         set_threshold_model_ctx();
     }
 
-    StatusIndicator {
+    MyStatusIndicator {
         id: light_bt
         property bool active_: false
         property color color_: light_color1
@@ -100,6 +101,7 @@ ResizableRectangle {
         }
 
         MouseArea {
+            id: ligth_mouse
             anchors.fill: parent
             hoverEnabled: true
             cursorShape: Qt.PointingHandCursor
@@ -129,7 +131,7 @@ ResizableRectangle {
             }
             function send_command(argment_index) {
                 var press_argument = argument_model.get(argment_index);
-                sys_manager.send_command(root.name,
+                sys_manager.send_command(name_menu.attr.name,
                                          cmd_menu.bind_obj,
                                          press_argument,
                                          argument_menu.hex_on
@@ -269,33 +271,30 @@ ResizableRectangle {
         MyMenu {
             id: light_menu
             text_center: false
-            title: (qsTr("指示灯模式配置") +
-                   ((light_color_menuitem.binded&&
-                     !three_color_mode)?
-                       " <C-ch>":""))
-            tips_text: ((light_color_menuitem.binded&&
-                         !three_color_mode)?
-                           qsTr("颜色<C>由已绑定频道决定"):"")
+            title: qsTr("指示灯模式配置")
+//            tips_text: ((light_color_menuitem.binded&&
+//                         !three_color_mode)?
+//                           qsTr("颜色<C>由已绑定频道决定"):"")
             MyMenuItem {
-                text_center: true
-                text: three_color_mode?qsTr("三色模式"):qsTr("亮灭模式")
+                text: qsTr("模式:") + (three_color_mode?qsTr("三色"):qsTr("亮灭"))
                 tips_text: three_color_mode?
                                qsTr("点击可切换为亮灭模式"):
                                qsTr("点击可切换为三色模式")
                 onTriggered: three_color_mode = !three_color_mode
             }
+            MyMenuSeparator {
+
+            }
             MyMenuItem {
-                text_center: true
                 visible: !three_color_mode
-                text: reverse_logic?
-                          qsTr("< 阈值时灯亮"):
-                          qsTr("> 阈值时灯亮")
+                text: qsTr("逻辑:") + ((reverse_logic?"＞":"＜") +
+                          qsTr("阈值时,灯亮"))
                 tips_text: qsTr("点击可切换逻辑")
                 onTriggered: reverse_logic = !reverse_logic
             }
             Instantiator {
                 model: three_color_mode?three_color_model:on_off_model
-                onObjectAdded: light_menu.insertItem(object.index+2, object)
+                onObjectAdded: light_menu.insertItem(object.index+3, object)
                 onObjectRemoved: light_menu.removeItem(object)
                 delegate: MyMenuItem {
                     id: ch_menu_item
@@ -315,32 +314,39 @@ ResizableRectangle {
                     }
                 }
             }
+            MyMenuSeparator {
+
+            }
             MyMenuItem {
                 id: light_color_menuitem
                 text_center: true
                 visible: !three_color_mode
-                text: (qsTr("颜色") + (binded?" <ch>":""))
-                tips_text: (binded?qsTr("颜色<C>由已绑定频道决定"):text) +
-                           ":" + color
-                property bool binded: light_color_link_ch &&
-                                      ch_menu.bind_obj
-                indicator_color: light_color_
+                text: qsTr("自定义颜色")
+                tips_text: checked?
+                               qsTr("已选中，再点击可修改颜色"):
+                               qsTr("点击可选中自定义颜色，再点击可修改颜色")
+                indicator_color: light_color
                 color_mark_on: true
+                checked: !light_color_link_ch
                 onTriggered: {
-                    if (binded) return;
-                    sys_manager.open_color_dialog(
-                                root,
-                                "light_color",
-                                light_color
-                                );
-                    menu.visible = false;
+                    if (checked)
+                        sys_manager.open_color_dialog(
+                                    root,
+                                    "light_color",
+                                    light_color
+                                    );
+                    light_color_link_ch = false;
                 }
             }
             MyMenuItem {
                 text_center: true
                 visible: !three_color_mode
-                text: qsTr("允许颜色由已绑定频道决定")
+                text: qsTr("颜色跟随已绑定频道")
                 checked: light_color_link_ch
+                color_mark_on: true
+                indicator_color: ch_menu.bind_obj?
+                                     ch_menu.bind_obj.color:
+                                     "white"
                 onTriggered: light_color_link_ch = !light_color_link_ch
             }
             MyMenuItem {

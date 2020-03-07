@@ -5,21 +5,21 @@ import "./effects"
 
 ResizableRectangle {
     id: root
-    tips_text: qsTr("双击可全屏，右键可弹出设置菜单")
     width: appTheme.applyHScale(226)
     height: appTheme.applyHScale(226)
-    border.width: ((is_hide_border&&!hovered)?0:appTheme.applyHScale(1))
-    border.color: "#D0D0D0"
+    border.width: (((is_hide_border&&!hovered)||
+             is_fill_parent)?0:appTheme.applyHScale(1))
     property string path:  "image"
     property string title: "image"
     property string current_directory: ""   // set by system
     property int img_index: -1
     property bool is_hide_name: false
-    property bool is_hide_border: false
+    property bool is_hide_border: true
     property bool is_show_effect_setting: true
     property string effect_file: effect_loader.file_name
     property var parameters: []
     property var parent_container
+    color: "transparent"
 
     onClicked: {
         if (mouse.button === Qt.RightButton)
@@ -81,7 +81,7 @@ ResizableRectangle {
             tips_text: qsTr("点击此处可修改图片标题")
             anchors.bottom: parent.bottom
             anchors.horizontalCenter: parent.horizontalCenter
-            color: "black"
+            color: appTheme.fontColor
             visible: !is_hide_name
             horizontalAlignment: Text.AlignHCenter
             onText_inputed: {

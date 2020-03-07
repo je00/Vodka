@@ -51,8 +51,8 @@
 // Based on http://www.geeks3d.com/20100909/shader-library-gaussian-blur-post-processing-filter-in-glsl/
 
 import QtQuick 2.12
-import QtQuick.Controls 1.4 as QQC_1_4
 import QtQuick.Controls 2.5
+import MyModules 1.0
 
 Item {
     id: root
@@ -156,11 +156,11 @@ Item {
 
                 Rectangle {
                     anchors.fill: parent
-                    color: "white"
+                    color: appTheme.bgColor
                     opacity: 0.6
                 }
 
-                QQC_1_4.Slider {
+                MySlider {
                     id: parameter_slider
                     stepSize: 0.01
                     value: model.value

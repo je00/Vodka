@@ -8,42 +8,90 @@ ResizableRectangle {
     id: root
     property var id_map: {
         'argument_menu': argument_menu,
-        'cmd_menu':      cmd_menu
+        'cmd_menu':      cmd_menu,
+        'name_menu':     name_menu,
+        'theme':         theme
     }
-    support_fill_parent: false
+    support_fill_parent: true
     width: appTheme.applyHScale(74)
     height: appTheme.applyVScale(54)
     minimumWidth: minimumHeight
     minimumHeight: bt_mouse.anchors.margins * 3
     radius: appTheme.applyHScale(5)
-
     property string path:  "bound_bt"
-    property string color_normal: "#F5F5F5"
-    property string color_hovered: "blue"
-    property string color_pressed: "#0080ff"
-    property string color_border: "#D0D0D0"
-    property string color_text_1: "blue"
-    property string color_text_2: "white"
-    property int border_width: appTheme.applyHScale(1)
-    property int font_size: -1
-    property int font_size_: (font_size > 0)?font_size:appTheme.fontPixelSizeNormal
-    property string name: qsTr("Button")
-    color: {
-        if (bt_mouse.containsPress)
-            color_pressed
-        else if (bt_mouse.containsMouse)
-            color_hovered
-        else
-            color_normal
-    }
-    border.color: color_border
-    border.width: border_width
 
-    onClicked: {
-        if (mouse.button === Qt.RightButton)
-            menu.popup();
+    border.color: theme.colorBorder_
+    border.width: theme.borderWidth
+
+    Item {
+        id: theme
+        property bool color1Follow: true
+        property bool color2Follow: true
+        property bool colorBorderFollow: true
+
+        property color color1: appTheme.bgColor
+        property color color2: appTheme.mainColor
+        property color colorBorder: appTheme.lineColor
+        property int borderWidth: appTheme.applyHScale(1)
+
+        property color color1_: color1Follow?appTheme.bgColor:color1
+        property color color2_: color2Follow?appTheme.mainColor:color2
+        property color colorBorder_: colorBorderFollow?appTheme.lineColor:colorBorder
+        //        property real opacity: 1
+        property var ctx
+        function get_ctx() {
+            var ctx = [
+                        { P:'color1',             V: ""+color1          },
+                        { P:'color2',             V: ""+color2          },
+                        { P:'colorBorder',        V: ""+colorBorder     },
+                        { P:'color1Follow',       V: color1Follow       },
+                        { P:'color2Follow',       V: color2Follow       },
+                        { P:'colorBorderFollow',  V: colorBorderFollow  },
+                        { P:'borderWidth',        V: borderWidth        },
+                        { P:'opacity',            V: opacity            },
+                    ];
+            return ctx;
+
+        }
+        function apply_ctx(ctx) {
+            if (ctx) {
+                __set_ctx__(theme, ctx);
+            }
+        }
+
+        onCtxChanged: {
+            if (ctx) {
+                apply_ctx(ctx);
+                ctx = undefined;
+            }
+        }
+        // called by sys_manager
+        //        function set_color(parameter, color) {
+        //            root[parameter] = "" + color;
+        //        }
     }
 
+    Rectangle {
+        opacity: theme.opacity *
+                 ((bt_mouse.pressed||!root.enabled)?
+                      0.7:1)
+        anchors.fill: parent
+        anchors.margins: theme.borderWidth
+        color: ((bt_mouse.pressed||bt_mouse.containsMouse)?
+                    theme.color2_:
+                    theme.color1_)
+        radius: parent.radius
+    }
+
+    states: [
+        State {
+            when: theme.opacity!==1
+            PropertyChanges {
+                target: root
+                color: "transparent"
+            }
+        }
+    ]
     MouseArea {
         id: bt_mouse
         enabled: !bound_bt_name.editing
@@ -55,9 +103,10 @@ ResizableRectangle {
         propagateComposedEvents: true
         onPressed: send_command(0)
         onReleased: send_command(1)
+        onDoubleClicked: {}
         function send_command(argment_index) {
             var press_argument = argument_model.get(argment_index);
-            sys_manager.send_command(root.name,
+            sys_manager.send_command(name_menu.attr.name,
                                      cmd_menu.bind_obj,
                                      press_argument,
                                      argument_menu.hex_on
@@ -70,7 +119,7 @@ ResizableRectangle {
         anchors.fill: bound_bt_name
         source: bound_bt_name
         visible: !bound_bt_name.visible
-        property real effect_text_ratio1: (parent.width - font_size_)/bound_bt_name.width
+        property real effect_text_ratio1: (parent.width - name_menu.attr.font_size)/bound_bt_name.width
         property real effect_text_ratio2: parent.width/bound_bt_name.width
         gradient: Gradient {
             orientation: Gradient.Horizontal
@@ -91,26 +140,19 @@ ResizableRectangle {
         elide: Text.ElideMiddle
         anchors.verticalCenter: parent.verticalCenter
         anchors.horizontalCenter: parent.horizontalCenter
-        text: root.name
+        text: name_menu.attr.name
         color: bt_mouse.containsMouse?
-                   color_text_2:
-                   color_text_1
+                   theme.color1_:
+                   theme.color2_
         font.bold: true
-        font.pixelSize: font_size_
-        onText_inputed: root.name = text;
+        font.pixelSize: name_menu.attr.font_size
+        onText_inputed: name_menu.set_name(text);
     }
 
     MyMenu {
         id: menu
         DeleteMenuItem {
             target: root
-        }
-        MyMenuItem {
-            text: qsTr("输入名称")
-            onTriggered: {
-                bound_bt_name.enter_edit_mode();
-                menu.visible = false;
-            }
         }
         CmdMenu {
             id: cmd_menu
@@ -137,157 +179,158 @@ ResizableRectangle {
                 }
             }
         }
-
-        MyMenuItem {
-            text_center: true
-            text: qsTr("边框宽度:")
-            plus_minus_on: true
-            value_text: border_width
-            value_editable: true
-            onPlus_triggered: {
-                border_width += 1;
-            }
-            onMinus_triggered: {
-                border_width = Math.max(
-                            0,
-                            border_width - 1
-                            );
-            }
-
-            onValue_inputed: {
-                var tmp = parseInt(text);
-                if (isNaN(tmp))
-                    tmp = 0;
-                border_width = tmp;
-            }
+        NameMenu {
+            id: name_menu
+            cmd_menu: cmd_menu
+            support_color: false
         }
-        MyMenuItem {
-            text_center: true
-            text: qsTr("字体大小(px):")
-            plus_minus_on: true
-            value_text: font_size > 0?
-                            font_size:
-                            appTheme.fontPixelSizeNormal
-            value_editable: true
-            onPlus_triggered: {
-                font_size = font_size_ + 1;
-            }
-            onMinus_triggered: {
-                font_size = Math.max(
-                            appTheme.fontPixelSizeNormal,
-                            font_size - 1
-                            );
-            }
 
-            onValue_inputed: {
-                var tmp = parseInt(text);
-                if (isNaN(tmp))
-                    tmp = -1;
-                font_size = tmp;
-            }
-        }
         MyMenu {
-            id: color_menu
+            id: theme_menu
             text_center: true
-            title: qsTr("配色")
+            title: qsTr("主题")
             MyMenuItem {
                 text: qsTr("重置")
                 tips_text: qsTr("恢复默认配色")
                 onTriggered: {
-                    color_border = "#D0D0D0";
-                    color_normal = "#F5F5F5";
-                    color_hovered = "blue";
-                    color_pressed = "#0080ff";
-                    color_text_1 = "blue";
-                    color_text_2 = "white";
+                    theme.color1Follow = true;
+                    theme.color2Follow = true;
+                    theme.colorBorderFollow = true;
+                }
+            }
+            MyMenuItem {
+                text_center: true
+                text: qsTr("边框宽度:")
+                plus_minus_on: true
+                value_text: theme.borderWidth
+                value_editable: true
+                onPlus_triggered: {
+                    theme.borderWidth += 1;
+                }
+                onMinus_triggered: {
+                    theme.borderWidth = Math.max(
+                                0,
+                                theme.borderWidth - 1
+                                );
+                }
+
+                onValue_inputed: {
+                    var tmp = parseInt(text);
+                    if (isNaN(tmp))
+                        tmp = 0;
+                    theme.borderWidth = tmp;
                 }
             }
 
+            MyMenuItem {
+                text_center: true
+                text: qsTr("不透明度:")
+                plus_minus_on: true
+                value_text: theme.opacity.toFixed(2)
+                value_editable: true
+                onPlus_triggered: {
+                    theme.opacity = Math.min(1, theme.opacity + 0.1);
+                }
+                onMinus_triggered: {
+                    theme.opacity = Math.max(0, theme.opacity - 0.1);
+                }
+
+                onValue_inputed: {
+                    var tmp = parseFloat(text);
+                    if (isNaN(tmp))
+                        return;
+                    tmp = Math.max(0, tmp);
+                    tmp = Math.min(1, tmp);
+                    theme.opacity = tmp;
+                }
+            }
+            MyMenuSeparator {
+
+            }
             Instantiator {
                 model: ListModel {
                     ListElement {
-                        text: qsTr("主体通常")
-                        parameter: "color_normal"
+                        text: qsTr("颜色1")
+                        parameter: "color1"
+                        follow: "bgColor"
                     }
                     ListElement {
-                        text: qsTr("主体鼠标悬浮")
-                        parameter: "color_hovered"
+                        text: qsTr("颜色2")
+                        parameter: "color2"
+                        follow: "mainColor"
                     }
                     ListElement {
-                        text: qsTr("主体鼠标按下")
-                        parameter: "color_pressed"
-                    }
-                    ListElement {
-                        text: qsTr("主体边框")
-                        parameter: "color_border"
-                    }
-                    ListElement {
-                        text: qsTr("文字通常")
-                        parameter: "color_text_1"
-                    }
-                    ListElement {
-                        text: qsTr("文字鼠标悬浮")
-                        parameter: "color_text_2"
+                        text: qsTr("边框")
+                        parameter: "colorBorder"
+                        follow: "lineColor"
                     }
                 }
-                onObjectAdded: color_menu.addItem(object);
-                onObjectRemoved: color_menu.removeItem(object)
-                delegate: MyMenuItem {
-                    text: model.text
-                    property string color_: root[model.parameter]
+                onObjectAdded: theme_menu.addMenu(object);
+                onObjectRemoved: theme_menu.removeMenu(object)
+                delegate: MyMenu {
+                    title: model.text
                     color_mark_on: true
-                    //                    selected: sys_manager.color_dialog.target_obj === this
-                    selected: (sys_manager.color_dialog.parameter ===
-                               model.parameter)
-                    indicator_color: color_.length>0?
-                                         color_:appTheme.lineColor
-                    tips_text: text + ":" + indicator_color
-                    onTriggered: {
-                        sys_manager.open_color_dialog(
-                                    root,
-                                    model.parameter,
-                                    color_
-                                    );
+                    indicator_color: theme[model.parameter+"_"]
+                    MyMenuItem {
+                        text: qsTr("自定义")
+                        color_mark_on: true
+                        //                    selected: sys_manager.color_dialog.target_obj === this
+                        selected: (sys_manager.color_dialog.parameter ===
+                                   model.parameter)
+                        indicator_color: color_.length>0?
+                                             color_:appTheme.lineColor
+                        tips_text: checked?
+                                       qsTr("已选中，再点击可修改颜色"):
+                                       qsTr("点击可选中自定义颜色，再点击可修改颜色")
+                        checked: !theme[model.parameter+"Follow"]
+                        property string color_: theme[model.parameter]
+                        onTriggered: {
+                            if (checked) {
+                                sys_manager.open_color_dialog(
+                                            theme,
+                                            model.parameter,
+                                            color_
+                                            );
+                            }
+                            theme[model.parameter+"Follow"] = false;
+                        }
+
+                    }
+                    MyMenuItem {
+                        text: qsTr("跟随") + appTheme.colorName[model.follow]
+                        checked: theme[model.parameter + "Follow"]
+                        color_mark_on: true
+                        indicator_color: appTheme[model.follow]
+                        onTriggered: {
+                            theme[model.parameter + "Follow"] = !checked;
+                        }
                     }
                 }
             }
         }
     }
 
+    onClicked: {
+        if (mouse.button === Qt.RightButton)
+            menu.popup();
+    }
+
+
     function onBind() {
-        bound_bt_name.focus = false;
-        var command = sys_manager.find_command_by_name(root.name);
-        if (command) {
-            bind = true;
-            root.command = command;
-        } else {
-            bind = false;
-        }
     }
 
     function onUnbind() {
-        bound_bt_name.focus = false;
-        bind = false;
-        root.command = null;
     }
 
     function widget_ctx() {
         var ctx = {
             "path": path,
             "ctx": [
-                {                       P:'ctx',           V: get_ctx()               },
-                {                       P:'name',          V: name                    },
-                {                       P:'color_normal',  V: color_normal            },
-                {                       P:'color_hovered', V: color_hovered           },
-                {                       P:'color_pressed', V: color_pressed           },
-                {                       P:'color_border',  V: color_border            },
-                {                       P:'color_text_1',  V: color_text_1            },
-                {                       P:'color_text_2',  V: color_text_2            },
-                {                       P:'border_width',  V: border_width            },
-                {                       P:'font_size',     V: font_size               },
-                {   T:"argument_menu",  P:'ctx',           V: argument_menu.get_ctx() },
-                {   T:"cmd_menu",       P:'ctx',           V: cmd_menu.get_ctx()      }
-
+                {                       P:'ctx',  V: get_ctx()                },
+                {   T:"argument_menu",  P:'ctx',  V: argument_menu.get_ctx()  },
+                {   T:"cmd_menu",       P:'ctx',  V: cmd_menu.get_ctx()       },
+                {   T:"name_menu",      P:'ctx',  V: name_menu.get_ctx()      },
+                {   T:'theme',          P:"ctx",  V: theme.get_ctx()          },
             ]};
         return ctx;
     }
@@ -295,10 +338,4 @@ ResizableRectangle {
     function apply_widget_ctx(ctx) {
         __set_ctx__(root, ctx.ctx);
     }
-
-    // called by sys_manager
-    function set_color(parameter, color) {
-        root[parameter] = "" + color;
-    }
-
 }
