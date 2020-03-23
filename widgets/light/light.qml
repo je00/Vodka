@@ -8,13 +8,19 @@ ResizableRectangle {
     id: root
     border.width: ((hovered||ligth_mouse.containsMouse)
                    &&!full_screen)?appTheme.applyHScale(1):0
-    property var id_map: {
-        'argument_menu': argument_menu,
-        'cmd_menu':      cmd_menu,
-        'ch_menu':       ch_menu,
-        'value_menu':    value_menu,
-        'name_menu':     name_menu
+    property Item ref: Loader {
+        active: true
+        sourceComponent: Component {
+            Item {
+                property var ref_argument_menu :   argument_menu
+                property var ref_cmd_menu      :   cmd_menu
+                property var ref_ch_menu       :   ch_menu
+                property var ref_value_menu    :   value_menu
+                property var ref_name_menu     :   name_menu
+            }
+        }
     }
+
     height: appTheme.applyHScale(40)
     width: appTheme.applyHScale(40)
     minimumWidth: appTheme.applyHScale(40)
@@ -52,6 +58,14 @@ ResizableRectangle {
                              ch_menu.bind_obj.value.toFixed(value_menu.attr.decimal):
                              "0"
     property var threshold_model_ctx
+
+    Connections {
+        target: mouse
+        onClicked: {
+            if (mouse.button === Qt.RightButton)
+                menu.popup();
+        }
+    }
 
     onThreshold_model_ctxChanged: {
         set_threshold_model_ctx();
@@ -100,11 +114,14 @@ ResizableRectangle {
             }
         }
 
-        MouseArea {
+        MyMouseArea {
             id: ligth_mouse
-            anchors.fill: parent
+            anchors.centerIn: parent
+            width: Math.min(parent.width, parent.height)*2/3
+            height: width
             hoverEnabled: true
             cursorShape: Qt.PointingHandCursor
+
             onClicked: {
                 if (three_color_mode) {
                     if (light_bt.color === light_color1) {
@@ -138,10 +155,6 @@ ResizableRectangle {
                                          );
             }
         }
-    }
-    onClicked: {
-        if (mouse.button === Qt.RightButton)
-            menu.popup();
     }
 
     function onBind() {
@@ -445,7 +458,7 @@ ResizableRectangle {
     }
 
     function apply_widget_ctx(ctx) {
-        __set_ctx__(root, ctx.ctx);
+        __set_ctx__(root, ctx.ctx, ref);
     }
 
     // called by sys_manager

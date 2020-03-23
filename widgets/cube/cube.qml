@@ -10,6 +10,29 @@ import "./"
 
 ResizableRectangle {
     id: root
+    property Item ref: Loader {
+        active: true
+        sourceComponent: Component {
+            Item {
+                property var ref_angle_offset          :   angle_offset
+                property var ref_position_offset       :   position_offset
+                property var ref_center_point          :   center_point
+                property var ref_obj_length            :   obj_length
+                property var ref_obj_world_length      :   obj_world_length
+                property var ref_root_transform        :   root_transform
+                property var ref_scalar_menu           :   scalar_menu
+                property var ref_x_menu                :   x_menu
+                property var ref_y_menu                :   y_menu
+                property var ref_z_menu                :   z_menu
+                property var ref_pos_offset_menu       :   pos_offset_menu
+                property var ref_theme                 :   theme
+                property var ref_file_menu             :   file_menu
+                property var ref_angle_offset_rect     :   angle_offset_rect
+                property var ref_position_offset_rect  :   position_offset_rect
+            }
+        }
+    }
+
     tips_text: main_mouse.containsMouse?
                    qsTr("双击:") + (pos_offset_menu.checked?
                                       qsTr("隐藏位姿偏置设置"):
@@ -737,6 +760,7 @@ ResizableRectangle {
         property int start_x: -999
         property int start_y: -999
         property quaternion start_rotation
+
         onClicked: {
             if (mouse.button === Qt.RightButton) {
                 main_menu.popup();
@@ -1137,7 +1161,7 @@ ResizableRectangle {
     }
 
     function apply_widget_ctx(ctx) {
-        __set_ctx__(root, ctx.ctx);
+        __set_ctx__(root, ctx.ctx, ref);
         //        scene3d.enabled = true;
     }
 }

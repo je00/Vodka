@@ -21,9 +21,12 @@ ResizableRectangle {
     property var parent_container
     color: "transparent"
 
-    onClicked: {
-        if (mouse.button === Qt.RightButton)
-            menu.popup();
+    Connections {
+        target: mouse
+        onClicked: {
+            if (mouse.button === Qt.RightButton)
+                menu.popup();
+        }
     }
 
     Component {

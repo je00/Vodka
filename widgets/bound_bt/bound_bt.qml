@@ -6,12 +6,18 @@ import MyModules 1.0
 
 ResizableRectangle {
     id: root
-    property var id_map: {
-        'argument_menu': argument_menu,
-        'cmd_menu':      cmd_menu,
-        'name_menu':     name_menu,
-        'theme':         theme
+    property Item ref: Loader {
+        active: true
+        sourceComponent: Component {
+            Item {
+                property var ref_argument_menu:  argument_menu
+                property var ref_cmd_menu:       cmd_menu
+                property var ref_name_menu:      name_menu
+                property var ref_theme:          theme
+            }
+        }
     }
+
     full_parent_enabled: true
     width: appTheme.applyHScale(74)
     height: appTheme.applyVScale(54)
@@ -22,6 +28,14 @@ ResizableRectangle {
 
     border.color: theme.colorBorder_
     border.width: theme.borderWidth
+
+    Connections {
+        target: mouse
+        onClicked: {
+            if (mouse.button === Qt.RightButton)
+                menu.popup();
+        }
+    }
 
     Item {
         id: theme
@@ -92,8 +106,9 @@ ResizableRectangle {
             }
         }
     ]
-    MouseArea {
+    MyMouseArea {
         id: bt_mouse
+        cursorShape: Qt.PointingHandCursor
         enabled: !bound_bt_name.editing
         anchors {
             fill: parent
@@ -310,10 +325,6 @@ ResizableRectangle {
         }
     }
 
-    onClicked: {
-        if (mouse.button === Qt.RightButton)
-            menu.popup();
-    }
 
 
     function onBind() {
@@ -336,6 +347,6 @@ ResizableRectangle {
     }
 
     function apply_widget_ctx(ctx) {
-        __set_ctx__(root, ctx.ctx);
+        __set_ctx__(root, ctx.ctx, ref);
     }
 }

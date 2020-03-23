@@ -6,15 +6,21 @@ import MyModules 1.0
 ResizableRectangle {
     id: root
     color: "transparent"
-    property var id_map: {
-        'slider':        slider,
-        'argument_menu': argument_menu,
-        'cmd_menu':      cmd_menu,
-        'ch_menu':       ch_menu,
-        'value_menu':    value_menu,
-        'name_menu':     name_menu,
-        "theme":         theme
+    property Item ref: Loader {
+        active: true
+        sourceComponent: Component {
+            Item {
+                property var ref_slider        :   slider
+                property var ref_argument_menu :   argument_menu
+                property var ref_cmd_menu      :   cmd_menu
+                property var ref_ch_menu       :   ch_menu
+                property var ref_value_menu    :   value_menu
+                property var ref_name_menu     :   name_menu
+                property var ref_theme         :   theme
+            }
+        }
     }
+
     property string path: "slider"
     property real from: 0
     property real to: 1000
@@ -384,7 +390,7 @@ ResizableRectangle {
     }
 
     function apply_widget_ctx(ctx) {
-        __set_ctx__(root, ctx.ctx);
+        __set_ctx__(root, ctx.ctx, ref);
     }
 
 }
