@@ -8,7 +8,7 @@ ResizableRectangle {
     width: appTheme.applyHScale(226)
     height: appTheme.applyHScale(226)
     border.width: (((is_hide_border&&!hovered)||
-             is_fill_parent)?0:appTheme.applyHScale(1))
+             full_screen)?0:appTheme.applyHScale(1))
     property string path:  "image"
     property string title: "image"
     property string current_directory: ""   // set by system
@@ -258,7 +258,7 @@ ResizableRectangle {
 
     Component.onCompleted: {
         menu.update_ch_menu();
-        if (is_fill_parent) {
+        if (full_screen) {
             sys_manager.fill_parent(root);
         }
     }

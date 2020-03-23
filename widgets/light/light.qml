@@ -7,7 +7,7 @@ import MyModules 1.0
 ResizableRectangle {
     id: root
     border.width: ((hovered||ligth_mouse.containsMouse)
-                   &&!is_fill_parent)?appTheme.applyHScale(1):0
+                   &&!full_screen)?appTheme.applyHScale(1):0
     property var id_map: {
         'argument_menu': argument_menu,
         'cmd_menu':      cmd_menu,
@@ -19,7 +19,7 @@ ResizableRectangle {
     width: appTheme.applyHScale(40)
     minimumWidth: appTheme.applyHScale(40)
     minimumHeight: appTheme.applyHScale(40)
-//    support_fill_parent: false
+//    full_parent_enabled: false
     radius: appTheme.applyHScale(5)
     color: "transparent"
     border {

@@ -12,7 +12,7 @@ ResizableRectangle {
         'name_menu':     name_menu,
         'theme':         theme
     }
-    support_fill_parent: true
+    full_parent_enabled: true
     width: appTheme.applyHScale(74)
     height: appTheme.applyVScale(54)
     minimumWidth: minimumHeight

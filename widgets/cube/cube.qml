@@ -15,7 +15,7 @@ ResizableRectangle {
                                       qsTr("隐藏位姿偏置设置"):
                                       qsTr("弹出位姿偏置设置")) + "\n"
                    + ("右键:弹出设置菜单"):
-                   qsTr("双击:") + (is_fill_parent?
+                   qsTr("双击:") + (full_screen?
                                       qsTr("取消全屏"):
                                       qsTr("全屏显示")) + "\n"
                    + qsTr("右键:弹出设置菜单")
@@ -39,7 +39,7 @@ ResizableRectangle {
     }
 
     border.width: (((theme.hideBorder&&!hovered&&!main_mouse.containsMouse)||
-                    is_fill_parent)?0:appTheme.applyHScale(1))
+                    full_screen)?0:appTheme.applyHScale(1))
     color: "transparent"
 
     width: appTheme.applyHScale(226)
@@ -71,18 +71,18 @@ ResizableRectangle {
                                             100,
                                             100)
     readonly property vector3d position_offset: Qt.vector3d(
-                                           0,
-                                           0,
-                                           0)
+                                           position_offset_rect.valueX,
+                                           position_offset_rect.valueY,
+                                           position_offset_rect.valueZ)
     readonly property vector3d angle_offset: Qt.vector3d(
                                         angle_offset_rect.valueX,
                                         angle_offset_rect.valueY,
                                         angle_offset_rect.valueZ)
 
     property vector3d center_point: Qt.vector3d(
-                                        position_offset_rect.valueX,
-                                        position_offset_rect.valueY,
-                                        position_offset_rect.valueZ)
+                                        0,
+                                        0,
+                                        0)
     property var parent_container
 
     Item {
@@ -1056,14 +1056,14 @@ ResizableRectangle {
         if (!enabled)
             return;
 
-        if (!is_fill_parent)
+        if (!full_screen)
             x = (x - x%4);
     }
     onYChanged: {
         if (!enabled)
             return;
 
-        if (!is_fill_parent)
+        if (!full_screen)
             y = (y - y%4);
     }
 
