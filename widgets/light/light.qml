@@ -6,8 +6,7 @@ import MyModules 1.0
 
 ResizableRectangle {
     id: root
-    border.width: ((hovered||ligth_mouse.containsMouse)
-                   &&!full_screen)?appTheme.applyHScale(1):0
+    border.width: ((hovered||ligth_mouse.containsMouse))?appTheme.applyHScale(1):0
     property Item ref: Loader {
         active: true
         sourceComponent: Component {

@@ -61,8 +61,9 @@ ResizableRectangle {
         "position_offset_rect": position_offset_rect,
     }
 
-    border.width: (((theme.hideBorder&&!hovered&&!main_mouse.containsMouse)||
-                    full_screen)?0:appTheme.applyHScale(1))
+    border.width: (((theme.hideBorder
+                     &&!hovered
+                     &&!main_mouse.containsMouse))?0:appTheme.applyHScale(1))
     color: "transparent"
 
     width: appTheme.applyHScale(226)
@@ -94,13 +95,13 @@ ResizableRectangle {
                                             100,
                                             100)
     readonly property vector3d position_offset: Qt.vector3d(
-                                           position_offset_rect.valueX,
-                                           position_offset_rect.valueY,
-                                           position_offset_rect.valueZ)
+                                                    position_offset_rect.valueX,
+                                                    position_offset_rect.valueY,
+                                                    position_offset_rect.valueZ)
     readonly property vector3d angle_offset: Qt.vector3d(
-                                        angle_offset_rect.valueX,
-                                        angle_offset_rect.valueY,
-                                        angle_offset_rect.valueZ)
+                                                 angle_offset_rect.valueX,
+                                                 angle_offset_rect.valueY,
+                                                 angle_offset_rect.valueZ)
 
     property vector3d center_point: Qt.vector3d(
                                         0,
@@ -752,7 +753,7 @@ ResizableRectangle {
         }
     }
 
-    MouseArea {
+    MyMouseArea {
         id: main_mouse
         acceptedButtons: Qt.RightButton | Qt.LeftButton
         anchors.fill: scene3d
@@ -973,7 +974,7 @@ ResizableRectangle {
         onDropped: {
             var path = sys_manager.config_path;
             if(drop.hasUrls){
-//                reset_mesh();
+                //                reset_mesh();
                 for(var i = 0; i < drop.urls.length; i++){
                     var url = drop.urls[i];
                     file_menu.handle_url_from_dialog(
@@ -1074,21 +1075,6 @@ ResizableRectangle {
 
         return result;
 
-    }
-
-    onXChanged: {
-        if (!enabled)
-            return;
-
-        if (!full_screen)
-            x = (x - x%4);
-    }
-    onYChanged: {
-        if (!enabled)
-            return;
-
-        if (!full_screen)
-            y = (y - y%4);
     }
 
     function update_cube_rotate() {

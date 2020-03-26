@@ -7,8 +7,7 @@ ResizableRectangle {
     id: root
     width: appTheme.applyHScale(226)
     height: appTheme.applyHScale(226)
-    border.width: (((is_hide_border&&!hovered)||
-             full_screen)?0:appTheme.applyHScale(1))
+    border.width: (((is_hide_border&&!hovered))?0:appTheme.applyHScale(1))
     property string path:  "image"
     property string title: "image"
     property string current_directory: ""   // set by system
@@ -19,6 +18,7 @@ ResizableRectangle {
     property string effect_file: effect_loader.file_name
     property var parameters: []
     property var parent_container
+//    property int image_tick: 0
     color: "transparent"
 
     Connections {
@@ -209,7 +209,7 @@ ResizableRectangle {
                     else
                         img_index = -1;
 
-                    refresh();
+                    refresh(true);
                 }
             }
         }
@@ -261,18 +261,27 @@ ResizableRectangle {
 
     Component.onCompleted: {
         menu.update_ch_menu();
-        if (full_screen) {
-            sys_manager.fill_parent(root);
-        }
     }
 
     onCurrent_directoryChanged: menu.update_effect_menu();
 
 
-    function refresh() {
-        image.source = "";
-        //        if (img_index >= 0)
-        image.source = "image://data/" + img_index;
+    function refresh(force=false) {
+        if (force) {
+            image.source = "";
+            image.source = "image://data/" + img_index;
+            return;
+        }
+
+        if (img_index < 0)
+            return;
+
+//        console.log(image_tick, sys_manager.image_tick);
+//        if (image_tick !== sys_manager.image_tick) {
+//            image_tick = sys_manager.image_tick;
+            image.source = "";
+            image.source = "image://data/" + img_index;
+//        }
     }
 
 

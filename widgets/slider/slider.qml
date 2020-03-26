@@ -35,6 +35,14 @@ ResizableRectangle {
     minimumWidth: appTheme.applyHScale(204)
     radius: appTheme.applyHScale(5)
 
+    Connections {
+        target: mouse
+        onClicked: {
+            if (mouse.button === Qt.RightButton)
+                menu.popup();
+        }
+    }
+
     Rectangle {
         anchors {
             fill: parent
@@ -45,23 +53,6 @@ ResizableRectangle {
         color: theme.bgColor_
     }
 
-    onXChanged: {
-        if (!enabled)
-            return;
-
-        x = (x - x%4)
-    }
-    onYChanged: {
-        if (!enabled)
-            return;
-
-        y = (y - y%4)
-    }
-
-    onClicked: {
-        if (mouse.button === Qt.RightButton)
-            menu.popup();
-    }
 
     Item {
         id: theme
