@@ -1,3 +1,8 @@
+
+<div align=center>
+<img src="_v_images/20200327104322813_30841.png" width=300x/>
+</div>
+
 # 关于此仓库
 * 伏特加上位机自2020年3月27将改名为VOFA+，协议和控件仓库名称不变。
 * Vodka是VOFA+上位机的插件库，当前包含[3个协议](#protocal)、[5个控件](#widget)。
