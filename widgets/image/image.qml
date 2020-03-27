@@ -143,7 +143,6 @@ ResizableRectangle {
             id: effect_menu
             title: qsTr("特效")
             MyMenuItem {
-                font_point_size: theme_font_point_size
                 property string file_name: "EffectPassThrough.qml.default"
                 checked: root.effect_file === file_name
                 text: qsTr("None")
@@ -184,7 +183,6 @@ ResizableRectangle {
             id: effect_menu_component
             MyMenuItem {
                 id: effect_menu_item
-                font_point_size: theme_font_point_size
                 property string file_name
                 checked: root.effect_file === file_name
                 onTriggered: {
@@ -201,7 +199,6 @@ ResizableRectangle {
                 id: ch_menu_item
                 property int index
                 checked: (img_index === index)
-                font_point_size: theme_font_point_size
 
                 onTriggered: {
                     if (img_index !== index)

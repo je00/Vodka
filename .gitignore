@@ -44,3 +44,4 @@ CMakeLists.txt.user*
 /widgets/image/effects/*.defaultc
 /widgets/*.po
 /widgets/simplifiedchinese.ts
+/*.vswp
