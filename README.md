@@ -61,7 +61,7 @@ Serial.write((char *)data, 24);
 Serial.write(tail, 4);
 ```
 
-## ## <span id="widget">控件介绍</span>
+## <span id="widget">控件介绍</span>
 
   1. 多功能波形图（未开源）
   可切换柱状图，直方统计图、FFT，运算在上位机完成。
