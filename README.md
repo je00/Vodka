@@ -1,7 +1,9 @@
-
+<br/>
+<br/>
 <div align=center>
-<img src="_v_images/20200327104322813_30841.png" width=300x/>
+<img src="images/vofa.png" width=200x/>
 </div>
+<br/>
 
 # 关于此仓库
 * 伏特加上位机自2020年3月27将改名为VOFA+，协议和控件仓库名称不变。
