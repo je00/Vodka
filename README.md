@@ -1,7 +1,7 @@
 <br/>
 <br/>
 <div align=center>
-<img src="images/vofa.png" width=200x/>
+<img src="images/vofa.png" width=300x/>
 </div>
 <br/>
 
