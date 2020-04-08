@@ -561,7 +561,7 @@ ResizableRectangle {
                     worldDirection: camera.position.times(-1).normalized();
                     color: light_color
                     intensity: 1.0
-                },
+                }
 //                // Event Source will be set by the Qt3DQuickWindow
 //                InputSettings { }
             ]
