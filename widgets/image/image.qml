@@ -7,7 +7,7 @@ ResizableRectangle {
     id: root
     width: appTheme.applyHScale(226)
     height: appTheme.applyHScale(226)
-    border.width: (((is_hide_border&&!hovered))?0:appTheme.applyHScale(1))
+    border.width: ((is_hide_border&&!hovered)?0:appTheme.applyHScale(1))
     property string path:  "image"
     property string title: "image"
     property string current_directory: ""   // set by system

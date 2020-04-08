@@ -2,8 +2,10 @@
 //import QtCanvas3D 1.0
 import Qt3D.Core 2.12
 import Qt3D.Render 2.12
-import QtQuick.Scene3D 2.12
+import Qt3D.Render 2.13
+import Qt3D.Input 2.13
 import Qt3D.Extras 2.12
+import QtQuick.Scene3D 2.12
 import QtQuick.Controls 2.12
 import MyModules 1.0
 import "./"
@@ -63,7 +65,8 @@ ResizableRectangle {
 
     border.width: (((theme.hideBorder
                      &&!hovered
-                     &&!main_mouse.containsMouse))?0:appTheme.applyHScale(1))
+                     &&!main_mouse.containsMouse))?
+                       0:appTheme.applyHScale(1))
     color: "transparent"
 
     width: appTheme.applyHScale(226)
@@ -537,17 +540,17 @@ ResizableRectangle {
 
     Scene3D {
         id: scene3d
+
         anchors {
             fill: parent
             margins: appTheme.applyHScale(12)
         }
-        aspects: "input"
-        visible: (height > 0 && width > 0)
-
         Entity {
-            //            components: [ root_transform ]
+            id: root_entity
+            parent: null
             components: [
                 RenderSettings {
+                    renderPolicy: RenderSettings.OnDemand
                     activeFrameGraph: ForwardRenderer {
                         clearColor: Qt.rgba(0, 0.5, 1, 0)
                         camera: camera
@@ -558,10 +561,11 @@ ResizableRectangle {
                     worldDirection: camera.position.times(-1).normalized();
                     color: light_color
                     intensity: 1.0
-                }
-                // Event Source will be set by the Qt3DQuickWindow
-                //            InputSettings { }
+                },
+//                // Event Source will be set by the Qt3DQuickWindow
+//                InputSettings { }
             ]
+
             Camera {
                 id: camera
                 projectionType: CameraLens.PerspectiveProjection
@@ -573,6 +577,7 @@ ResizableRectangle {
                 upVector: Qt.vector3d( 0.0, 1.0, 0.0 )
                 viewCenter: Qt.vector3d( 0.0, 0.0, 0.0 )
             }
+//            FirstPersonCameraController { camera: camera }
 
 
             Entity {
@@ -702,7 +707,13 @@ ResizableRectangle {
                             id: cube_entity
                             property Mesh obj_mesh
                             property bool first_run: true
-                            components: [ ]
+                            components: [RenderSettings {
+                                    renderPolicy: RenderSettings.Always
+                                    activeFrameGraph: ForwardRenderer {
+                                        clearColor: Qt.rgba(0, 0.5, 1, 1)
+                                        camera: camera
+                                    }
+                                }]
                             Component.onCompleted: {
                                 update_model();
                             }
