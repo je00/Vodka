@@ -41,7 +41,7 @@ ResizableRectangle {
                                       qsTr("弹出位姿偏置设置")) + "\n"
                    + ("右键:弹出设置菜单"):
                    qsTr("双击:") + (full_screen?
-                                      qsTr("取消全屏"):
+                                      qsTr("向下还原"):
                                       qsTr("全屏显示")) + "\n"
                    + qsTr("右键:弹出设置菜单")
     tips_visible: main_mouse.containsMouse
@@ -173,8 +173,8 @@ ResizableRectangle {
 
         MyMenuItem {
             id: mode_menu
-            text: quaternion_mode?QT_TR_NOOP("四元数模式"):QT_TR_NOOP("欧拉角模式")
-            tips_text: (qsTr("点击可切换为") +
+            text: quaternion_mode?qsTr("四元数模式"):qsTr("欧拉角模式")
+            tips_text: (qsTr("点击可切换为") + ": " +
                         (quaternion_mode?qsTr("欧拉角模式"):qsTr("四元数模式")))
             onTriggered: {
                 quaternion_mode = !quaternion_mode;
