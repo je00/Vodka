@@ -9,7 +9,7 @@ ResizableRectangle {
     border.width: ((hovered||ligth_mouse.containsMouse))?
                       appTheme.applyHScale(1):0
     property Item ref: Loader {
-        active: true
+        active: false
         sourceComponent: Component {
             Item {
                 property var ref_argument_menu :   argument_menu

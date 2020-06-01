@@ -7,7 +7,7 @@ import MyModules 1.0
 ResizableRectangle {
     id: root
     property Item ref: Loader {
-        active: true
+        active: false
         sourceComponent: Component {
             Item {
                 property var ref_argument_menu:  argument_menu

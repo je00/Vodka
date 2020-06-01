@@ -13,7 +13,7 @@ import "./"
 ResizableRectangle {
     id: root
     property Item ref: Loader {
-        active: true
+        active: false
         sourceComponent: Component {
             Item {
                 property var ref_angle_offset          :   angle_offset

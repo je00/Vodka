@@ -7,7 +7,7 @@ ResizableRectangle {
     id: root
     color: "transparent"
     property Item ref: Loader {
-        active: true
+        active: false
         sourceComponent: Component {
             Item {
                 property var ref_slider        :   slider
