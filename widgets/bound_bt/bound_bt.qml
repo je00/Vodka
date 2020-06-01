@@ -333,7 +333,7 @@ ResizableRectangle {
     function onUnbind() {
     }
 
-    function widget_ctx() {
+    function get_widget_ctx() {
         var ctx = {
             "path": path,
             "ctx": [
@@ -346,7 +346,7 @@ ResizableRectangle {
         return ctx;
     }
 
-    function apply_widget_ctx(ctx) {
+    function set_widget_ctx(ctx) {
         __set_ctx__(root, ctx.ctx, ref);
     }
 }
