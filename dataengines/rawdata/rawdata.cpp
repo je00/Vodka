@@ -5,7 +5,8 @@
 
 RawData::RawData()
 {
-
+    frame_list_.append(Frame());
+    frame_ = &frame_list_[0];
 }
 
 RawData::~RawData()
@@ -16,13 +17,9 @@ RawData::~RawData()
 
 void RawData::ProcessingDatas(char *data, int count)
 {
-    frame_start_index_list_.clear();
-    frame_is_valid_list_.clear();
-    frame_end_index_list_.clear();
-    frame_image_size_list_.clear();
-
-    frame_start_index_list_.append(count);
-    frame_end_index_list_.append(count-1);
-    frame_is_valid_list_.append(false);
-    frame_image_size_list_.append(0);
+    // 将所有数据包含为一帧，is_valid_为false，表示这不是一个采样数据包、也不是一个图片数据包
+    frame_->start_index_ = 0;
+    frame_->end_index_ = count-1;
+    frame_->is_valid_ = false;
+    frame_->image_size_ = 0;
 }

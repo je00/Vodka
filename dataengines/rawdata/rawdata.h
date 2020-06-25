@@ -18,5 +18,7 @@ public:
     ~RawData();
 
     void ProcessingDatas(char *data, int count);
+private:
+    Frame *frame_;
 };
 #endif // RawData_H

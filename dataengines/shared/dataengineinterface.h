@@ -51,12 +51,14 @@ public:
         format_ = format;
         width_ = width;
         height_ = height;
+        updated_ = true;
     }
     uchar *data() { return data_.data(); }
     int length() { return length_; }
     int width() { return width_; }
     int height() { return height_; }
     Format format() { return format_; }
+    bool updated() { return updated_; }
 private:
 //    uchar *data_;
     QVector<uchar> data_;
@@ -64,6 +66,16 @@ private:
     int length_ = 0;
     int width_ = 0;
     int height_= 0;
+    bool updated_ = true;
+};
+
+
+struct Frame {
+    int start_index_ = 0;
+    int end_index_ = 0;
+    int image_size_ = 0;
+    QVector<float> datas_;
+    bool is_valid_ = 0;
 };
 
 class DataEngineInterface
@@ -74,25 +86,12 @@ public:
 //    virtual QVariantList ProcessingDatas(const QByteArray data) = 0;
     virtual void ProcessingDatas(char *data, int count) = 0;
 
-    QVector<int> frame_start_index_list() {
-//        image_.size();
-        return frame_start_index_list_; }
-    QVector<int> frame_end_index_list() { return frame_end_index_list_; }
-    QVector<bool> frame_is_valid_list() { return frame_is_valid_list_; }
-    QVector<QVector<float>> frame_datas_list() { return frame_datas_list_; }
-
-    QVector<RawImage*> image_list() { return image_list_; }
-    QVector<bool> image_updated_list() { return image_is_updated_list_; }
-    QVector<int> frame_image_size_list() { return frame_image_size_list_; }
+    const QList<Frame> &frame_list() { return frame_list_; }
+    const QList<RawImage*> &image_channels() { return image_channels_; }
 
 protected:
-    QVector<int> frame_start_index_list_;
-    QVector<int> frame_end_index_list_;
-    QVector<bool> frame_is_valid_list_;
-    QVector<int> frame_image_size_list_;
-    QVector<QVector<float>> frame_datas_list_;
-    QVector<RawImage*> image_list_;
-    QVector<bool> image_is_updated_list_;
+    QList<Frame> frame_list_;
+    QList<RawImage*> image_channels_;
 };
 
 

@@ -18,8 +18,7 @@ public:
     ~JustFloat();
 
     void ProcessingDatas(char *data, int count);
-    bool ProcessingFrame(char *data, int count);
-    bool ProcessingImage(char *data, int count);
+    bool ProcessingFrame(char *data, int count, QVector<float> &dd);
 private:
     uint32_t image_count_mutation_count_ = 0;
 };
