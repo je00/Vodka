@@ -3,16 +3,12 @@
 
 #include "dataengineinterface.h"
 
-#include <QVariantList>
-
-#define FireWater_iid "Mine.Plugin.FireWater"
-
 class FireWater : public QObject, public DataEngineInterface
 {
     Q_OBJECT
     Q_INTERFACES(DataEngineInterface)
+    Q_PLUGIN_METADATA(IID "VOFA+.Plugin.FireWater")
 
-    Q_PLUGIN_METADATA(IID FireWater_iid)
 public:
     explicit FireWater();
     ~FireWater();

@@ -1,7 +1,4 @@
-#include "RawData.h"
-#include <QDebug>
-#include <limits>
-
+#include "rawdata.h"
 
 RawData::RawData()
 {

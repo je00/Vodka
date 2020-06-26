@@ -83,7 +83,6 @@ class DataEngineInterface
 
 public:
     ~DataEngineInterface() {}
-//    virtual QVariantList ProcessingDatas(const QByteArray data) = 0;
     virtual void ProcessingDatas(char *data, int count) = 0;
 
     const QList<Frame> &frame_list() { return frame_list_; }
@@ -95,7 +94,7 @@ protected:
 };
 
 
-#define DataEngineInterface_iid "Mine.Plugin.DataEngineInterface"
+#define DataEngineInterface_iid "VOFA+.Plugin.DataEngineInterface"
 
 QT_BEGIN_NAMESPACE
 Q_DECLARE_INTERFACE(DataEngineInterface, DataEngineInterface_iid)

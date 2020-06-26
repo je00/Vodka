@@ -3,16 +3,12 @@
 
 #include "dataengineinterface.h"
 
-#include <QVariantList>
-
-#define JustFloat_iid "Mine.Plugin.JustFloat"
-
 class JustFloat : public QObject, public DataEngineInterface
 {
     Q_OBJECT
     Q_INTERFACES(DataEngineInterface)
+    Q_PLUGIN_METADATA(IID "VOFA+.Plugin.JustFloat")
 
-    Q_PLUGIN_METADATA(IID JustFloat_iid)
 public:
     explicit JustFloat();
     ~JustFloat();
