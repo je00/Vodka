@@ -127,9 +127,10 @@ ResizableRectangle {
         value: 500
 //        Component.onCompleted: value = 500;
         onValueChanged: {
+            value = value.toFixed(value_menu.attr.decimal);
             root_spinbox.value = value;
             argument_model.get(0).hex_value = sys_manager.float_to_hex(value);
-            argument_model.get(0).float_value = value;
+            argument_model.get(0).float_value = root_spinbox.value;
 
             var press_argument = argument_model.get(0);
             sys_manager.send_command(name_menu.attr.name,
@@ -177,7 +178,10 @@ ResizableRectangle {
             value: 0
             from: root.from
             to: root.to
-            onValueChanged: slider.value = value;
+            onValueChanged: {
+                value = value.toFixed(value_menu.attr.decimal);
+                slider.value = value;
+            }
         }
     }
 
