@@ -239,7 +239,7 @@ ResizableRectangle {
         FileMenu {
             id: file_menu
             title: qsTr("模型文件")
-            dir: sys_manager.config_path + "/objs"
+            dir: sys_manager.data_path + "/objs"
             types: ["obj", "stl"]
             MyMenuItem {
                 text: qsTr("cube")
@@ -252,7 +252,8 @@ ResizableRectangle {
 
             }
             onSelected_fileChanged: {
-                reset_mesh();
+                if (!cube_entity.first_run)
+                    reset_mesh();
                 cube_entity.update_model();
             }
         }
@@ -703,6 +704,7 @@ ResizableRectangle {
                             origin: position_offset
                         }
 
+
                         Entity {
                             id: cube_entity
                             property Mesh obj_mesh
@@ -739,16 +741,21 @@ ResizableRectangle {
                             }
 
                             function update_model() {
+
+                                var source;
+                                sys_manager.file_reader.source = sys_manager.data_path + "/objs/" + file_menu.selected_file;
+                                if (file_menu.selected_file.length > 0 &&
+                                        file_menu.selected_file.length > 0 &&
+                                        sys_manager.file_reader.exist()) {
+                                    source = "file:///" + sys_manager.file_reader.source;
+                                } else {
+                                    source = "./cube.stl";
+                                }
+
                                 cube_entity.components = [];
                                 var component = Qt.createComponent("./Mesh.qml");
-                                var new_mesh  = component.createObject(cube_entity);
+                                var new_mesh  = component.createObject(cube_entity, { 'source': source });
 
-                                sys_manager.file_reader.source = sys_manager.config_path + "/objs/" + file_menu.selected_file;
-                                if (file_menu.selected_file.length > 0 && sys_manager.file_reader.exist()) {
-                                    new_mesh.source = "file:///" + sys_manager.file_reader.source;
-                                } else {
-                                    new_mesh.source = "./cube.stl";
-                                }
                                 var tmp_mesh = obj_mesh;
                                 obj_mesh = new_mesh;
                                 if (tmp_mesh)
@@ -983,7 +990,7 @@ ResizableRectangle {
     DropArea {
         anchors.fill: parent
         onDropped: {
-            var path = sys_manager.config_path;
+            var path = sys_manager.data_path;
             if(drop.hasUrls){
                 //                reset_mesh();
                 for(var i = 0; i < drop.urls.length; i++){
