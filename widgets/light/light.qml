@@ -438,22 +438,36 @@ ResizableRectangle {
 
     function get_widget_ctx() {
         var ctx = {
-            "path": path,
-            "ctx": [
-                {                    P:'ctx',                   V: get_ctx()                },
-                {                    P:'top_value',             V: top_value                },
-                {                    P:'bottom_value',          V: bottom_value             },
-                {                    P:'three_color_mode',      V: three_color_mode         },
-                {                    P:'light_color_link_ch',   V: light_color_link_ch      },
-                {                    P:'light_color',           V: light_color              },
-                {                    P:'reverse_logic',         V: reverse_logic            },
-                {                    P:'threshold_model_ctx',   V: get_threshold_model_ctx()},
-                { T:"argument_menu", P:'ctx',                   V: argument_menu.get_ctx()  },
-                { T:"cmd_menu",      P:'ctx',                   V: cmd_menu.get_ctx()       },
-                { T:"ch_menu",       P:'ctx',                   V: ch_menu.get_ctx()        },
-                { T:"value_menu",    P:'ctx',                   V: value_menu.get_ctx()     },
-                { T:"name_menu",     P:'ctx',                   V: name_menu.get_ctx()      }
-            ]};
+            'path': path,
+            'ctx': {
+                '.': {
+                    'ctx'                   :   get_ctx()                ,
+                    'top_value'             :   top_value                ,
+                    'bottom_value'          :   bottom_value             ,
+                    'three_color_mode'      :   three_color_mode         ,
+                    'light_color_link_ch'   :   light_color_link_ch      ,
+                    'light_color'           :   light_color              ,
+                    'reverse_logic'         :   reverse_logic            ,
+                    'threshold_model_ctx'   :   get_threshold_model_ctx(),
+                },
+                'argument_menu': {
+                    'ctx': argument_menu.get_ctx()
+                },
+                'cmd_menu': {
+                    'ctx': cmd_menu.get_ctx()
+                },
+                'ch_menu': {
+                    'ctx': ch_menu.get_ctx()
+                },
+                'value_menu': {
+                    'ctx': value_menu.get_ctx()
+                },
+                'name_menu': {
+                    'ctx': name_menu.get_ctx()
+                }
+            }
+        }
+
         return ctx;
     }
 

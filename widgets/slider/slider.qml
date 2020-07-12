@@ -62,12 +62,15 @@ ResizableRectangle {
         property bool hideBorder: false
         property var ctx
         function get_ctx() {
-            var ctx = [
-                        { P:'bgColorFollow',    V: bgColorFollow    },
-                        { P:'bgColor',          V: "" + bgColor     },
-                        { P:'opacity',          V: opacity          },
-                        { P:'hideBorder',       V: hideBorder       },
-                    ];
+            var ctx = {
+                '.': {
+                    'bgColorFollow': bgColorFollow,
+                    'bgColor'      : "" + bgColor ,
+                    'opacity'      : opacity      ,
+                    'hideBorder'   : hideBorder   ,
+                }
+            }
+
             return ctx;
 
         }
@@ -366,21 +369,37 @@ ResizableRectangle {
     }
     function get_widget_ctx() {
         var ctx = {
-            "path": path,
-            "ctx": [
-                {                    P:'ctx',       V: get_ctx()                },
-                {                    P:'from',      V: from                     },
-                {                    P:'to',        V: to                       },
-                {                    P:'step_size', V: step_size                },
-                { T:"slider",        P:'value',     V: slider.value             },
-                { T:"argument_menu", P:'ctx',       V: argument_menu.get_ctx()  },
-                { T:"cmd_menu",      P:'ctx',       V: cmd_menu.get_ctx()       },
-                { T:"ch_menu",       P:'ctx',       V: ch_menu.get_ctx()        },
-                { T:"value_menu",    P:'ctx',       V: value_menu.get_ctx()     },
-                { T:"name_menu",     P:'ctx',       V: name_menu.get_ctx()      },
-                { T:"theme",         P:'ctx',       V: theme.get_ctx()          }
+            '.': {
+                'ctx'       : get_ctx(),
+                'from'      : from     ,
+                'to'        : to       ,
+                'step_size' : step_size,
+            },
+            'slider': {
+                'value': slider.value
+            },
 
-            ]};
+            'argument_menu': {
+                'ctx': argument_menu.get_ctx()
+            },
+
+            'cmd_menu': {
+                'ctx': cmd_menu.get_ctx()
+            },
+            'ch_menu': {
+                'ctx': ch_menu.get_ctx()
+            },
+            'value_menu': {
+                'ctx': value_menu.get_ctx()
+            },
+            'name_menu': {
+                'ctx': name_menu.get_ctx()
+            },
+            'theme': {
+                'ctx': theme.get_ctx()
+            },
+        }
+
         return ctx;
     }
 

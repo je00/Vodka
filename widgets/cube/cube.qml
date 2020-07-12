@@ -124,13 +124,16 @@ ResizableRectangle {
         property real bgOpacity: 0.0
         property var ctx
         function get_ctx() {
-            var ctx = [
-                        { P:"cubeColorFollow",    V:cubeColorFollow  },
-                        { P:"cubeColor",          V:""+cubeColor  },
-                        { P:"bgColor",            V:""+bgColor    },
-                        { P:"bgOpacity",          V:bgOpacity     },
-                        { P:"hideBorder",         V:hideBorder    },
-                    ];
+            var ctx = {
+                '.': {
+                    "cubeColorFollow"    :cubeColorFollow   ,
+                    "cubeColor"          :""+cubeColor      ,
+                    "bgColor"            :""+bgColor        ,
+                    "bgOpacity"          :bgOpacity         ,
+                    "hideBorder"         :hideBorder        ,
+                }
+            }
+
             return ctx;
 
         }
@@ -1126,41 +1129,70 @@ ResizableRectangle {
 
     function get_widget_ctx() {
         var ctx = {
-            "path": path,
-            "ctx": [
-                { T:'scalar_menu',          P:'ctx',                   V: scalar_menu.get_ctx()    },
-                { T:'x_menu',               P:'ctx',                   V: x_menu.get_ctx()         },
-                { T:'y_menu',               P:'ctx',                   V: y_menu.get_ctx()         },
-                { T:'z_menu',               P:'ctx',                   V: z_menu.get_ctx()         },
-                { T:'pos_offset_menu',      P:'checked',               V: pos_offset_menu.checked  },
-                {                           P:'scale',                 V: root.scale               },
-                {                           P:'quaternion_mode',       V: root.quaternion_mode     },
-                {                           P:'angle_or_radian',       V: root.angle_or_radian     },
-                { T:'angle_offset_rect',    P:'valueX',                V: angle_offset_rect.valueX },
-                { T:'angle_offset_rect',    P:'valueY',                V: angle_offset_rect.valueY },
-                { T:'angle_offset_rect',    P:'valueZ',                V: angle_offset_rect.valueZ },
-                { T:'position_offset_rect', P:'valueX',                V: position_offset_rect.valueX },
-                { T:'position_offset_rect', P:'valueY',                V: position_offset_rect.valueY },
-                { T:'position_offset_rect', P:'valueZ',                V: position_offset_rect.valueZ },
-                { T:'center_point',         P:'x',                     V: root.center_point.x      },
-                { T:'center_point',         P:'y',                     V: root.center_point.y      },
-                { T:'center_point',         P:'z',                     V: root.center_point.z      },
-                { T:'root_transform',       P:'rotationX',             V: root_transform.rotationX },
-                { T:'root_transform',       P:'rotationY',             V: root_transform.rotationY },
-                { T:'root_transform',       P:'rotationZ',             V: root_transform.rotationZ },
-                { T:'obj_length',           P:'x',                     V: root.obj_length.x        },
-                { T:'obj_length',           P:'y',                     V: root.obj_length.y        },
-                { T:'obj_length',           P:'z',                     V: root.obj_length.z        },
-                { T:'obj_world_length',     P:'x',                     V: root.obj_world_length.x  },
-                { T:'obj_world_length',     P:'y',                     V: root.obj_world_length.y  },
-                { T:'obj_world_length',     P:'z',                     V: root.obj_world_length.z  },
-                {                           P:'is_auto_center',        V: root.is_auto_center      },
-                {                           P:'is_show_obj_axis',      V: root.is_show_obj_axis    },
-                {                           P:'is_show_world_axis',    V: root.is_show_world_axis  },
-                { T:'theme',                P:'ctx',                   V: theme.get_ctx()          },
-                { T:'file_menu',            P:'selected_file',         V: file_menu.selected_file  },
-                {                           P:'ctx',                   V: get_ctx()                },
-            ]};
+            '.': {
+                'scale'             : root.scale             ,
+                'quaternion_mode'   : root.quaternion_mode   ,
+                'angle_or_radian'   : root.angle_or_radian   ,
+                'is_auto_center'    : root.is_auto_center    ,
+                'is_show_obj_axis'  : root.is_show_obj_axis  ,
+                'is_show_world_axis': root.is_show_world_axis,
+                'ctx'               : get_ctx()              ,
+            },
+            'scalar_menu': {
+                'ctx': scalar_menu.get_ctx()
+            },
+            'x_menu': {
+                'ctx': x_menu.get_ctx()
+            },
+
+            'y_menu': {
+                'ctx': y_menu.get_ctx()
+            },
+
+            'z_menu': {
+                'ctx': z_menu.get_ctx()
+            },
+            'pos_offset_menu': {
+                'checked': pos_offset_menu.checked
+            },
+            'angle_offset_rect': {
+                'valueX':   angle_offset_rect.valueX,
+                'valueY':   angle_offset_rect.valueY,
+                'valueZ':   angle_offset_rect.valueZ,
+            },
+            'position_offset_rect': {
+                'valueX':   position_offset_rect.valueX,
+                'valueY':   position_offset_rect.valueY,
+                'valueZ':   position_offset_rect.valueZ,
+            },
+            'center_point': {
+                'x': root.center_point.x,
+                'y': root.center_point.y,
+                'z': root.center_point.z,
+            },
+            'root_transform': {
+                'rotationX': root_transform.rotationX,
+                'rotationY': root_transform.rotationY,
+                'rotationZ': root_transform.rotationZ
+            },
+            'obj_length': {
+                'x': obj_length.x,
+                'y': obj_length.y,
+                'z': obj_length.z
+            },
+            'obj_world_length': {
+                'x': root.obj_world_length.x,
+                'y': root.obj_world_length.y,
+                'z': root.obj_world_length.z
+            },
+            'theme': {
+                'ctx': theme.get_ctx()
+            },
+            'file_menu': {
+                'selected_file': file_menu.selected_file
+            }
+        }
+
         return ctx;
     }
 

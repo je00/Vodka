@@ -293,17 +293,20 @@ ResizableRectangle {
 
     function get_widget_ctx() {
         var ctx = {
-            "path": path,
-            "ctx": [
-                {P:'ctx',                    V: get_ctx()                   },
-                {P:'title',                  V: root.title                  },
-                {P:'img_index',              V: root.img_index              },
-                {P:'is_hide_name',           V: root.is_hide_name           },
-                {P:'is_hide_border',         V: root.is_hide_border         },
-                {P:'is_show_effect_setting', V: root.is_show_effect_setting },
-                {P:'parameters',             V: root.parameters             },
-                {P:'effect_file',            V: root.effect_file            },
-            ]};
+            'path': path,
+            'ctx': {
+                '.': {
+                    'ctx'                    : get_ctx()                   ,
+                    'title'                  : root.title                  ,
+                    'img_index'              : root.img_index              ,
+                    'is_hide_name'           : root.is_hide_name           ,
+                    'is_hide_border'         : root.is_hide_border         ,
+                    'is_show_effect_setting' : root.is_show_effect_setting ,
+                    'parameters'             : root.parameters             ,
+                    'effect_file'            : root.effect_file            ,
+                }
+            }
+        }
 
         return ctx;
     }

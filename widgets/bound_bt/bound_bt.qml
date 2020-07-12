@@ -54,16 +54,19 @@ ResizableRectangle {
         //        property real opacity: 1
         property var ctx
         function get_ctx() {
-            var ctx = [
-                        { P:'color1',             V: ""+color1          },
-                        { P:'color2',             V: ""+color2          },
-                        { P:'colorBorder',        V: ""+colorBorder     },
-                        { P:'color1Follow',       V: color1Follow       },
-                        { P:'color2Follow',       V: color2Follow       },
-                        { P:'colorBorderFollow',  V: colorBorderFollow  },
-                        { P:'borderWidth',        V: borderWidth        },
-                        { P:'opacity',            V: opacity            },
-                    ];
+            var ctx = {
+                '.': {
+                    'color1'             : ""+color1         ,
+                    'color2'             : ""+color2         ,
+                    'colorBorder'        : ""+colorBorder    ,
+                    'color1Follow'       : color1Follow      ,
+                    'color2Follow'       : color2Follow      ,
+                    'colorBorderFollow'  : colorBorderFollow ,
+                    'borderWidth'        : borderWidth       ,
+                    'opacity'            : opacity           ,
+                }
+            }
+
             return ctx;
 
         }
@@ -335,14 +338,16 @@ ResizableRectangle {
 
     function get_widget_ctx() {
         var ctx = {
-            "path": path,
-            "ctx": [
-                {                       P:'ctx',  V: get_ctx()                },
-                {   T:"argument_menu",  P:'ctx',  V: argument_menu.get_ctx()  },
-                {   T:"cmd_menu",       P:'ctx',  V: cmd_menu.get_ctx()       },
-                {   T:"name_menu",      P:'ctx',  V: name_menu.get_ctx()      },
-                {   T:'theme',          P:"ctx",  V: theme.get_ctx()          },
-            ]};
+            'path': path,
+            'ctx': {
+                '.': {  'ctx':  get_ctx()   },
+                "argument_menu" : {  'ctx': argument_menu.get_ctx()  },
+                "cmd_menu"      : {  'ctx': cmd_menu.get_ctx()       },
+                "name_menu"     : {  'ctx': name_menu.get_ctx()      },
+                'theme'         : {  "ctx": theme.get_ctx()          },
+            }
+        }
+
         return ctx;
     }
 

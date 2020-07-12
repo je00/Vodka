@@ -102,14 +102,18 @@ ResizableRectangle {
 
     function get_widget_ctx() {
         var ctx = {
-            "path": path,
-            "ctx": [
-                {                    P:'ctx', V: get_ctx()               },
-                { T:"ch_menu",       P:'ctx', V: ch_menu.get_ctx()       },
-                { T:"cmd_menu",      P:'ctx', V: cmd_menu.get_ctx()      },
-                { T:"argument_menu", P:'ctx', V: argument_menu.get_ctx() },
-            ]
+            'path': path,
+            'ctx': {
+                '.': {  'ctx': get_ctx() },
+                'ch_menu': {
+                    'ctx': ch_menu.get_ctx()
+                },
+                'argument_menu': {
+                    'ctx': argument_menu.get_ctx()
+                }
+            }
         }
+
         return ctx;
     }
 
