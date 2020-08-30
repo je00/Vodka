@@ -566,8 +566,8 @@ ResizableRectangle {
                     color: light_color
                     intensity: 1.0
                 }
-//                // Event Source will be set by the Qt3DQuickWindow
-//                InputSettings { }
+                //                // Event Source will be set by the Qt3DQuickWindow
+                //                InputSettings { }
             ]
 
             Camera {
@@ -581,7 +581,7 @@ ResizableRectangle {
                 upVector: Qt.vector3d( 0.0, 1.0, 0.0 )
                 viewCenter: Qt.vector3d( 0.0, 0.0, 0.0 )
             }
-//            FirstPersonCameraController { camera: camera }
+            //            FirstPersonCameraController { camera: camera }
 
 
             Entity {
@@ -1129,67 +1129,71 @@ ResizableRectangle {
 
     function get_widget_ctx() {
         var ctx = {
-            '.': {
-                'scale'             : root.scale             ,
-                'quaternion_mode'   : root.quaternion_mode   ,
-                'angle_or_radian'   : root.angle_or_radian   ,
-                'is_auto_center'    : root.is_auto_center    ,
-                'is_show_obj_axis'  : root.is_show_obj_axis  ,
-                'is_show_world_axis': root.is_show_world_axis,
-                'ctx'               : get_ctx()              ,
-            },
-            'scalar_menu': {
-                'ctx': scalar_menu.get_ctx()
-            },
-            'x_menu': {
-                'ctx': x_menu.get_ctx()
-            },
+            'path': path,
+            'ctx': {
 
-            'y_menu': {
-                'ctx': y_menu.get_ctx()
-            },
+                '.': {
+                    'scale'             : root.scale             ,
+                    'quaternion_mode'   : root.quaternion_mode   ,
+                    'angle_or_radian'   : root.angle_or_radian   ,
+                    'is_auto_center'    : root.is_auto_center    ,
+                    'is_show_obj_axis'  : root.is_show_obj_axis  ,
+                    'is_show_world_axis': root.is_show_world_axis,
+                    'ctx'               : get_ctx()              ,
+                },
+                'scalar_menu': {
+                    'ctx': scalar_menu.get_ctx()
+                },
+                'x_menu': {
+                    'ctx': x_menu.get_ctx()
+                },
 
-            'z_menu': {
-                'ctx': z_menu.get_ctx()
-            },
-            'pos_offset_menu': {
-                'checked': pos_offset_menu.checked
-            },
-            'angle_offset_rect': {
-                'valueX':   angle_offset_rect.valueX,
-                'valueY':   angle_offset_rect.valueY,
-                'valueZ':   angle_offset_rect.valueZ,
-            },
-            'position_offset_rect': {
-                'valueX':   position_offset_rect.valueX,
-                'valueY':   position_offset_rect.valueY,
-                'valueZ':   position_offset_rect.valueZ,
-            },
-            'center_point': {
-                'x': root.center_point.x,
-                'y': root.center_point.y,
-                'z': root.center_point.z,
-            },
-            'root_transform': {
-                'rotationX': root_transform.rotationX,
-                'rotationY': root_transform.rotationY,
-                'rotationZ': root_transform.rotationZ
-            },
-            'obj_length': {
-                'x': obj_length.x,
-                'y': obj_length.y,
-                'z': obj_length.z
-            },
-            'obj_world_length': {
-                'x': root.obj_world_length.x,
-                'y': root.obj_world_length.y,
-                'z': root.obj_world_length.z
-            },
-            'theme': {
-                'ctx': theme.get_ctx()
-            },
-            'file_menu': {
-                'selected_file': file_menu.selected_file
+                'y_menu': {
+                    'ctx': y_menu.get_ctx()
+                },
+
+                'z_menu': {
+                    'ctx': z_menu.get_ctx()
+                },
+                'pos_offset_menu': {
+                    'checked': pos_offset_menu.checked
+                },
+                'angle_offset_rect': {
+                    'valueX':   angle_offset_rect.valueX,
+                    'valueY':   angle_offset_rect.valueY,
+                    'valueZ':   angle_offset_rect.valueZ,
+                },
+                'position_offset_rect': {
+                    'valueX':   position_offset_rect.valueX,
+                    'valueY':   position_offset_rect.valueY,
+                    'valueZ':   position_offset_rect.valueZ,
+                },
+                'center_point': {
+                    'x': root.center_point.x,
+                    'y': root.center_point.y,
+                    'z': root.center_point.z,
+                },
+                'root_transform': {
+                    'rotationX': root_transform.rotationX,
+                    'rotationY': root_transform.rotationY,
+                    'rotationZ': root_transform.rotationZ
+                },
+                'obj_length': {
+                    'x': obj_length.x,
+                    'y': obj_length.y,
+                    'z': obj_length.z
+                },
+                'obj_world_length': {
+                    'x': root.obj_world_length.x,
+                    'y': root.obj_world_length.y,
+                    'z': root.obj_world_length.z
+                },
+                'theme': {
+                    'ctx': theme.get_ctx()
+                },
+                'file_menu': {
+                    'selected_file': file_menu.selected_file
+                }
             }
         }
 

@@ -30,8 +30,8 @@ ResizableRectangle {
     height: minimumHeight
     width: appTheme.applyHScale(204)
     minimumHeight:
-                   (name_text.height + appTheme.applyVScale(16) + radius +
-                   value_text.height)/(5/6)
+        (name_text.height + appTheme.applyVScale(16) + radius +
+         value_text.height)/(5/6)
     minimumWidth: appTheme.applyHScale(204)
     radius: appTheme.applyHScale(5)
 
@@ -128,7 +128,7 @@ ResizableRectangle {
         to: root.to
         stepSize: root.step_size
         value: 500
-//        Component.onCompleted: value = 500;
+        //        Component.onCompleted: value = 500;
         onValueChanged: {
             value = value.toFixed(value_menu.attr.decimal);
             root_spinbox.value = value;
@@ -177,7 +177,9 @@ ResizableRectangle {
             font.pixelSize: Math.max(appTheme.fontPixelSizeNormal,
                                      value_menu.attr.font_size/2)
             width: parent.width/2
+            force_decimals: true
             decimals: value_menu.attr.decimal
+            stepSize: root.step_size
             value: 0
             from: root.from
             to: root.to
@@ -369,35 +371,39 @@ ResizableRectangle {
     }
     function get_widget_ctx() {
         var ctx = {
-            '.': {
-                'ctx'       : get_ctx(),
-                'from'      : from     ,
-                'to'        : to       ,
-                'step_size' : step_size,
-            },
-            'slider': {
-                'value': slider.value
-            },
+            "path": path,
+            'ctx': {
 
-            'argument_menu': {
-                'ctx': argument_menu.get_ctx()
-            },
+                '.': {
+                    'ctx'       : get_ctx(),
+                    'from'      : from     ,
+                    'to'        : to       ,
+                    'step_size' : step_size,
+                },
+                'slider': {
+                    'value': slider.value
+                },
 
-            'cmd_menu': {
-                'ctx': cmd_menu.get_ctx()
-            },
-            'ch_menu': {
-                'ctx': ch_menu.get_ctx()
-            },
-            'value_menu': {
-                'ctx': value_menu.get_ctx()
-            },
-            'name_menu': {
-                'ctx': name_menu.get_ctx()
-            },
-            'theme': {
-                'ctx': theme.get_ctx()
-            },
+                'argument_menu': {
+                    'ctx': argument_menu.get_ctx()
+                },
+
+                'cmd_menu': {
+                    'ctx': cmd_menu.get_ctx()
+                },
+                'ch_menu': {
+                    'ctx': ch_menu.get_ctx()
+                },
+                'value_menu': {
+                    'ctx': value_menu.get_ctx()
+                },
+                'name_menu': {
+                    'ctx': name_menu.get_ctx()
+                },
+                'theme': {
+                    'ctx': theme.get_ctx()
+                }
+            }
         }
 
         return ctx;

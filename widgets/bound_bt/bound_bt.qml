@@ -132,23 +132,23 @@ ResizableRectangle {
         }
     }
 
-    LinearGradient  {
-        id: text_gradient
-        anchors.fill: bound_bt_name
-        source: bound_bt_name
-        visible: !bound_bt_name.visible
-        property real effect_text_ratio1: (parent.width - name_menu.attr.font_size)/bound_bt_name.width
-        property real effect_text_ratio2: parent.width/bound_bt_name.width
-        gradient: Gradient {
-            orientation: Gradient.Horizontal
-            GradientStop {
-                position: text_gradient.effect_text_ratio1
-                color: bound_bt_name.color }
-            GradientStop {
-                position: text_gradient.effect_text_ratio2;
-                color: "white" }
-        }
-    }
+//    LinearGradient  {
+//        id: text_gradient
+//        anchors.fill: bound_bt_name
+//        source: bound_bt_name
+//        visible: !bound_bt_name.visible
+//        property real effect_text_ratio1: (parent.width - name_menu.attr.font_size)/bound_bt_name.width
+//        property real effect_text_ratio2: parent.width/bound_bt_name.width
+//        gradient: Gradient {
+//            orientation: Gradient.Horizontal
+//            GradientStop {
+//                position: text_gradient.effect_text_ratio1
+//                color: bound_bt_name.color }
+//            GradientStop {
+//                position: text_gradient.effect_text_ratio2;
+//                color: "white" }
+//        }
+//    }
 
     MyText {
         id: bound_bt_name
@@ -162,6 +162,7 @@ ResizableRectangle {
         color: bt_mouse.containsMouse?
                    theme.color1_:
                    theme.color2_
+        visible: name_menu.attr.visible
         font.bold: true
         font.pixelSize: name_menu.attr.font_size
         onText_inputed: name_menu.set_name(text);
@@ -205,10 +206,11 @@ ResizableRectangle {
 
         MyMenu {
             id: theme_menu
-            text_center: true
+            text_center: false
             title: qsTr("主题")
             MyMenuItem {
                 text: qsTr("重置")
+                text_center: true
                 tips_text: qsTr("恢复默认配色")
                 onTriggered: {
                     theme.color1Follow = true;
@@ -286,11 +288,13 @@ ResizableRectangle {
                 onObjectAdded: theme_menu.addMenu(object);
                 onObjectRemoved: theme_menu.removeMenu(object)
                 delegate: MyMenu {
+                    text_center: true
                     title: model.text
                     color_mark_on: true
                     indicator_color: theme[model.parameter+"_"]
                     MyMenuItem {
                         text: qsTr("自定义")
+                        text_center: true
                         color_mark_on: true
                         //                    selected: sys_manager.color_dialog.target_obj === this
                         selected: (sys_manager.color_dialog.parameter ===
@@ -316,6 +320,7 @@ ResizableRectangle {
                     }
                     MyMenuItem {
                         text: qsTr("跟随") + appTheme.colorName[model.follow]
+                        text_center: true
                         checked: theme[model.parameter + "Follow"]
                         color_mark_on: true
                         indicator_color: appTheme[model.follow]
