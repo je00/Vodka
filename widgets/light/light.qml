@@ -7,7 +7,7 @@ import MyModules 1.0
 ResizableRectangle {
     id: root
     border.width: ((hovered||ligth_mouse.containsMouse))?
-                      appTheme.applyHScale(1):0
+                      g_settings.applyHScale(1):0
     property Item ref: Loader {
         active: false
         sourceComponent: Component {
@@ -21,16 +21,16 @@ ResizableRectangle {
         }
     }
 
-    height: appTheme.applyHScale(40)
-    width: appTheme.applyHScale(40)
-    minimumWidth: appTheme.applyHScale(40)
-    minimumHeight: appTheme.applyHScale(40)
+    height: g_settings.applyHScale(40)
+    width: g_settings.applyHScale(40)
+    minimumWidth: g_settings.applyHScale(40)
+    minimumHeight: g_settings.applyHScale(40)
 //    full_parent_enabled: false
-    radius: appTheme.applyHScale(5)
+    radius: g_settings.applyHScale(5)
     color: "transparent"
     border {
         color: "#D0D0D0"
-        width: hovered?appTheme.applyHScale(1):0
+        width: hovered?g_settings.applyHScale(1):0
     }
     height_width_ratio: 1
 

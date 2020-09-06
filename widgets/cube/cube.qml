@@ -66,11 +66,11 @@ ResizableRectangle {
     border.width: (((theme.hideBorder
                      &&!hovered
                      &&!main_mouse.containsMouse))?
-                       0:appTheme.applyHScale(1))
+                       0:g_settings.applyHScale(1))
     color: "transparent"
 
-    width: appTheme.applyHScale(226)
-    height: appTheme.applyHScale(226)
+    width: g_settings.applyHScale(226)
+    height: g_settings.applyHScale(226)
     property string path: "cube"
     property bool not_support_change_window_: true
     property int default_width: width
@@ -185,7 +185,7 @@ ResizableRectangle {
             }
         }
         MyMenuSeparator {
-            margins: appTheme.applyHScale(10)
+            margins: g_settings.applyHScale(10)
         }
 
         MyMenuItem {
@@ -439,7 +439,7 @@ ResizableRectangle {
             MyMenu {
                 title: qsTr("模型颜色")
                 MyMenuItem {
-                    text: qsTr("跟随") + appTheme.colorName["mainColor"]
+                    text: qsTr("跟随") + g_settings.colorName["mainColor"]
                     checked: theme.cubeColorFollow
                     onTriggered: {
                         theme.cubeColorFollow = !theme.cubeColorFollow;
@@ -547,7 +547,7 @@ ResizableRectangle {
 
         anchors {
             fill: parent
-            margins: appTheme.applyHScale(12)
+            margins: g_settings.applyHScale(12)
         }
         Entity {
             id: root_entity
@@ -851,7 +851,7 @@ ResizableRectangle {
     ListView {
         id: angle_offset_rect
         visible: pos_offset_menu.checked
-        width: appTheme.applyHScale(180)
+        width: g_settings.applyHScale(180)
         anchors {
             bottom: position_offset_rect.top
             horizontalCenter: parent.horizontalCenter
@@ -921,10 +921,10 @@ ResizableRectangle {
     ListView {
         id: position_offset_rect
         visible: pos_offset_menu.checked
-        width: appTheme.applyHScale(180)
+        width: g_settings.applyHScale(180)
         anchors {
             bottom: parent.bottom
-            bottomMargin: appTheme.applyVScale(2)
+            bottomMargin: g_settings.applyVScale(2)
             horizontalCenter: parent.horizontalCenter
         }
         orientation: ListView.Horizontal

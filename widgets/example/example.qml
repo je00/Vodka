@@ -24,13 +24,13 @@ ResizableRectangle {
 
 
     // 控件宽、高均为100像素
-    width: appTheme.applyHScale(100)
-    height: appTheme.applyVScale(100)
+    width: g_settings.applyHScale(100)
+    height: g_settings.applyVScale(100)
 
     // ResizableRectangle是可用鼠标改变尺寸的
     // 这里界定它们的最小宽、高均为100像素
-    minimumWidth: appTheme.applyHScale(100)
-    minimumHeight: appTheme.applyVScale(100)
+    minimumWidth: g_settings.applyHScale(100)
+    minimumHeight: g_settings.applyVScale(100)
 
     MyMenu {
         id: menu

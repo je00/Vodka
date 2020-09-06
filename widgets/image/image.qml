@@ -5,9 +5,9 @@ import "./effects"
 
 ResizableRectangle {
     id: root
-    width: appTheme.applyHScale(226)
-    height: appTheme.applyHScale(226)
-    border.width: ((is_hide_border&&!hovered)?0:appTheme.applyHScale(1))
+    width: g_settings.applyHScale(226)
+    height: g_settings.applyHScale(226)
+    border.width: ((is_hide_border&&!hovered)?0:g_settings.applyHScale(1))
     property string path:  "image"
     property string title: "image"
     property string current_directory: ""   // set by system
@@ -53,7 +53,7 @@ ResizableRectangle {
         id: image_rect
         anchors {
             fill: parent
-            margins: appTheme.applyVScale(12)
+            margins: g_settings.applyVScale(12)
         }
 
         ShaderEffectSource {

@@ -26,14 +26,14 @@ ResizableRectangle {
     property real to: 1000
     property real step_size: 1
     border.color: appTheme.lineColor
-    border.width: (hovered||!theme.hideBorder)?appTheme.applyHScale(1):0
+    border.width: (hovered||!theme.hideBorder)?g_settings.applyHScale(1):0
     height: minimumHeight
-    width: appTheme.applyHScale(204)
+    width: g_settings.applyHScale(204)
     minimumHeight:
-        (name_text.height + appTheme.applyVScale(16) + radius +
+        (name_text.height + g_settings.applyVScale(16) + radius +
          value_text.height)/(5/6)
-    minimumWidth: appTheme.applyHScale(204)
-    radius: appTheme.applyHScale(5)
+    minimumWidth: g_settings.applyHScale(204)
+    radius: g_settings.applyHScale(5)
 
     Connections {
         target: mouse
@@ -93,7 +93,7 @@ ResizableRectangle {
         //        border.width: 1
         anchors {
             bottom: slider.top
-            //            bottomMargin: appTheme.applyVScale(2)
+            //            bottomMargin: g_settings.applyVScale(2)
             left: slider.left
             right: slider.right
             top: parent.top
@@ -275,7 +275,7 @@ ResizableRectangle {
 
             }
             MyMenuItem {
-                text: qsTr("跟随") + appTheme.colorName["bgColor"]
+                text: qsTr("跟随") + g_settings.colorName["bgColor"]
                 color_mark_on: true
                 indicator_color: appTheme.bgColor
                 checked: theme.bgColorFollow

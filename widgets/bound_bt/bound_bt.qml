@@ -19,11 +19,11 @@ ResizableRectangle {
     }
 
     full_parent_enabled: true
-    width: appTheme.applyHScale(74)
-    height: appTheme.applyVScale(54)
+    width: g_settings.applyHScale(74)
+    height: g_settings.applyVScale(54)
     minimumWidth: minimumHeight
     minimumHeight: bt_mouse.anchors.margins * 3
-    radius: appTheme.applyHScale(5)
+    radius: g_settings.applyHScale(5)
     property string path:  "bound_bt"
 
     border.color: theme.colorBorder_
@@ -46,7 +46,7 @@ ResizableRectangle {
         property color color1: appTheme.bgColor
         property color color2: appTheme.mainColor
         property color colorBorder: appTheme.lineColor
-        property int borderWidth: appTheme.applyHScale(1)
+        property int borderWidth: g_settings.applyHScale(1)
 
         property color color1_: color1Follow?appTheme.bgColor:color1
         property color color2_: color2Follow?appTheme.mainColor:color2
@@ -115,7 +115,7 @@ ResizableRectangle {
         enabled: !bound_bt_name.editing
         anchors {
             fill: parent
-            margins: appTheme.applyHScale(12)
+            margins: g_settings.applyHScale(12)
         }
         hoverEnabled: !bound_bt_name.editing
         propagateComposedEvents: true
@@ -319,7 +319,7 @@ ResizableRectangle {
 
                     }
                     MyMenuItem {
-                        text: qsTr("跟随") + appTheme.colorName[model.follow]
+                        text: qsTr("跟随") + g_settings.colorName[model.follow]
                         text_center: true
                         checked: theme[model.parameter + "Follow"]
                         color_mark_on: true
