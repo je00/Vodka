@@ -45,3 +45,4 @@ CMakeLists.txt.user*
 /widgets/*.po
 /widgets/simplifiedchinese.ts
 /*.vswp
+*.bak

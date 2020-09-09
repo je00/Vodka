@@ -1,4 +1,4 @@
-#ifndef JUSTFLOAT_H
+﻿#ifndef JUSTFLOAT_H
 #define JUSTFLOAT_H
 
 #include "dataengineinterface.h"

@@ -1,4 +1,4 @@
-#include "rawdata.h"
+﻿#include "rawdata.h"
 
 RawData::RawData()
 {

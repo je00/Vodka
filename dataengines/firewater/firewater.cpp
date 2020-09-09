@@ -1,4 +1,4 @@
-#include "firewater.h"
+﻿#include "firewater.h"
 #include <QDebug>
 #include <limits>
 
@@ -26,7 +26,7 @@ void FireWater::ProcessingDatas(char *data, int count)
         bool frame_is_valid = false;
         char *frame_head_ptr = data + begin;
         int frame_count = i - begin + 1;
-        int image_size = 0;A
+        int image_size = 0;
         Frame frame;
 
         // 将分别位于':'左右两侧的任意字符串和CSV结构的数据分割

@@ -1,4 +1,4 @@
-#ifndef FIREWATER_H
+﻿#ifndef FIREWATER_H
 #define FIREWATER_H
 
 #include "dataengineinterface.h"

@@ -1,4 +1,4 @@
-#ifndef RawData_H
+﻿#ifndef RawData_H
 #define RawData_H
 
 #include "dataengineinterface.h"

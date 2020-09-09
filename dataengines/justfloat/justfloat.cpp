@@ -1,4 +1,4 @@
-#include "justfloat.h"
+﻿#include "justfloat.h"
 #include <limits>
 
 
