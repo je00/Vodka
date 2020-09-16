@@ -880,6 +880,7 @@ ResizableRectangle {
 
         delegate: MySpinBox {
             id: angle_input
+            auto_size: false
             width: angle_offset_rect.width/3
             anchors.verticalCenter: parent.verticalCenter
             stepSize: 15
@@ -952,6 +953,7 @@ ResizableRectangle {
 
         delegate: MySpinBox {
             id: position_input
+            auto_size: false
             width: position_offset_rect.width/3
             anchors.verticalCenter: parent.verticalCenter
             tips_text: qsTr("位置偏置 ") +
