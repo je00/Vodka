@@ -175,7 +175,6 @@ ResizableRectangle {
         DeleteMenuItem {
             //            target: root
             onTriggered: {
-                console.log("scene3d", scene3d.enabled)
                 root.destroy();
             }
         }
@@ -556,14 +555,14 @@ ResizableRectangle {
 
     Scene3D {
         id: scene3d
-
+        enabled: false
         anchors {
             fill: parent
             margins: g_settings.applyHScale(12)
         }
         Entity {
             id: root_entity
-            parent: null
+//            parent: null
             components: [
                 RenderSettings {
                     renderPolicy: RenderSettings.OnDemand
@@ -598,8 +597,9 @@ ResizableRectangle {
 
             Entity {
                 id: sceneRoot
-                enabled: false
-                components: [ ]
+                enabled: true
+//                components: [ ]
+                components: [root_transform]
 
                 Transform {
                     id: root_transform
@@ -745,7 +745,6 @@ ResizableRectangle {
                             Connections {
                                 target: cube_entity.obj_mesh
                                 onStatusChanged: {
-                                    console.log("cube_entity.obj_mesh.status", cube_entity.obj_mesh.status)
                                     if (cube_entity.obj_mesh.status !== 2)
                                         return;
                                     if (cube_entity.first_run) {
@@ -1062,12 +1061,12 @@ ResizableRectangle {
                                                               position_offset,
                                                               root.scale
                                                               );
-        obj_length.x = list[3];
-        obj_length.y = list[4];
-        obj_length.z = list[5];
-        obj_world_length.x = list[6] + Math.abs(list[0] * root.scale);
-        obj_world_length.y = list[7] + Math.abs(list[1] * root.scale);
-        obj_world_length.z = list[8] + Math.abs(list[2] * root.scale);
+        obj_length.x = list[3] + Math.abs(list[0] * 2);
+        obj_length.y = list[4] + Math.abs(list[1] * 2);
+        obj_length.z = list[5] + Math.abs(list[2] * 2);
+        obj_world_length.x = list[6] + Math.abs(list[0] * root.scale * 2);
+        obj_world_length.y = list[7] + Math.abs(list[1] * root.scale * 2);
+        obj_world_length.z = list[8] + Math.abs(list[2] * root.scale * 2);
         center_point = Qt.vector3d(0, 0, 0);
 //        center_point = Qt.vector3d(list[0], list[1], list[2]);
     }
@@ -1091,6 +1090,9 @@ ResizableRectangle {
         if (root.center_point.x !== list[0] ||
                 root.center_point.y !== list[1] ||
                 root.center_point.z !== list[2]) {
+            obj_length.x = list[3] + Math.abs(list[0] * 2);
+            obj_length.y = list[4] + Math.abs(list[1] * 2);
+            obj_length.z = list[5] + Math.abs(list[2] * 2);
             obj_world_length.x = list[6] + Math.abs(list[0] * root.scale * 2);
             obj_world_length.y = list[7] + Math.abs(list[1] * root.scale * 2);
             obj_world_length.z = list[8] + Math.abs(list[2] * root.scale * 2);
@@ -1266,13 +1268,13 @@ ResizableRectangle {
 
     Timer {
         id: update_scene_timer
-        interval: 300
+        interval: 100
         onTriggered: {
             update_scene();
         }
     }
 
     Component.onCompleted: {
-        update_scene_timer.start();
+//        update_scene_timer.start();
     }
 }
