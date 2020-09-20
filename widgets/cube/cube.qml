@@ -744,7 +744,8 @@ ResizableRectangle {
 
                             Connections {
                                 target: cube_entity.obj_mesh
-                                function onStatusChanged() {
+                                onStatusChanged: {
+                                    console.log("cube_entity.obj_mesh.status", cube_entity.obj_mesh.status)
                                     if (cube_entity.obj_mesh.status !== 2)
                                         return;
                                     if (cube_entity.first_run) {
