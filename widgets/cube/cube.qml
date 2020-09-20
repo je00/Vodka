@@ -83,6 +83,7 @@ ResizableRectangle {
     property bool angle_or_radian: false
     property color light_color: "#333333"
     property color ambient_color: "#CCCCCC"
+    property real arrow_size: 1.5;
     property quaternion pos: Qt.quaternion(
                                  (scalar_menu.bind_obj)?scalar_menu.bind_obj.value:0,
                                  (x_menu.bind_obj)?x_menu.bind_obj.value:0,
@@ -111,6 +112,10 @@ ResizableRectangle {
                                         0,
                                         0)
     property var parent_container
+
+    Component.onDestruction: {
+        root.enabled = false;
+    }
 
     Item {
         id: theme
@@ -168,7 +173,11 @@ ResizableRectangle {
         //            height: (count - 1)*30
         //            background_color: ""
         DeleteMenuItem {
-            target: root
+            //            target: root
+            onTriggered: {
+                console.log("scene3d", scene3d.enabled)
+                root.destroy();
+            }
         }
         MyMenuSeparator {
 
@@ -404,6 +413,14 @@ ResizableRectangle {
                     center_mesh();
                 }
             }
+            MyMenuItem {
+                id: reset_menu
+                text: qsTr("原始文件位姿")
+                tips_text: qsTr("模型将按照原始文件的位姿放置")
+                onTriggered: {
+                    reset_mesh();
+                }
+            }
             MyMenuSeparator {
 
             }
@@ -524,14 +541,8 @@ ResizableRectangle {
                        qsTr("也可以显示/隐藏位姿偏置设置窗口")
             checked: false
             onTriggered: checked = !checked;
-        }
-
-        MyMenuItem {
-            id: reset_menu
-            text: qsTr("恢复原始位姿")
-            tips_text: qsTr("模型将按照原始文件的位姿放置")
-            onTriggered: {
-                reset_mesh();
+            onCheckedChanged: {
+                update_scene();
             }
         }
     }
@@ -541,6 +552,7 @@ ResizableRectangle {
         color: theme.bgColor
         opacity: theme.bgOpacity
     }
+
 
     Scene3D {
         id: scene3d
@@ -586,7 +598,8 @@ ResizableRectangle {
 
             Entity {
                 id: sceneRoot
-                components: [ root_transform ]
+                enabled: false
+                components: [ ]
 
                 Transform {
                     id: root_transform
@@ -601,8 +614,8 @@ ResizableRectangle {
                     dir: Qt.vector3d(1, 0, 0)
                     color: "#ff0000"
                     ambient_color: root.ambient_color
-                    length: ((obj_axis_x.length < 120)?140:obj_axis_x.length+20)
-                    width: 0.5
+                    length: ((obj_axis_x.length < 120)?145:obj_axis_x.length+20)
+                    width: arrow_size * 0.8
                     enabled: root.is_show_world_axis
                 }
                 Arrow {
@@ -610,8 +623,8 @@ ResizableRectangle {
                     dir: Qt.vector3d(0, 1, 0)
                     color: "#00ff00"
                     ambient_color: root.ambient_color
-                    length: ((obj_axis_y.length < 120)?140:obj_axis_y.length+20)
-                    width: 0.5
+                    length: ((obj_axis_y.length < 120)?145:obj_axis_y.length+20)
+                    width: arrow_size * 0.8
                     enabled: root.is_show_world_axis
                 }
                 Arrow {
@@ -619,8 +632,8 @@ ResizableRectangle {
                     dir: Qt.vector3d(0, 0, 1)
                     color: "#0000ff"
                     ambient_color: root.ambient_color
-                    length: ((obj_axis_z.length < 120)?140:obj_axis_z.length+20)
-                    width: 0.5
+                    length: ((obj_axis_z.length < 120)?145:obj_axis_z.length+20)
+                    width: arrow_size * 0.8
                     enabled: root.is_show_world_axis
                 }
 
@@ -629,7 +642,7 @@ ResizableRectangle {
                     ambient: root.ambient_color
                     diffuse: theme.cubeColor_
                     shininess: 1.0
-                    //                alpha: 0.5
+                    //                alpha: arrow_size
                 }
 
                 Entity {
@@ -645,8 +658,10 @@ ResizableRectangle {
                         dir: Qt.vector3d(1, 0, 0)
                         color: "#ff0000"
                         ambient_color: root.ambient_color
-                        length: (obj_world_length.x/2 + 20)
-                        width: 0.5
+                        length: {
+                            return (obj_world_length.x/2 + 25)
+                        }
+                        width: arrow_size
                         enabled: !angle_offset_rect.visible && root.is_show_obj_axis
                     }
                     Arrow {
@@ -654,8 +669,10 @@ ResizableRectangle {
                         dir: Qt.vector3d(0, 1, 0)
                         color: "#00ff00"
                         ambient_color: root.ambient_color
-                        length: (obj_world_length.y/2  + 20)
-                        width: 0.5
+                        length: {
+                            return (obj_world_length.y/2 + 25)
+                        }
+                        width: arrow_size
                         enabled: !angle_offset_rect.visible && root.is_show_obj_axis
                     }
                     Arrow {
@@ -663,11 +680,14 @@ ResizableRectangle {
                         dir: Qt.vector3d(0, 0, 1)
                         color: "#0000ff"
                         ambient_color: root.ambient_color
-                        length: (obj_world_length.z/2 + 20)
-                        width: 0.5
+                        length: {
+                            return (obj_world_length.z/2 + 25)
+                        }
+                        width: arrow_size
                         enabled: !angle_offset_rect.visible && root.is_show_obj_axis
                     }
                     Entity {
+                        id: cube_roation
                         Transform {
                             id: cube_rotation_offset_transform
                             scale: 1
@@ -683,8 +703,8 @@ ResizableRectangle {
                             dir: Qt.vector3d(1, 0, 0)
                             color: "#ff0000"
                             ambient_color: root.ambient_color
-                            length: ((obj_length.x * root.scale)/2 + 20)
-                            width: 0.5
+                            length: ((obj_length.x * root.scale)/2 + 25)
+                            width: arrow_size
                             enabled: angle_offset_rect.visible
                             origin: position_offset
                         }
@@ -692,8 +712,8 @@ ResizableRectangle {
                             dir: Qt.vector3d(0, 1, 0)
                             color: "#00ff00"
                             ambient_color: root.ambient_color
-                            length: ((obj_length.y * root.scale)/2  + 20)
-                            width: 0.5
+                            length: ((obj_length.y * root.scale)/2  + 25)
+                            width: arrow_size
                             enabled: angle_offset_rect.visible
                             origin: position_offset
                         }
@@ -701,12 +721,11 @@ ResizableRectangle {
                             dir: Qt.vector3d(0, 0, 1)
                             color: "#0000ff"
                             ambient_color: root.ambient_color
-                            length: ((obj_length.z * root.scale)/2 + 20)
-                            width: 0.5
+                            length: ((obj_length.z * root.scale)/2 + 25)
+                            width: arrow_size
                             enabled: angle_offset_rect.visible
                             origin: position_offset
                         }
-
 
                         Entity {
                             id: cube_entity
@@ -715,7 +734,7 @@ ResizableRectangle {
                             components: [RenderSettings {
                                     renderPolicy: RenderSettings.Always
                                     activeFrameGraph: ForwardRenderer {
-                                        clearColor: Qt.rgba(0, 0.5, 1, 1)
+                                        clearColor: Qt.rgba(0, arrow_size, 1, 1)
                                         camera: camera
                                     }
                                 }]
@@ -725,7 +744,9 @@ ResizableRectangle {
 
                             Connections {
                                 target: cube_entity.obj_mesh
-                                onStatusChanged: {
+                                function onStatusChanged() {
+                                    if (cube_entity.obj_mesh.status !== 2)
+                                        return;
                                     if (cube_entity.first_run) {
                                         cube_entity.first_run = false;
                                     } else if (is_auto_center)
@@ -738,8 +759,10 @@ ResizableRectangle {
                                 rotation: fromAxisAndAngle(Qt.vector3d(1, 0, 0), 0)
                                 //                                translation: center_point.times(-1).plus(
                                 //                                                        position_offset)
-                                translation: center_point.times(-root.scale).plus(
-                                                 position_offset)
+                                translation: {
+                                    center_point.times(-root.scale).plus(
+                                                position_offset)
+                                }
 
                             }
 
@@ -1020,21 +1043,34 @@ ResizableRectangle {
     }
 
     function reset_mesh() {
-        obj_world_length.x = 100;
-        obj_world_length.y = 100;
-        obj_world_length.z = 100;
-        obj_length.x = 100;
-        obj_length.y = 100;
-        obj_length.z = 100;
         root.scale = 1;
-        center_point = Qt.vector3d(0, 0, 0);
         position_offset_rect.valueX = 0;
         position_offset_rect.valueY = 0;
         position_offset_rect.valueZ = 0;
         angle_offset_rect.valueX = 0;
         angle_offset_rect.valueY = 0;
         angle_offset_rect.valueZ = 0;
+        var quaternion = cube_rotation_offset_transform.rotation;
+
+        var list = sys_manager.three_tools.bounding_positioin(cube_entity.obj_mesh,
+                                                              Qt.vector4d(quaternion.x,
+                                                                          quaternion.y,
+                                                                          quaternion.z,
+                                                                          quaternion.scalar
+                                                                          ),
+                                                              position_offset,
+                                                              root.scale
+                                                              );
+        obj_length.x = list[3];
+        obj_length.y = list[4];
+        obj_length.z = list[5];
+        obj_world_length.x = list[6] + Math.abs(list[0] * root.scale);
+        obj_world_length.y = list[7] + Math.abs(list[1] * root.scale);
+        obj_world_length.z = list[8] + Math.abs(list[2] * root.scale);
+        center_point = Qt.vector3d(0, 0, 0);
+//        center_point = Qt.vector3d(list[0], list[1], list[2]);
     }
+
 
     function update_mesh_world_length() {
         var quaternion = cube_rotation_offset_transform.rotation;
@@ -1048,11 +1084,21 @@ ResizableRectangle {
                                                               position_offset,
                                                               root.scale
                                                               );
-        if (list.lenght === 0)
+        if (list.length === 0)
             return;
-        obj_world_length.x = list[6];
-        obj_world_length.y = list[7];
-        obj_world_length.z = list[8];
+
+        if (root.center_point.x !== list[0] ||
+                root.center_point.y !== list[1] ||
+                root.center_point.z !== list[2]) {
+            obj_world_length.x = list[6] + Math.abs(list[0] * root.scale * 2);
+            obj_world_length.y = list[7] + Math.abs(list[1] * root.scale * 2);
+            obj_world_length.z = list[8] + Math.abs(list[2] * root.scale * 2);
+        } else {
+            obj_world_length.x = list[6];
+            obj_world_length.y = list[7];
+            obj_world_length.z = list[8];
+        }
+
     }
 
     function center_mesh() {
@@ -1081,11 +1127,14 @@ ResizableRectangle {
                                   obj_length.y,
                                   obj_length.z);
 
-        root.scale = 150/max_length;
+        center_point = Qt.vector3d(list[0], list[1], list[2]);
+        if (cube_entity.obj_mesh.source === "./cube.stl")
+            root.scale = 1;
+        else
+            root.scale = 150/max_length;
         position_offset_rect.valueX = 0;
         position_offset_rect.valueY = 0;
         position_offset_rect.valueZ = 0;
-        center_point = Qt.vector3d(list[0], list[1], list[2]);
     }
 
     function cross_product(q1, q2) {
@@ -1202,8 +1251,27 @@ ResizableRectangle {
         return ctx;
     }
 
+    function update_scene() {
+        sceneRoot.components = [];
+        sceneRoot.components = [root_transform]
+        sceneRoot.enabled = true;
+    }
+
+
     function set_widget_ctx(ctx) {
         __set_ctx__(root, ctx.ctx, ref);
         //        scene3d.enabled = true;
+    }
+
+    Timer {
+        id: update_scene_timer
+        interval: 300
+        onTriggered: {
+            update_scene();
+        }
+    }
+
+    Component.onCompleted: {
+        update_scene_timer.start();
     }
 }

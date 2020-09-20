@@ -10,8 +10,8 @@ Entity {
     property color ambient_color: "#cccccc"
     property real length: 140
     property real width: 1
-    property real headLength: 10
-    property real headWidth: 10
+    property real headLength: width*10
+    property real headWidth: width*10
     property vector3d dir: Qt.vector3d(0, 0, 1)
     property vector3d origin: Qt.vector3d(0, 0, 0)
 
