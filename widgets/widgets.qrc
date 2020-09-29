@@ -48,5 +48,6 @@
         <file>image/image.qml</file>
         <file>light/light.qml</file>
         <file>slider/slider.qml</file>
+        <file>example/example.qml</file>
     </qresource>
 </RCC>

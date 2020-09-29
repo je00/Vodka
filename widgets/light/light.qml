@@ -289,6 +289,7 @@ ResizableRectangle {
 //                         !three_color_mode)?
 //                           qsTr("颜色<C>由已绑定频道决定"):"")
             MyMenuItem {
+                text_center: true
                 text: qsTr("模式:") + (three_color_mode?qsTr("三色"):qsTr("亮灭"))
                 tips_text: three_color_mode?
                                qsTr("点击可切换为亮灭模式"):
@@ -300,7 +301,7 @@ ResizableRectangle {
             }
             MyMenuItem {
                 visible: !three_color_mode
-                text: qsTr("逻辑:") + ((reverse_logic?"＞":"＜") +
+                text: qsTr("逻辑:") + ((reverse_logic?"<":">") +
                           qsTr("阈值时,灯亮"))
                 tips_text: qsTr("点击可切换逻辑")
                 onTriggered: reverse_logic = !reverse_logic
