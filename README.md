@@ -19,8 +19,8 @@
 * Volt（伏特）、Ohm（欧姆）、Fala（法拉)、Ampere(安培)，是4个传感器信号的常用单位，同时也是4位电子物理学的伟大前驱。
 * VOFA+是一款通过直观简洁的协议将字节流翻译成多通道数据的软件，支持十六进制浮点数据，也支持CSV格式字符串流，具体协议请查看下文[协议介绍](#protocal)。
 * VOFA+通过拖动的操作逻辑动态添加控件，并将数据绑定到控件上，以实现传感器数据的可视化，具体协议请查看下文[控件介绍](#widget)。 
-* **[前往下载VOFA+](https://gitee.com/je0000/Vodka/releases)**
-* **[前往微云查看常见操作视频](https://share.weiyun.com/cQxRTsRC)**           
+* **[前往下载VOFA+](https://gitee.com/je0000/Vodka/releases)**  
+* **[前往阅读使用教程](https://je0000.gitee.io/vofaplus/docs/)**  
 
 ## <span id="protocal">协议介绍</span>
 
@@ -85,5 +85,3 @@ Serial.write(tail, 4);
 
   6. 滑动条
 
-## 常见操作视频
-* **[点击前往微云查看](https://share.weiyun.com/cQxRTsRC)**
