@@ -1,0 +1,17 @@
+{
+  "SimplifiedChinese": {
+    "format": "#define CH_COUNT <N>\nstruct Frame {\n    float fdata[CH_COUNT];\n    unsigned char tail[4]{0x00, 0x00, 0x80, 0x7f};\n};\n\n- ch_data为小端浮点数组，里面放着需要发送的CH_COUNT个通道。\n- tail为帧尾。",
+    "example": "float ch[4];\nch[0] = sin(t);\nch[1] = sin(2*t);\nch[2] = sin(3*t);\nch[3] = sin(4*t);\nwrite((char *)ch, sizeof(float) * 4);\n\nchar[4] tail = {0x00, 0x00, 0x80, 0x7f};\nwrite(tail, 4);",
+    "url": "https://www.vofa.plus/plugin_detail/?name=justfloat"
+  },
+  "TraditionalChinese": {
+    "format": "#define CH_COUNT <N>\nstruct Frame {\n    float fdata[CH_COUNT];\n    unsigned char tail[4]{0x00, 0x00, 0x80, 0x7f};\n};\n\n- ch_data為小端浮點數組，裡面放著需要發送的CH_COUNT個通道。\n- tail為幀尾。",
+    "example": "float ch[4];\nch[0] = sin(t);\nch[1] = sin(2*t);\nch[2] = sin(3*t);\nch[3] = sin(4*t);\nwrite((char *)ch, sizeof(float) * 4);\n\nchar[4] tail = {0x00, 0x00, 0x80, 0x7f};\nwrite(tail, 4);",
+    "url": "https://www.vofa.plus/plugin_detail/?name=justfloat"
+  },
+  "English": {
+    "format": "#define CH_COUNT <N>\nstruct Frame {\n    float fdata[CH_COUNT];\n    unsigned char tail[4]{0x00, 0x00, 0x80, 0x7f};\n};\n\n- ch_data is a small end floating-point array containing CH_COUNT channels to be sent.\n- tail is the end of the frame.",
+    "example": "float ch[4];\nch[0] = sin(t);\nch[1] = sin(2*t);\nch[2] = sin(3*t);\nch[3] = sin(4*t);\nwrite((char *)ch, sizeof(float) * 4);\n\nchar[4] tail = {0x00, 0x00, 0x80, 0x7f};\nwrite(tail, 4);",
+    "url": "https://www.vofa.plus/plugin_detail/?name=justfloat"
+  }
+}

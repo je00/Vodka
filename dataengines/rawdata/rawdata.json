@@ -1,0 +1,17 @@
+{
+  "English": {
+    "format": "If you only use VoFa + as a serial debugging assistant and do not do any sampling data and image analysis, please use this protocol.",
+    "example": "Rawdata does not do sampling data analysis. The Rawdata protocol is suitable for the requirement of only viewing byte stream without parsing data.",
+    "url": "https://www.vofa.plus/plugin_detail/?name=rawdata"
+  },
+  "SimplifiedChinese": {
+    "format": "如果您只把VoFa+当成串口调试助手，不做任何采样数据和图片解析，请务必使用本协议。",
+    "example": "RawData不做采样数据解析。RawData协议适用于不需要解析数据，仅仅查看字节流的需求。",
+    "url": "https://www.vofa.plus/plugin_detail/?name=rawdata"
+  },
+  "TraditionalChinese": {
+    "format": "如果您只把VoFa+當成串口調試助手，不做任何採樣數據和圖片解析，請務必使用本協議。",
+    "example": "RawData不做採樣數據解析。RawData協議適用於不需要解析數據，僅僅查看位元組流的需求。",
+    "url": "https://www.vofa.plus/plugin_detail/?name=rawdata"
+  }
+}
