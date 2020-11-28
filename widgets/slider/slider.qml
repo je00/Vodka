@@ -25,6 +25,7 @@ ResizableRectangle {
     property real from: 0
     property real to: 1000
     property real step_size: 1
+    property bool loading: false
     border.color: appTheme.lineColor
     border.width: (hovered||!theme.hideBorder)?g_settings.applyHScale(1):0
     height: minimumHeight
@@ -32,7 +33,8 @@ ResizableRectangle {
     minimumHeight:
         (name_text.height + g_settings.applyVScale(16) + radius +
          value_text.height)/(5/6)
-    minimumWidth: g_settings.applyHScale(204)
+    //    minimumWidth: g_settings.applyHScale(204)
+    minimumWidth: Math.max(204, value_text.width)
     radius: g_settings.applyHScale(5)
 
     Connections {
@@ -136,11 +138,13 @@ ResizableRectangle {
             argument_model.get(0).float_value = root_spinbox.value;
 
             var press_argument = argument_model.get(0);
-            sys_manager.send_command(name_menu.attr.name,
-                                     cmd_menu.bind_obj,
-                                     press_argument,
-                                     argument_menu.hex_on
-                                     );
+            if (!loading) {
+                sys_manager.send_command(name_menu.attr.name,
+                                         cmd_menu.bind_obj,
+                                         press_argument,
+                                         argument_menu.hex_on
+                                         );
+            }
         }
     }
 
@@ -174,17 +178,16 @@ ResizableRectangle {
                 verticalCenter: parent.verticalCenter
                 right: parent.right
             }
-            font.pixelSize: Math.max(appTheme.fontPixelSizeNormal,
+            font.pixelSize: Math.max(g_settings.fontPixelSizeNormal,
                                      value_menu.attr.font_size/2)
             width: parent.width/2
             force_decimals: true
             decimals: value_menu.attr.decimal
             stepSize: root.step_size
-            value: 0
+            value: 500
             from: root.from
             to: root.to
-            onValueChanged: {
-                value = value.toFixed(value_menu.attr.decimal);
+            onAccepted: {
                 slider.value = value;
             }
         }
@@ -198,6 +201,12 @@ ResizableRectangle {
         CmdMenu {
             id: cmd_menu
             title: qsTr("绑定命令")
+            onBind_objChanged: {
+                if (bind_obj) {
+                    if (!name_menu.attr.name_link_ch)
+                        name_menu.attr.name_link_cmd = true;
+                }
+            }
         }
         ChMenu {
             id: ch_menu
@@ -410,7 +419,9 @@ ResizableRectangle {
     }
 
     function set_widget_ctx(ctx) {
+        loading = true;
         __set_ctx__(root, ctx.ctx, ref);
+        loading = false;
     }
 
 }
