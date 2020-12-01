@@ -134,7 +134,12 @@ ResizableRectangle {
         DeleteMenuItem {
             target: root
         }
+        ScreenshotMenuItem {
+            target: root
+        }
+        MyMenuSeparator {
 
+        }
         MyMenu {
             id: ch_menu
             title: qsTr("指定图片")

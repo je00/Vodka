@@ -45,23 +45,6 @@ ResizableRectangle {
                                       qsTr("全屏显示")) + "\n"
                    + qsTr("右键:弹出设置菜单")
     tips_visible: main_mouse.containsMouse
-    property var id_map: {
-        "angle_offset":         angle_offset,
-        "position_offset":      position_offset,
-        "center_point":         center_point,
-        "obj_length":           obj_length,
-        "obj_world_length":     obj_world_length,
-        "root_transform":       root_transform,
-        "scalar_menu":          scalar_menu,
-        "x_menu":               x_menu,
-        "y_menu":               y_menu,
-        "z_menu":               z_menu,
-        "pos_offset_menu":      pos_offset_menu,
-        "theme":                theme,
-        "file_menu":            file_menu,
-        "angle_offset_rect":    angle_offset_rect,
-        "position_offset_rect": position_offset_rect,
-    }
 
     border.width: (((theme.hideBorder
                      &&!hovered
@@ -120,10 +103,10 @@ ResizableRectangle {
     Item {
         id: theme
         property bool hideBorder: true
-        property bool cubeColorFollow: false
+        property bool cubeColorFollow: true
         property color cubeColor: "#0080ff"
         property color cubeColor_: cubeColorFollow?
-                                       appTheme.mainColor:
+                                       appTheme.objColor:
                                        cubeColor
         property color bgColor: "white"
         property real bgOpacity: 0.0
@@ -177,6 +160,9 @@ ResizableRectangle {
             onTriggered: {
                 root.destroy();
             }
+        }
+        ScreenshotMenuItem {
+            target: root
         }
         MyMenuSeparator {
 
@@ -455,7 +441,9 @@ ResizableRectangle {
             MyMenu {
                 title: qsTr("模型颜色")
                 MyMenuItem {
-                    text: qsTr("跟随") + g_settings.colorName["mainColor"]
+                    color_mark_on: true
+                    indicator_color: appTheme.objColor
+                    text: qsTr("跟随") + g_settings.colorName["objColor"]
                     checked: theme.cubeColorFollow
                     onTriggered: {
                         theme.cubeColorFollow = !theme.cubeColorFollow;
@@ -471,14 +459,19 @@ ResizableRectangle {
                                    qsTr("已选中，再点击可修改颜色"):
                                    qsTr("点击可选中自定义颜色，再点击可修改颜色")
                     onTriggered: {
-                        if (checked) {
-                            sys_manager.open_color_dialog(
-                                        theme,
-                                        0,
-                                        theme.cubeColor
-                                        );
-                        }
+//                        if (checked) {
+//                            sys_manager.open_color_dialog(
+//                                        theme,
+//                                        0,
+//                                        theme.cubeColor
+//                                        );
+//                        }
                         theme.cubeColorFollow = false;
+                        sys_manager.open_color_dialog(
+                                    theme,
+                                    0,
+                                    theme.cubeColor
+                                    );
                     }
 
                 }
