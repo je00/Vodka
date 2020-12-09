@@ -331,18 +331,22 @@ ResizableRectangle {
             value_text: "" + root.from
             value_editable: true
             onPlus_triggered: {
-                root.from = root.from + 1;
+                root.from = Math.min(
+                            root.to,
+                            root.from + 1
+                            );
+
             }
             onMinus_triggered: {
-                root.from = Math.max(
-                            0,
-                            root.from - 1
-                            );
+                root.from = root.from - 1;
             }
             onValue_inputed: {
-                root.from = Math.max(
-                            0,
-                            parseFloat(text)
+                var value = parseFloat(text);
+                if (!value)
+                    value = 0;
+                root.from = Math.min(
+                            root.to,
+                            value
                             );
             }
         }
@@ -358,14 +362,17 @@ ResizableRectangle {
             }
             onMinus_triggered: {
                 root.to = Math.max(
-                            0,
+                            root.from,
                             root.to - 1
                             );
             }
             onValue_inputed: {
+                var value = parseFloat(text);
+                if (!value)
+                    value = 0;
                 root.to = Math.max(
-                            0,
-                            parseFloat(text)
+                            root.from,
+                            value
                             );
             }
         }
