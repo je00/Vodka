@@ -549,6 +549,7 @@ ResizableRectangle {
     Scene3D {
         id: scene3d
         enabled: false
+        multisample: true
         anchors {
             fill: parent
             margins: g_settings.applyHScale(12)
