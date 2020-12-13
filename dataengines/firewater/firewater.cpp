@@ -34,7 +34,6 @@ void FireWater::ProcessingDatas(char *data, int count)
         QString frame_str = QString::fromLocal8Bit(frame_head_ptr , frame_count);
         QList<QString> name_and_datas = frame_str.split(':');
 
-
         if (name_and_datas.size() >= 2) {
             // 为什么分割段数>2，也进行帧解析？
             // 答：没有关系，d:d:1,2,3,4\n，这样分割段数是3，不影响解析。
@@ -99,6 +98,20 @@ void FireWater::ProcessingDatas(char *data, int count)
                 }
             }
             frame_is_valid = true;      // 至此，可以确定这是一个合法的采样数据包
+        } else {
+            // 以下代码对不以冒号开头的纯CSV数据添加支持
+            QList<QString> datas = frame_str.trimmed().split(',');
+            bool ok;
+            for (int i = 0; i < datas.length(); i++) {
+                float value = datas[i].trimmed().toFloat(&ok);
+                if (!ok) {
+                    frame.datas_.clear();
+                    break;
+                }
+                frame.datas_.append(value);
+            }
+            if (frame.datas_.length() > 0)
+                frame_is_valid = true;      // 至此，可以确定这是一个合法的采样数据包
         }
 
         // 记录帧 是否合法，开始位置，结束位置，图片尺寸（如果为0，标识其不是图片数据包）

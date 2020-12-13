@@ -1,17 +1,17 @@
 {
   "SimplifiedChinese": {
-    "format": "\"<any>:ch0,ch1,ch2,...,chN\\n\"",
-    "example": "printf(\"samples: 1.1, 3.2, -0.6, -0.9\\n\")\n\n- 注意：FireWater遇到换行才会打印数据，很多新用户在这里产生疑惑。",
+    "format": "\"<any>:ch0,ch1,ch2,...,chN\\n\"\n或\n\"ch0,ch1,ch2,...,chN\\n\"",
+    "example": "printf(\"samples: 1.1, 3.2, -0.6, -0.9\\n\")\n或\nprintf(\"1.1, 3.2, -0.6, -0.9\\n\")\n\n- 注意：FireWater遇到换行才会打印数据，很多新用户在这里产生疑惑。",
     "url": "https://www.vofa.plus/plugin_detail/?name=firewater"
   },
   "TraditionalChinese": {
-    "format": "\"<any>:ch0,ch1,ch2,...,chN\\n\"",
-    "example": "printf(\"samples: 1.1, 3.2, -0.6, -0.9\\n\")\n\n- 注意：FireWater遇到換行才會列印數據，很多新用戶在這裡產生疑惑。",
+    "format": "\"<any>:ch0,ch1,ch2,...,chN\\n\"\n或\n\"ch0,ch1,ch2,...,chN\\n\"",
+    "example": "printf(\"samples: 1.1, 3.2, -0.6, -0.9\\n\")\n或\nprintf(\"1.1, 3.2, -0.6, -0.9\\n\")\n\n- 注意：FireWater遇到換行才會列印數據，很多新用戶在這裡產生疑惑。",
     "url": "https://www.vofa.plus/plugin_detail/?name=firewater"
   },
   "English": {
-    "format": "\"<any>:ch0,ch1,ch2,...,chN\\n\"",
-    "example": "printf(\"samples: 1.1, 3.2, -0.6, -0.9\\n\")\n\n- Note: FireWater will print data only when it encounters a line break. Many new users have doubts here.",
+    "format": "\"<any>:ch0,ch1,ch2,...,chN\\n\"\nOr\n\"ch0,ch1,ch2,...,chN\\n\"",
+    "example": "printf(\"samples: 1.1, 3.2, -0.6, -0.9\\n\")\nOr\nprintf(\"1.1, 3.2, -0.6, -0.9\\n\")\n\n- Note: FireWater will print data only when it encounters a line break. Many new users have doubts here.",
     "url": "https://www.vofa.plus/plugin_detail/?name=firewater"
   }
 }
