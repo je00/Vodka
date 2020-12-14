@@ -723,7 +723,7 @@ ResizableRectangle {
 
                         Entity {
                             id: cube_entity
-                            property Mesh obj_mesh
+                            property var obj_mesh
                             property bool first_run: true
                             components: [RenderSettings {
                                     renderPolicy: RenderSettings.Always
@@ -737,7 +737,7 @@ ResizableRectangle {
                             }
 
                             Connections {
-                                target: cube_entity.obj_mesh
+                                target: cube_entity.obj_mesh?cube_entity.obj_mesh:null
                                 onStatusChanged: {
                                     if (cube_entity.obj_mesh.status !== 2)
                                         return;
