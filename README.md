@@ -6,7 +6,7 @@
 <br/>
 
 
-## 文档地址：https://je0000.gitee.io/vofaplus/docs/
+## 下载链接：https://www.vofa.plus/downloads/
 
 # 关于此仓库
 * 伏特加上位机自2020年3月27将改名为VOFA+，协议和控件仓库名称不变。
