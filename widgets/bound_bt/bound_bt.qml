@@ -176,6 +176,12 @@ ResizableRectangle {
         CmdMenu {
             id: cmd_menu
             title: qsTr("绑定命令")
+            onBind_objChanged: {
+                if (bind_obj) {
+                    if (!name_menu.attr.name_link_ch)
+                        name_menu.attr.name_link_cmd = true;
+                }
+            }
         }
         ArgumentMenu {
             id: argument_menu
