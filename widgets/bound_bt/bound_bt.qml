@@ -46,7 +46,7 @@ ResizableRectangle {
         property color color1: appTheme.bgColor
         property color color2: appTheme.mainColor
         property color colorBorder: appTheme.lineColor
-        property int borderWidth: g_settings.applyHScale(1)
+        property real borderWidth: g_settings.applyHScale(1)
 
         property color color1_: color1Follow?appTheme.bgColor:color1
         property color color2_: color2Follow?appTheme.mainColor:color2
