@@ -131,7 +131,7 @@ ResizableRectangle {
         stepSize: root.step_size
         value: 500
         //        Component.onCompleted: value = 500;
-        onValueChanged: {
+        function send() {
             value = value.toFixed(value_menu.attr.decimal);
             root_spinbox.value = value;
             argument_model.get(0).hex_value = sys_manager.float_to_hex(value);
@@ -145,6 +145,10 @@ ResizableRectangle {
                                          argument_menu.hex_on
                                          );
             }
+        }
+
+        onValueChanged: {
+            send();
         }
     }
 
@@ -174,6 +178,7 @@ ResizableRectangle {
         }
         MySpinBox {
             id: root_spinbox
+            input_finished_dalay: 200
             anchors {
                 verticalCenter: parent.verticalCenter
                 right: parent.right
@@ -189,6 +194,10 @@ ResizableRectangle {
             to: root.to
             onAccepted: {
                 slider.value = value;
+            }
+            onInput_finished: {
+                if (slider.value === value)
+                    slider.send();
             }
         }
     }
