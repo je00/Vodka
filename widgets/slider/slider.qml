@@ -169,7 +169,10 @@ ResizableRectangle {
             }
             font.pixelSize: name_menu.attr.font_size
             color: name_menu.attr.color
-            width: parent.width/2
+            width: Math.min(
+                       parent.width - root_spinbox.width,
+                       Math.max(this.text_width, parent.width/2)
+                       )
             elide: Text.ElideMiddle
             editable: name_menu.attr.editable
             tips_text: name_menu.attr.tips_text
