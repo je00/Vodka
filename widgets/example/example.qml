@@ -22,7 +22,6 @@ ResizableRectangle {
     color: "white"
     border.width: 1
 
-
     // 控件宽、高均为100像素
     width: g_settings.applyHScale(100)
     height: g_settings.applyVScale(100)
@@ -74,7 +73,12 @@ ResizableRectangle {
                 menu.popup();
             }
         }
+    }
 
+    MyMouseArea {
+        cursorShape: Qt.PointingHandCursor
+        anchors.fill: parent
+        anchors.margins: g_settings.applyHScale(10)
         onPressed: send_command(0)
         onReleased: send_command(1)
         function send_command(argment_index) {
@@ -85,7 +89,6 @@ ResizableRectangle {
                                      argument_menu.hex_on
                                      );
         }
-
     }
 
 
@@ -108,16 +111,18 @@ ResizableRectangle {
                 'ch_menu': {
                     'ctx': ch_menu.get_ctx()
                 },
+                'cmd_menu': {
+                    'ctx': cmd_menu.get_ctx()
+                },
                 'argument_menu': {
                     'ctx': argument_menu.get_ctx()
                 }
             }
         }
-
         return ctx;
     }
 
     function set_widget_ctx(ctx) {
-        __set_ctx__(root, ctx.ctx, ref);
+        __set_ctx__(root, ctx.ctx);
     }
 }
