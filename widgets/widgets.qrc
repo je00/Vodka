@@ -49,5 +49,6 @@
         <file>light/light.qml</file>
         <file>slider/slider.qml</file>
         <file>example/example.qml</file>
+        <file>circular_gauge/circular_gauge.qml</file>
     </qresource>
 </RCC>

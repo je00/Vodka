@@ -147,7 +147,6 @@ ResizableRectangle {
                 bgColor = color;
                 break;
             }
-
         }
     }
     MyMenu { // 右键菜单
@@ -446,26 +445,19 @@ ResizableRectangle {
                     text: qsTr("跟随") + g_settings.colorName["objColor"]
                     checked: theme.cubeColorFollow
                     onTriggered: {
-                        theme.cubeColorFollow = !theme.cubeColorFollow;
+                        theme.cubeColorFollow = true;
                     }
                 }
 
-                MyMenuItem {
+                MyColorMenuItem {
                     checked: !theme.cubeColorFollow
-                    color_mark_on: true
-                    indicator_color: theme.cubeColor
+                    target_obj: theme
+                    target_name: "cubeColor"
                     text: qsTr("自定义颜色...")
                     tips_text: checked?
                                    qsTr("已选中，再点击可修改颜色"):
                                    qsTr("点击可选中自定义颜色，再点击可修改颜色")
                     onTriggered: {
-//                        if (checked) {
-//                            sys_manager.open_color_dialog(
-//                                        theme,
-//                                        0,
-//                                        theme.cubeColor
-//                                        );
-//                        }
                         theme.cubeColorFollow = false;
                         sys_manager.open_color_dialog(
                                     theme,
@@ -473,7 +465,6 @@ ResizableRectangle {
                                     theme.cubeColor
                                     );
                     }
-
                 }
             }
 
@@ -540,6 +531,7 @@ ResizableRectangle {
     }
 
     Rectangle {
+        z: -1
         anchors.fill: parent
         color: theme.bgColor
         opacity: theme.bgOpacity
