@@ -118,7 +118,7 @@ ResizableRectangle {
             margins: g_settings.applyHScale(12)
         }
         hoverEnabled: !bound_bt_name.editing
-        propagateComposedEvents: true
+//        propagateComposedEvents: true
         onPressed: send_command(0)
         onReleased: send_command(1)
         onDoubleClicked: {}
@@ -131,24 +131,6 @@ ResizableRectangle {
                                      );
         }
     }
-
-//    LinearGradient  {
-//        id: text_gradient
-//        anchors.fill: bound_bt_name
-//        source: bound_bt_name
-//        visible: !bound_bt_name.visible
-//        property real effect_text_ratio1: (parent.width - name_menu.attr.font_size)/bound_bt_name.width
-//        property real effect_text_ratio2: parent.width/bound_bt_name.width
-//        gradient: Gradient {
-//            orientation: Gradient.Horizontal
-//            GradientStop {
-//                position: text_gradient.effect_text_ratio1
-//                color: bound_bt_name.color }
-//            GradientStop {
-//                position: text_gradient.effect_text_ratio2;
-//                color: "white" }
-//        }
-//    }
 
     MyText {
         id: bound_bt_name
