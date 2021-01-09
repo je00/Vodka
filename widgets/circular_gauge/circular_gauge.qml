@@ -24,6 +24,11 @@ ResizableRectangle {
     }
     property real from: -1
     property real to: 1
+    property real danger: 0.8
+    property bool danger_reverse: false
+    property int decimal: 1
+    property real font_scale: 1
+    property real label_inset: 0.25
 
     //    border.width: g_settings.applyHScale(1)
 
@@ -76,7 +81,7 @@ ResizableRectangle {
         opacity: theme.bgOpacity
     }
 
-    CircularGauge{
+    CircularGauge {
         id:gauge
         anchors {
             top: parent.top
@@ -106,13 +111,26 @@ ResizableRectangle {
             }
         }
         style: CircularGaugeStyle {
-            labelInset: outerRadius * 0.2
+            id: circular_gauge_style
+            labelInset: outerRadius * label_inset
             tickmarkLabel: Label{
-                text:""+styleData.value.toFixed(1)
-                font.pixelSize: g_settings.fontPixelSizeSmall *
-                                (Math.min(gauge.width, gauge.height)/(g_settings.applyHScale(200)*0.95))
+                text:""+styleData.value.toFixed(root.decimal)
+                font.pixelSize: g_settings.fontPixelSizeSmall
+                                * (Math.min(gauge.width, gauge.height)/(g_settings.applyHScale(200)))
+                                * root.font_scale
+
                 font.family: g_settings.fontFamilyNumber
-                color: appTheme.fontColor
+                color: {
+                    if (root.danger_reverse) {
+                        (styleData.value <= root.danger)?
+                               appTheme.badColor:
+                               appTheme.fontColor
+                    } else {
+                        (styleData.value >= root.danger)?
+                               appTheme.badColor:
+                               appTheme.fontColor
+                    }
+                }
             }
             labelStepSize: (root.to-root.from)/10
             tickmarkStepSize : (root.to-root.from)/10
@@ -121,13 +139,33 @@ ResizableRectangle {
                 implicitWidth: outerRadius * 0.02
                 antialiasing: true
                 implicitHeight: outerRadius * 0.06
-                color: appTheme.fontColor
+                color: {
+                    if (root.danger_reverse) {
+                        (styleData.value <= root.danger)?
+                               appTheme.badColor:
+                               appTheme.fontColorTips
+                    } else {
+                        (styleData.value >= root.danger)?
+                               appTheme.badColor:
+                               appTheme.fontColorTips
+                    }
+                }
             }
             minorTickmark: Rectangle {
                 implicitWidth: outerRadius * 0.02
                 antialiasing: true
                 implicitHeight: outerRadius * 0.03
-                color: appTheme.fontColorTips
+                color: {
+                    if (root.danger_reverse) {
+                        (styleData.value <= root.danger)?
+                               appTheme.badColor:
+                               appTheme.fontColorTips
+                    } else {
+                        (styleData.value >= root.danger)?
+                               appTheme.badColor:
+                               appTheme.fontColorTips
+                    }
+                }
             }
             needle: Item {
                 antialiasing: true
@@ -234,9 +272,170 @@ ResizableRectangle {
         ScreenshotMenuItem {
             target: root
         }
+
         MyMenuSeparator {
 
         }
+
+        MyMenu {
+            title: qsTr("设置")
+            MyMenuItem {
+                text_center: true
+                text: qsTr("重置")
+                onTriggered: {
+                    root.from = -1;
+                    root.to = 1;
+                    root.danger = 0.8;
+                    root.danger_reverse = false;
+                    root.decimal = 1;
+                    root.font_scale = 0.9;
+                    root.label_inset = 0.2;
+
+                }
+            }
+
+            MyMenuSeparator {
+
+            }
+
+            MyMenuItem {
+                text_center: true
+                text: qsTr("最小值") + ":"
+                plus_minus_on: true
+                value_text: "" + root.from
+                value_editable: true
+                onPlus_triggered: {
+                    root.from = root.from + 1;
+                }
+                onMinus_triggered: {
+                    root.from = root.from - 1;
+                }
+                onValue_inputed: {
+                    var value = parseFloat(text);
+                    if (!value)
+                        value = 0;
+                    root.from = value;
+                }
+            }
+            MyMenuItem {
+                text_center: true
+                text: qsTr("最大值") + ":"
+                plus_minus_on: true
+                value_text: "" + root.to
+                value_editable: true
+                onPlus_triggered: {
+                    root.to = root.to + 1;
+                }
+                onMinus_triggered: {
+                    root.to = root.to - 1;
+                }
+                onValue_inputed: {
+                    var value = parseFloat(text);
+                    if (!value)
+                        value = 0;
+                    root.to = value;
+                }
+            }
+            MyMenuSeparator {
+                margins: g_settings.applyHScale(10)
+            }
+            MyMenuItem {
+                text_center: true
+                text: qsTr("警告值") + ":"
+                plus_minus_on: true
+                value_text: "" + root.danger
+                value_editable: true
+                onPlus_triggered: {
+                    root.danger = (root.danger + 0.1).toFixed(2);
+                }
+                onMinus_triggered: {
+                    root.danger = (root.danger - 0.1).toFixed(2);
+                }
+                onValue_inputed: {
+                    var value = parseFloat(text);
+                    if (!value)
+                        value = 0;
+                    root.danger = value;
+                }
+            }
+            MyMenuItem {
+                text_center: true
+                text: qsTr("逻辑反向")
+                checked: root.danger_reverse
+                onTriggered: {
+                    root.danger_reverse = !root.danger_reverse;
+                }
+            }
+
+            MyMenuSeparator {
+                margins: g_settings.applyHScale(10)
+            }
+
+            MyMenuItem {
+                text_center: true
+                text: qsTr("小数位数") + ":"
+                plus_minus_on: true
+                value_text: "" + root.decimal
+                value_editable: true
+                onPlus_triggered: {
+                    root.decimal = root.decimal + 1;
+                }
+                onMinus_triggered: {
+                    root.decimal = Math.max(0,
+                                            root.decimal - 1);
+                }
+                onValue_inputed: {
+                    var value = parseInt(text);
+                    if (!value)
+                        value = 0;
+                    root.decimal = value;
+                }
+            }
+            MyMenuItem {
+                text_center: true
+                text: qsTr("字体比例") + ":"
+                plus_minus_on: true
+                value_text: "" + root.font_scale
+                value_editable: true
+                onPlus_triggered: {
+                    root.font_scale = (root.font_scale + 0.01).toFixed(2);
+                }
+                onMinus_triggered: {
+                    root.font_scale = Math.max(0,
+                                               root.font_scale - 0.01).toFixed(2);
+                }
+                onValue_inputed: {
+                    var value = parseFloat(text);
+                    if (!value)
+                        value = 0;
+                    root.decimal = value;
+                }
+            }
+            MyMenuItem {
+                text_center: true
+                text: qsTr("数字位置") + ":"
+                plus_minus_on: true
+                value_text: "" + root.label_inset
+                value_editable: true
+                onPlus_triggered: {
+                    root.label_inset = (root.label_inset + 0.01).toFixed(2);
+                }
+                onMinus_triggered: {
+                    root.label_inset = (root.label_inset - 0.01).toFixed(2);
+                }
+                onValue_inputed: {
+                    var value = parseFloat(text).toFixed(2);
+                    if (!value)
+                        value = 0;
+                    root.label_inset = value;
+                }
+            }
+        }
+
+        MyMenuSeparator {
+
+        }
+
         ChMenu {
             id: ch_menu
         }
@@ -248,44 +447,7 @@ ResizableRectangle {
             id: value_menu
             ch_menu: ch_menu
         }
-        MyMenuItem {
-            text_center: true
-            text: "from:"
-            plus_minus_on: true
-            value_text: "" + root.from
-            value_editable: true
-            onPlus_triggered: {
-                root.from = root.from + 1;
-            }
-            onMinus_triggered: {
-                root.from = root.from - 1;
-            }
-            onValue_inputed: {
-                var value = parseFloat(text);
-                if (!value)
-                    value = 0;
-                root.from = value;
-            }
-        }
-        MyMenuItem {
-            text_center: true
-            text: "to:"
-            plus_minus_on: true
-            value_text: "" + root.to
-            value_editable: true
-            onPlus_triggered: {
-                root.to = root.to + 1;
-            }
-            onMinus_triggered: {
-                root.to = root.to - 1;
-            }
-            onValue_inputed: {
-                var value = parseFloat(text);
-                if (!value)
-                    value = 0;
-                root.to = value;
-            }
-        }
+
         MyMenu {
             id: theme_menu
             title: qsTr("主题")
@@ -349,8 +511,13 @@ ResizableRectangle {
             'path': path,
             'ctx': {
                 '.': {  'ctx': get_ctx()   ,
-                    'from'      : from     ,
-                    'to'        : to       ,
+                    'from'          : from          ,
+                    'to'            : to            ,
+                    'danger'        : danger        ,
+                    'danger_reverse': danger_reverse   ,
+                    'decimal'       : decimal       ,
+                    'font_scale'    : font_scale    ,
+                    'label_inset'   : label_inset   ,
                 },
                 'ch_menu': {
                     'ctx': ch_menu.get_ctx()
