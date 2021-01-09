@@ -219,14 +219,35 @@ ResizableRectangle {
         DeleteMenuItem {
             target: root
         }
+        NameMenu {
+            id: name_menu
+            ch_menu: ch_menu
+            cmd_menu: cmd_menu
+        }
         CmdMenu {
             id: cmd_menu
             title: qsTr("绑定命令")
+            onBind_objChanged: {
+                if (bind_obj) {
+                    if (!name_menu.attr.name_link_ch)
+                        name_menu.attr.name_link_cmd = true;
+                } else {
+                    name_menu.attr.name_link_cmd = false;
+                }
+            }
         }
         ChMenu {
             id: ch_menu
             checked: bind_obj
             indicator_color: bind_obj?bind_obj.color:"red"
+            onBind_objChanged: {
+                if (bind_obj) {
+                    if (!name_menu.attr.name_link_cmd)
+                        name_menu.attr.name_link_ch = true;
+                } else {
+                    name_menu.attr.name_link_ch = false;
+                }
+            }
         }
         ArgumentMenu {
             id: argument_menu
@@ -275,11 +296,6 @@ ResizableRectangle {
         ValueMenu {
             id: value_menu
             ch_menu: ch_menu
-        }
-        NameMenu {
-            id: name_menu
-            ch_menu: ch_menu
-            cmd_menu: cmd_menu
         }
         MyMenu {
             id: light_menu

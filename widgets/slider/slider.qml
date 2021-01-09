@@ -114,10 +114,17 @@ ResizableRectangle {
                 verticalCenter: parent.verticalCenter
                 horizontalCenter: parent.horizontalCenter
             }
+            onTextChanged: {
+                if (ch_menu.bind_obj)
+                    slider.target_value = parseFloat(text);
+            }
         }
     }
+
     MySlider {
         id: slider
+        color2: value_menu.attr.color
+        property real target_value: 500
         height: root.height/6
         anchors {
             left: parent.left
@@ -129,26 +136,57 @@ ResizableRectangle {
         from: root.from
         to: root.to
         stepSize: root.step_size
-        value: 500
+        value: target_value
         //        Component.onCompleted: value = 500;
-        function send() {
-            value = value.toFixed(value_menu.attr.decimal);
-            root_spinbox.value = value;
-            argument_model.get(0).hex_value = sys_manager.float_to_hex(value);
-            argument_model.get(0).float_value = root_spinbox.value;
+        states: [
+            State {
+                when: slider.pressed
+                PropertyChanges {
+                    explicit: true
+                    target: slider
+                    value: target_value
+                }
+            }
+        ]
+        function send(index=0, use_force_value=false, force_value=0) {
+            var send_value;
+            if (use_force_value)
+                send_value = force_value;
+            else
+                send_value = slider.value;
+            var value_string = send_value.toFixed(value_menu.attr.decimal)
+            root_spinbox.value = value_string;
+            for (var i = 0; i < argument_model.count; i++) {
+                argument_model.get(i).hex_value = sys_manager.float_to_hex(send_value);
+                argument_model.get(i).float_value = parseFloat(value_string);
+            }
 
-            var press_argument = argument_model.get(0);
+            var argument = argument_model.get(index);
             if (!loading) {
                 sys_manager.send_command(name_menu.attr.name,
                                          cmd_menu.bind_obj,
-                                         press_argument,
+                                         argument,
                                          argument_menu.hex_on
                                          );
             }
         }
 
         onValueChanged: {
-            send();
+            if (!ch_menu.bind_obj) {
+                target_value = value;
+                root_spinbox.value = value.toFixed(value_menu.attr.decimal);
+            }
+
+            if (pressed) {
+                send(0);
+            } else if (!root_spinbox.hovered){
+                root_spinbox.value = value.toFixed(value_menu.attr.decimal);
+            }
+        }
+        onPressedChanged: {
+            if (!pressed) {
+                send(1);
+            }
         }
     }
 
@@ -196,11 +234,10 @@ ResizableRectangle {
             from: root.from
             to: root.to
             onAccepted: {
-                slider.value = value;
+                slider.target_value = value;
             }
             onInput_finished: {
-                if (slider.value === value)
-                    slider.send();
+                slider.send(2, true, value);
             }
         }
     }
@@ -210,6 +247,11 @@ ResizableRectangle {
         DeleteMenuItem {
             target: root
         }
+        NameMenu {
+            id: name_menu
+            ch_menu: ch_menu
+            cmd_menu: cmd_menu
+        }
         CmdMenu {
             id: cmd_menu
             title: qsTr("绑定命令")
@@ -217,6 +259,8 @@ ResizableRectangle {
                 if (bind_obj) {
                     if (!name_menu.attr.name_link_ch)
                         name_menu.attr.name_link_cmd = true;
+                } else {
+                    name_menu.attr.name_link_cmd = false;
                 }
             }
         }
@@ -224,6 +268,14 @@ ResizableRectangle {
             id: ch_menu
             checked: bind_obj
             indicator_color: bind_obj?bind_obj.color:"red"
+            onBind_objChanged: {
+                if (bind_obj) {
+                    if (!name_menu.attr.name_link_cmd)
+                        name_menu.attr.name_link_ch = true;
+                } else {
+                    name_menu.attr.name_link_ch = false;
+                }
+            }
         }
         ArgumentMenu {
             id: argument_menu
@@ -231,7 +283,21 @@ ResizableRectangle {
             model: ListModel {
                 id: argument_model
                 ListElement {
-                    name: qsTr("滑动条数值更新时发送，当前")
+                    name: qsTr("滑动条更新时发送数值，当前")
+                    float_value: 0
+                    hex_value: "00 00 00 00"
+                    enabled: true
+                    changable: false
+                }
+                ListElement {
+                    name: qsTr("结束滑动即鼠标弹起时发送数值，当前")
+                    float_value: 0
+                    hex_value: "00 00 00 00"
+                    enabled: false
+                    changable: false
+                }
+                ListElement {
+                    name: qsTr("操作输入框时发送数值，当前")
                     float_value: 0
                     hex_value: "00 00 00 00"
                     enabled: true
@@ -242,11 +308,6 @@ ResizableRectangle {
         ValueMenu {
             id: value_menu
             ch_menu: ch_menu
-        }
-        NameMenu {
-            id: name_menu
-            ch_menu: ch_menu
-            cmd_menu: cmd_menu
         }
 
         MyMenu {
@@ -409,7 +470,7 @@ ResizableRectangle {
                     'step_size' : step_size,
                 },
                 'slider': {
-                    'value': slider.value
+                    'target_value': slider.target_value
                 },
 
                 'argument_menu': {
