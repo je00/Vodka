@@ -86,7 +86,7 @@ ResizableRectangle {
             verticalCenter:parent.verticalCenter
             horizontalCenter:parent.horizontalCenter
         }
-        Gauge{
+        Gauge {
             id:gauge
             anchors {
                 top: parent.top
@@ -98,7 +98,9 @@ ResizableRectangle {
             height:parent.height
             minimumValue : root.from
             maximumValue : root.to
-            value: 0
+            value: ch_menu.bind_obj?
+                       ch_menu.bind_obj.value:
+                       0
 
             minorTickmarkCount :4
             tickmarkStepSize:(root.to-root.from)/10
@@ -189,15 +191,6 @@ ResizableRectangle {
     }
 
     Connections {
-        target: sys_manager
-        onNeed_update: {
-            gauge.value=ch_menu.bind_obj?
-                        ch_menu.bind_obj.value:
-                        0
-        }
-    }
-
-    Connections {
         // root.mouse：ResizableRectangle开放出来的MouseArea对象
         target: root.mouse
         onClicked: {
@@ -206,6 +199,7 @@ ResizableRectangle {
             }
         }
     }
+
     MyMenu {
         id: menu
         DeleteMenuItem {

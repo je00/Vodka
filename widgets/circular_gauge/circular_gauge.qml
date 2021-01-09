@@ -104,7 +104,9 @@ ResizableRectangle {
         maximumValue : root.to
         stepSize : 0
         tickmarksVisible :true
-        value: 0
+        value: ch_menu.bind_obj?
+                   ch_menu.bind_obj.value:
+                   0
         Behavior on value {
             NumberAnimation {
                 duration: 200
@@ -244,15 +246,6 @@ ResizableRectangle {
         font.pixelSize: name_menu.attr.font_size
         color: name_menu.attr.color
         onText_inputed: name_menu.set_name(text);
-    }
-
-    Connections {
-        target: sys_manager
-        onNeed_update: {
-            gauge.value=ch_menu.bind_obj?
-                        ch_menu.bind_obj.value:
-                        0
-        }
     }
 
     Connections {
