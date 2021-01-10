@@ -112,17 +112,15 @@ ResizableRectangle {
                 }
             }
             style: GaugeStyle {
-                tickmarkLabel: Label{
-
-                    text:""+styleData.value.toFixed(1)
-                    // font.pixelSize:{
-                    //     g_settings.fontPixelSizeSmall *
-                    //                 (Math.min(gauge.width, gauge.height)/
-                    //                     (g_settings.applyHScale(200)*0.95))
-                    // } 
-                    font.family: g_settings.fontFamilyNumber
-                    color: appTheme.fontColor
-                    rotation:root.orientation==Qt.Vertical?0: 90
+                tickmarkLabel: Item {
+                    implicitWidth: label_text.implicitWidth
+                    implicitHeight: label_text.implicitHeight
+                    MyText {
+                        id: label_text
+                        font.family: g_settings.fontFamilyNumber
+                        font.pixelSize: g_settings.fontPixelSizeSmall
+                        text:""+styleData.value.toFixed(1)
+                    }
                 }
 
                 tickmark: Rectangle {

@@ -212,13 +212,18 @@ ResizableRectangle {
         onText_inputed: name_menu.set_name(text);
     }
 
-    MyMenu {
+    MyIconMenu {
         id: menu
         text_center: false
 
         DeleteMenuItem {
             target: root
         }
+
+        FillParentMenu {
+            target: root
+        }
+
         NameMenu {
             id: name_menu
             ch_menu: ch_menu

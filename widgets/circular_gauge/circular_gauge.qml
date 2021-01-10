@@ -115,7 +115,7 @@ ResizableRectangle {
         style: CircularGaugeStyle {
             id: circular_gauge_style
             labelInset: outerRadius * label_inset
-            tickmarkLabel: Label{
+            tickmarkLabel: Label {
                 text:""+styleData.value.toFixed(root.decimal)
                 font.pixelSize: g_settings.fontPixelSizeSmall
                                 * (Math.min(gauge.width, gauge.height)/(g_settings.applyHScale(200)))
@@ -257,12 +257,17 @@ ResizableRectangle {
             }
         }
     }
-    MyMenu {
+    MyIconMenu {
         id: menu
         DeleteMenuItem {
             target: root
         }
+
         ScreenshotMenuItem {
+            target: root
+        }
+
+        FillParentMenu {
             target: root
         }
 
@@ -270,8 +275,7 @@ ResizableRectangle {
 
         }
 
-        MyMenu {
-            title: qsTr("设置")
+        SettingsMenu {
             MyMenuItem {
                 text_center: true
                 text: qsTr("重置")
@@ -287,9 +291,7 @@ ResizableRectangle {
                 }
             }
 
-            MyMenuSeparator {
-
-            }
+            MyMenuSeparator { }
 
             MyMenuItem {
                 text_center: true
@@ -441,9 +443,8 @@ ResizableRectangle {
             ch_menu: ch_menu
         }
 
-        MyMenu {
+        ThemeMenu {
             id: theme_menu
-            title: qsTr("主题")
 
             MyMenuItem {
                 text: qsTr("隐藏外框")

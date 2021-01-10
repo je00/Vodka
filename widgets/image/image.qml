@@ -128,15 +128,21 @@ ResizableRectangle {
         }
     }
 
-    MyMenu { // 右键菜单
+    MyIconMenu { // 右键菜单
         id: menu
         visible: false
         DeleteMenuItem {
             target: root
         }
+
         ScreenshotMenuItem {
             target: root
         }
+
+        FillParentMenu {
+            target: root
+        }
+
         MyMenuSeparator {
 
         }

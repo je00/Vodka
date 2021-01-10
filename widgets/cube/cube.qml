@@ -149,7 +149,7 @@ ResizableRectangle {
             }
         }
     }
-    MyMenu { // 右键菜单
+    MyIconMenu { // 右键菜单
         id: main_menu
         visible: false
         //            height: (count - 1)*30
@@ -160,9 +160,15 @@ ResizableRectangle {
                 root.destroy();
             }
         }
+
         ScreenshotMenuItem {
             target: root
         }
+
+        FillParentMenu {
+            target: root
+        }
+
         MyMenuSeparator {
 
         }
@@ -208,7 +214,6 @@ ResizableRectangle {
         ChMenu {
             id: x_menu
             checked: bind_obj
-            indicator_color: bind_obj?bind_obj.color:"#ff0000"
             color: "#ff0000"
             title: "X" + (bind_obj?(" → "+bind_obj.name):"")
         }
@@ -216,7 +221,6 @@ ResizableRectangle {
         ChMenu {
             id: y_menu
             checked: bind_obj
-            indicator_color: bind_obj?bind_obj.color:"#00ff00"
             color: "#00ff00"
             title: "Y" + (bind_obj?(" → "+bind_obj.name):"")
         }
@@ -224,7 +228,6 @@ ResizableRectangle {
         ChMenu {
             id: z_menu
             checked: bind_obj
-            indicator_color: bind_obj?bind_obj.color:"#0000ff"
             color: "#0000ff"
             title: "Z" + (bind_obj?(" → "+bind_obj.name):"")
         }
@@ -434,9 +437,8 @@ ResizableRectangle {
             }
         }
 
-        MyMenu {
+        ThemeMenu {
             id: theme_menu
-            title: qsTr("主题")
             MyMenu {
                 title: qsTr("模型颜色")
                 MyMenuItem {

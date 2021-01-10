@@ -10,7 +10,7 @@ ResizableRectangle {
         active: false
         sourceComponent: Component {
             Item {
-                property var ref_slider        :   slider
+                property var ref_slider_inside :   slider_inside
                 property var ref_argument_menu :   argument_menu
                 property var ref_cmd_menu      :   cmd_menu
                 property var ref_ch_menu       :   ch_menu
@@ -94,10 +94,10 @@ ResizableRectangle {
     Item {
         //        border.width: 1
         anchors {
-            bottom: slider.top
+            bottom: slider_inside.top
             //            bottomMargin: g_settings.applyVScale(2)
-            left: slider.left
-            right: slider.right
+            left: slider_inside.left
+            right: slider_inside.right
             top: parent.top
         }
 
@@ -106,7 +106,7 @@ ResizableRectangle {
             visible: value_menu.attr.visible
             text: (ch_menu.bind_obj?
                        ch_menu.bind_obj.value:
-                       slider.value).toFixed(value_menu.attr.decimal)
+                       slider_inside.value).toFixed(value_menu.attr.decimal)
             color: value_menu.attr.color
             enabled: !sys_manager.lock
             font.pixelSize: value_menu.attr.font_size
@@ -116,13 +116,13 @@ ResizableRectangle {
             }
             onTextChanged: {
                 if (ch_menu.bind_obj)
-                    slider.target_value = parseFloat(text);
+                    slider_inside.target_value = parseFloat(text);
             }
         }
     }
 
     MySlider {
-        id: slider
+        id: slider_inside
         color2: value_menu.attr.color
         property real target_value: 500
         height: root.height/6
@@ -140,10 +140,10 @@ ResizableRectangle {
         //        Component.onCompleted: value = 500;
         states: [
             State {
-                when: slider.pressed
+                when: slider_inside.pressed||slider_inside.hovered
                 PropertyChanges {
                     explicit: true
-                    target: slider
+                    target: slider_inside
                     value: target_value
                 }
             }
@@ -153,7 +153,7 @@ ResizableRectangle {
             if (use_force_value)
                 send_value = force_value;
             else
-                send_value = slider.value;
+                send_value = slider_inside.value;
             var value_string = send_value.toFixed(value_menu.attr.decimal)
             root_spinbox.value = value_string;
             for (var i = 0; i < argument_model.count; i++) {
@@ -172,7 +172,7 @@ ResizableRectangle {
         }
 
         onValueChanged: {
-            if (!ch_menu.bind_obj) {
+            if (!ch_menu.bind_obj && pressed) {
                 target_value = value;
                 root_spinbox.value = value.toFixed(value_menu.attr.decimal);
             }
@@ -193,9 +193,9 @@ ResizableRectangle {
     Rectangle {
         color: "transparent"
         anchors {
-            top: slider.bottom
-            left: slider.left
-            right: slider.right
+            top: slider_inside.bottom
+            left: slider_inside.left
+            right: slider_inside.right
             bottom: parent.bottom
         }
         MyText {
@@ -233,25 +233,126 @@ ResizableRectangle {
             value: 500
             from: root.from
             to: root.to
-            onAccepted: {
-                slider.target_value = value;
-            }
+
             onInput_finished: {
-                slider.send(2, true, value);
+                slider_inside.send(2, true, value);
             }
         }
     }
 
-    MyMenu {
+    MyIconMenu {
         id: menu
+
         DeleteMenuItem {
             target: root
         }
+
+        FillParentMenu {
+            target: root
+        }
+
+        SettingsMenu {
+            MyMenuItem {
+                text_center: true
+                text: qsTr("重置")
+                onTriggered: {
+                    root.from = 0
+                    root.to = 1000
+                    root.step_size = 1
+                }
+            }
+
+            MyMenuSeparator { }
+
+            MyMenuItem {
+                text_center: true
+                text: qsTr("最小值") + ":"
+                plus_minus_on: true
+                value_text: "" + root.from
+                value_editable: true
+                onPlus_triggered: {
+                    root.from = Math.min(
+                                root.to,
+                                root.from + 1
+                                );
+
+                }
+                onMinus_triggered: {
+                    root.from = root.from - 1;
+                }
+                onValue_inputed: {
+                    var value = parseFloat(text);
+                    if (!value)
+                        value = 0;
+                    root.from = Math.min(
+                                root.to,
+                                value
+                                );
+                }
+            }
+
+            MyMenuItem {
+                text_center: true
+                text: qsTr("最大值") + ":"
+                plus_minus_on: true
+                value_text: "" + root.to
+                value_editable: true
+                onPlus_triggered: {
+                    root.to = root.to + 1;
+                }
+                onMinus_triggered: {
+                    root.to = Math.max(
+                                root.from,
+                                root.to - 1
+                                );
+                }
+                onValue_inputed: {
+                    var value = parseFloat(text);
+                    if (!value)
+                        value = 0;
+                    root.to = Math.max(
+                                root.from,
+                                value
+                                );
+                }
+            }
+            MyMenuItem {
+                text_center: true
+                text: qsTr("步进") + ":"
+                plus_minus_on: true
+                value_text: "" + root.step_size
+                value_editable: true
+                onPlus_triggered: {
+                    root.step_size = root.step_size + 1;
+                }
+                onMinus_triggered: {
+                    root.step_size = Math.max(
+                                0,
+                                root.step_size - 1
+                                );
+                }
+                onValue_inputed: {
+                    root.step_size = Math.max(
+                                0,
+                                parseFloat(text)
+                                );
+                }
+            }
+        }
+
+        MyMenuSeparator { }
+
         NameMenu {
             id: name_menu
             ch_menu: ch_menu
             cmd_menu: cmd_menu
         }
+
+        ValueMenu {
+            id: value_menu
+            ch_menu: ch_menu
+        }
+
         CmdMenu {
             id: cmd_menu
             title: qsTr("绑定命令")
@@ -305,14 +406,9 @@ ResizableRectangle {
                 }
             }
         }
-        ValueMenu {
-            id: value_menu
-            ch_menu: ch_menu
-        }
 
-        MyMenu {
+        ThemeMenu {
             id: theme_menu
-            title: qsTr("主题")
             MyMenuItem {
                 text_center: true
                 text: qsTr("不透明度:")
@@ -375,83 +471,12 @@ ResizableRectangle {
             }
         }
 
-        MyMenuItem {
-            text_center: true
-            text: "step size:"
-            plus_minus_on: true
-            value_text: "" + root.step_size
-            value_editable: true
-            onPlus_triggered: {
-                root.step_size = root.step_size + 1;
-            }
-            onMinus_triggered: {
-                root.step_size = Math.max(
-                            0,
-                            root.step_size - 1
-                            );
-            }
-            onValue_inputed: {
-                root.step_size = Math.max(
-                            0,
-                            parseFloat(text)
-                            );
-            }
-        }
-        MyMenuItem {
-            text_center: true
-            text: "from:"
-            plus_minus_on: true
-            value_text: "" + root.from
-            value_editable: true
-            onPlus_triggered: {
-                root.from = Math.min(
-                            root.to,
-                            root.from + 1
-                            );
-
-            }
-            onMinus_triggered: {
-                root.from = root.from - 1;
-            }
-            onValue_inputed: {
-                var value = parseFloat(text);
-                if (!value)
-                    value = 0;
-                root.from = Math.min(
-                            root.to,
-                            value
-                            );
-            }
-        }
-
-        MyMenuItem {
-            text_center: true
-            text: "to:"
-            plus_minus_on: true
-            value_text: "" + root.to
-            value_editable: true
-            onPlus_triggered: {
-                root.to = root.to + 1;
-            }
-            onMinus_triggered: {
-                root.to = Math.max(
-                            root.from,
-                            root.to - 1
-                            );
-            }
-            onValue_inputed: {
-                var value = parseFloat(text);
-                if (!value)
-                    value = 0;
-                root.to = Math.max(
-                            root.from,
-                            value
-                            );
-            }
-        }
-
     }
 
+    MyToolTip {
+        text: slider_inside.mouseValue
+        visible: slider_inside.hovered && !slider_inside.pressed
+    }
 
     function onBind() {
 
@@ -469,8 +494,8 @@ ResizableRectangle {
                     'to'        : to       ,
                     'step_size' : step_size,
                 },
-                'slider': {
-                    'target_value': slider.target_value
+                'slider_inside': {
+                    'target_value': slider_inside.target_value
                 },
 
                 'argument_menu': {

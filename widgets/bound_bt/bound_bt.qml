@@ -150,11 +150,16 @@ ResizableRectangle {
         onText_inputed: name_menu.set_name(text);
     }
 
-    MyMenu {
+    MyIconMenu {
         id: menu
         DeleteMenuItem {
             target: root
         }
+
+        FillParentMenu {
+            target: root
+        }
+
         NameMenu {
             id: name_menu
             cmd_menu: cmd_menu
@@ -192,10 +197,9 @@ ResizableRectangle {
                 }
             }
         }
-        MyMenu {
+        ThemeMenu {
             id: theme_menu
             text_center: false
-            title: qsTr("主题")
             MyMenuItem {
                 text: qsTr("重置")
                 text_center: true
