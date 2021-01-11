@@ -396,14 +396,14 @@ ResizableRectangle {
                     root.font_scale = (root.font_scale + 0.01).toFixed(2);
                 }
                 onMinus_triggered: {
-                    root.font_scale = Math.max(0,
+                    root.font_scale = Math.max(0.1,
                                                root.font_scale - 0.01).toFixed(2);
                 }
                 onValue_inputed: {
                     var value = parseFloat(text);
-                    if (!value)
-                        value = 0;
-                    root.decimal = value;
+                    if (isNaN(value) || value <= 0)
+                        value = 0.1;
+                    root.font_scale = value;
                 }
             }
             MyMenuItem {

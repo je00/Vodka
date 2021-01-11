@@ -34,7 +34,7 @@ ResizableRectangle {
         (name_text.height + g_settings.applyVScale(16) + radius +
          value_text.height)/(5/6)
     //    minimumWidth: g_settings.applyHScale(204)
-    minimumWidth: Math.max(204, value_text.width)
+    minimumWidth: Math.max(g_settings.applyHScale(204), value_text.text_width)
     radius: g_settings.applyHScale(5)
 
     Connections {
@@ -341,35 +341,13 @@ ResizableRectangle {
         }
 
         MyMenuSeparator { }
-
-        NameMenu {
-            id: name_menu
-            ch_menu: ch_menu
-            cmd_menu: cmd_menu
-        }
-
-        ValueMenu {
-            id: value_menu
-            ch_menu: ch_menu
-        }
-
-        CmdMenu {
-            id: cmd_menu
-            title: qsTr("绑定命令")
-            onBind_objChanged: {
-                if (bind_obj) {
-                    if (!name_menu.attr.name_link_ch)
-                        name_menu.attr.name_link_cmd = true;
-                } else {
-                    name_menu.attr.name_link_cmd = false;
-                }
-            }
-        }
         ChMenu {
             id: ch_menu
             checked: bind_obj
             indicator_color: bind_obj?bind_obj.color:"red"
             onBind_objChanged: {
+                if (!name_menu)
+                    return;
                 if (bind_obj) {
                     if (!name_menu.attr.name_link_cmd)
                         name_menu.attr.name_link_ch = true;
@@ -378,6 +356,22 @@ ResizableRectangle {
                 }
             }
         }
+
+        CmdMenu {
+            id: cmd_menu
+            title: qsTr("绑定命令")
+            onBind_objChanged: {
+                if (!name_menu)
+                    return;
+                if (bind_obj) {
+                    if (!name_menu.attr.name_link_ch)
+                        name_menu.attr.name_link_cmd = true;
+                } else {
+                    name_menu.attr.name_link_cmd = false;
+                }
+            }
+        }
+
         ArgumentMenu {
             id: argument_menu
             cmd_obj: cmd_menu.bind_obj
@@ -405,6 +399,17 @@ ResizableRectangle {
                     changable: false
                 }
             }
+        }
+
+        NameMenu {
+            id: name_menu
+            ch_menu: ch_menu
+            cmd_menu: cmd_menu
+        }
+
+        ValueMenu {
+            id: value_menu
+            ch_menu: ch_menu
         }
 
         ThemeMenu {

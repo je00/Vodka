@@ -80,14 +80,14 @@ ResizableRectangle {
 
     Rectangle {
         color: "transparent"
-        width:root.orientation==Qt.Vertical?60:parent.width*0.95
-        height:root.orientation==Qt.Horizontal?60:parent.height*0.95
+        width: parent.width*0.95
+        height: parent.height*0.95
         anchors {
             verticalCenter:parent.verticalCenter
             horizontalCenter:parent.horizontalCenter
         }
         Gauge {
-            id:gauge
+            id: gauge
             anchors {
                 top: parent.top
                 bottom:parent.bottom
@@ -104,19 +104,29 @@ ResizableRectangle {
 
             minorTickmarkCount :4
             tickmarkStepSize:(root.to-root.from)/10
-            orientation :root.orientation
+            orientation: root.orientation
             tickmarkAlignment :root.orientation==Qt.Vertical?Qt.AlignRight:Qt.AlignBottom
             Behavior on value {
                 NumberAnimation {
                     duration: 200
                 }
             }
+            Rectangle {
+                anchors.fill: parent
+                color: "transparent"
+                border.width: 1
+            }
+
             style: GaugeStyle {
-                tickmarkLabel: Item {
+                tickmarkLabel: Rectangle {
                     implicitWidth: label_text.implicitWidth
                     implicitHeight: label_text.implicitHeight
+                    color: "transparent"
+                    border.width: 1
                     MyText {
                         id: label_text
+//                        anchors.bottom: parent.bottom
+//                        anchors.right: parent.right
                         font.family: g_settings.fontFamilyNumber
                         font.pixelSize: g_settings.fontPixelSizeSmall
                         text:""+styleData.value.toFixed(1)
@@ -136,7 +146,7 @@ ResizableRectangle {
                     color: appTheme.fontColorTips
                 }
                 valueBar: Item {
-                    implicitWidth: 15
+                    implicitWidth: gauge.width/2
                     Rectangle {
                         id: rectangle
                         anchors.fill: parent
