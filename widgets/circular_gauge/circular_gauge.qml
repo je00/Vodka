@@ -25,6 +25,7 @@ ResizableRectangle {
     property real from: -1
     property real to: 1
     property real danger: 0.8
+    property bool danger_on: true
     property bool danger_reverse: false
     property int decimal: 1
     property real font_scale: 1
@@ -109,7 +110,7 @@ ResizableRectangle {
                    0
         Behavior on value {
             NumberAnimation {
-                duration: 200
+                duration: 20
             }
         }
         style: CircularGaugeStyle {
@@ -123,12 +124,15 @@ ResizableRectangle {
 
                 font.family: g_settings.fontFamilyNumber
                 color: {
+                    if (!root.danger_on)
+                        return appTheme.fontColor;
+
                     if (root.danger_reverse) {
-                        (styleData.value <= root.danger)?
+                        return (styleData.value <= root.danger)?
                                appTheme.badColor:
                                appTheme.fontColor
                     } else {
-                        (styleData.value >= root.danger)?
+                        return (styleData.value >= root.danger)?
                                appTheme.badColor:
                                appTheme.fontColor
                     }
@@ -142,14 +146,17 @@ ResizableRectangle {
                 antialiasing: true
                 implicitHeight: outerRadius * 0.06
                 color: {
+                    if (!root.danger_on)
+                        return appTheme.fontColor;
+
                     if (root.danger_reverse) {
-                        (styleData.value <= root.danger)?
+                        return (styleData.value <= root.danger)?
                                appTheme.badColor:
-                               appTheme.fontColorTips
+                               appTheme.fontColor
                     } else {
-                        (styleData.value >= root.danger)?
+                        return (styleData.value >= root.danger)?
                                appTheme.badColor:
-                               appTheme.fontColorTips
+                               appTheme.fontColor
                     }
                 }
             }
@@ -158,6 +165,9 @@ ResizableRectangle {
                 antialiasing: true
                 implicitHeight: outerRadius * 0.03
                 color: {
+                    if (!root.danger_on)
+                        return appTheme.fontColorTips;
+
                     if (root.danger_reverse) {
                         (styleData.value <= root.danger)?
                                appTheme.badColor:
@@ -283,6 +293,7 @@ ResizableRectangle {
                     root.from = -1;
                     root.to = 1;
                     root.danger = 0.8;
+                    root.danger_on = false;
                     root.danger_reverse = false;
                     root.decimal = 1;
                     root.font_scale = 0.9;
@@ -348,14 +359,24 @@ ResizableRectangle {
                 }
                 onValue_inputed: {
                     var value = parseFloat(text);
-                    if (!value)
+                    if (isNaN(value))
                         value = 0;
                     root.danger = value;
                 }
             }
+
             MyMenuItem {
                 text_center: true
-                text: qsTr("逻辑反向")
+                text: qsTr("开启警告")
+                checked: root.danger_on
+                onTriggered: {
+                    root.danger_on = !root.danger_on;
+                }
+            }
+
+            MyMenuItem {
+                text_center: true
+                text: qsTr("警告反向")
                 checked: root.danger_reverse
                 onTriggered: {
                     root.danger_reverse = !root.danger_reverse;
@@ -368,7 +389,7 @@ ResizableRectangle {
 
             MyMenuItem {
                 text_center: true
-                text: qsTr("小数位数") + ":"
+                text: qsTr("刻度小数位数") + ":"
                 plus_minus_on: true
                 value_text: "" + root.decimal
                 value_editable: true
@@ -381,14 +402,14 @@ ResizableRectangle {
                 }
                 onValue_inputed: {
                     var value = parseInt(text);
-                    if (!value)
+                    if (isNaN(value) || value < 0)
                         value = 0;
                     root.decimal = value;
                 }
             }
             MyMenuItem {
                 text_center: true
-                text: qsTr("字体比例") + ":"
+                text: qsTr("刻度数字缩放") + ":"
                 plus_minus_on: true
                 value_text: "" + root.font_scale
                 value_editable: true
@@ -408,7 +429,7 @@ ResizableRectangle {
             }
             MyMenuItem {
                 text_center: true
-                text: qsTr("数字位置") + ":"
+                text: qsTr("刻度数字位置") + ":"
                 plus_minus_on: true
                 value_text: "" + root.label_inset
                 value_editable: true
@@ -433,6 +454,20 @@ ResizableRectangle {
 
         ChMenu {
             id: ch_menu
+            onBind_objChanged: {
+                if (!name_menu)
+                    return;
+                if (bind_obj) {
+                    if (!name_menu.attr.name_link_cmd
+                            && !name_menu.attr.name_link_ch) {
+                        name_menu.attr.name_link_ch = true;
+                        name_menu.attr.color_link_ch = true;
+                    }
+                } else {
+                    name_menu.attr.name_link_ch = false;
+                    name_menu.attr.color_link_ch = false;
+                }
+            }
         }
         NameMenu {
             id: name_menu
@@ -508,7 +543,8 @@ ResizableRectangle {
                     'from'          : from          ,
                     'to'            : to            ,
                     'danger'        : danger        ,
-                    'danger_reverse': danger_reverse   ,
+                    'danger_on'     : danger_on     ,
+                    'danger_reverse': danger_reverse,
                     'decimal'       : decimal       ,
                     'font_scale'    : font_scale    ,
                     'label_inset'   : label_inset   ,

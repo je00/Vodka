@@ -232,10 +232,14 @@ ResizableRectangle {
                 if (!name_menu)
                     return;
                 if (bind_obj) {
-                    if (!name_menu.attr.name_link_cmd)
+                    if (!name_menu.attr.name_link_cmd
+                            && !name_menu.attr.name_link_ch) {
                         name_menu.attr.name_link_ch = true;
+                        name_menu.attr.color_link_ch = true;
+                    }
                 } else {
                     name_menu.attr.name_link_ch = false;
+                    name_menu.attr.color_link_ch = false;
                 }
             }
         }
