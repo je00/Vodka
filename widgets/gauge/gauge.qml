@@ -119,6 +119,7 @@ ResizableRectangle {
         anchors.fill: parent
         color: theme.bgColorFollow?appTheme.bgColor:theme.bgColor
         opacity: theme.bgOpacity
+        radius: root.radius
     }
 
     Item {
