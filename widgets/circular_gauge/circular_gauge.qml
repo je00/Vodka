@@ -25,7 +25,7 @@ ResizableRectangle {
     }
     property real from: -1
     property real to: 1
-    property real danger_ratio: 0.8
+    property real danger_ratio: 0.9
     property bool danger_on: true
     property bool danger_reverse: false
     property int decimal: 1
@@ -478,7 +478,7 @@ ResizableRectangle {
                 title: qsTr("警告线")
                 MyMenuItem {
                     text_center: true
-                    text: qsTr("通过相对位置设置") + ":"
+                    text: qsTr("相对位置") + ":"
                     plus_minus_on: true
                     value_text: "" + root.danger_ratio
                     value_editable: true
@@ -498,7 +498,7 @@ ResizableRectangle {
 
                 MyMenuItem {
                     text_center: true
-                    text: qsTr("通过绝对数值设置") + ":"
+                    text: qsTr("对应数值") + ":"
                     plus_minus_on: true
                     value_text: "" + root.danger
                     value_editable: true
@@ -506,16 +506,14 @@ ResizableRectangle {
                         var step = (root.to - root.from)/50;
                         var tmp_value = (root.danger + step);
                         var tmp_ratio = (tmp_value - root.from) / (root.to - root.from);
-                        console.log("tmp_value", tmp_value)
-                        fix_danger(tmp_ratio, false)
+                        fix_danger(tmp_ratio, true)
                     }
                     onMinus_triggered: {
                         var step = (root.to - root.from)/50;
                         var tmp_value = (root.danger - step);
                         var tmp_ratio = (tmp_value - root.from) / (root.to - root.from);
-                        console.log("tmp_value", tmp_value)
 
-                        fix_danger(tmp_ratio, false)
+                        fix_danger(tmp_ratio, true)
                     }
                     onValue_inputed: {
                         var value = parseFloat(text);

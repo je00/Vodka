@@ -29,22 +29,24 @@ ResizableRectangle {
     property real to: 2
     property int  decimal: 1
     property real label_scale: 1
-    property real base_ratio: 0
+    property real base_ratio: 0.5
     property real danger_from_ratio: 0
     property real danger_to_ratio: 1
     property bool danger_on: false
     property bool danger_reverse: false
 
-    readonly property real base:        (root.from + (root.to - root.from)*base_ratio).toFixed(root.decimal)
-    readonly property real danger_from: (root.from + (root.to - root.from)*danger_from_ratio).toFixed(root.decimal)
-    readonly property real danger_to:   (root.from + (root.to - root.from)*danger_to_ratio).toFixed(root.decimal)
+    readonly property real base:        (root.from + (root.to - root.from)*base_ratio).toFixed(fix_decimal)
+    readonly property real danger_from: (root.from + (root.to - root.from)*danger_from_ratio).toFixed(fix_decimal)
+    readonly property real danger_to:   (root.from + (root.to - root.from)*danger_to_ratio).toFixed(fix_decimal)
+    readonly property int fix_decimal: Math.max(6, decimal)
 
     readonly property color danger_from_line_color: {
         if (root.danger_on
                 && (root.danger_reverse
-                    && (gauge.value.toFixed(root.decimal) >= root.danger_from && gauge.value.toFixed(root.decimal) <= root.danger_to))
+                    && (gauge.value.toFixed(fix_decimal) >= root.danger_from
+                        && gauge.value.toFixed(fix_decimal) <= root.danger_to))
                 || (!root.danger_reverse
-                    &&(gauge.value.toFixed(root.decimal) <= root.danger_from))) {
+                    &&(gauge.value.toFixed(fix_decimal) <= root.danger_from))) {
             return appTheme.badColor
         }
         return appTheme.lineColor
@@ -53,9 +55,10 @@ ResizableRectangle {
     readonly property color danger_to_line_color: {
         if (root.danger_on
                 && (root.danger_reverse
-                    && (gauge.value.toFixed(root.decimal) >= root.danger_from && gauge.value.toFixed(root.decimal) <= root.danger_to))
+                    && (gauge.value.toFixed(fix_decimal) >= root.danger_from
+                        && gauge.value.toFixed(fix_decimal) <= root.danger_to))
                 || (!root.danger_reverse
-                    &&(gauge.value.toFixed(root.decimal) >= root.danger_to))) {
+                    &&(gauge.value.toFixed(fix_decimal) >= root.danger_to))) {
             return appTheme.badColor
         }
         return appTheme.lineColor
@@ -182,9 +185,11 @@ ResizableRectangle {
                             return appTheme.fontColor
 
                         if ((root.danger_reverse
-                             && (styleData.value >= root.danger_from && styleData.value <= root.danger_to))
+                             && (styleData.value.toFixed(fix_decimal) >= root.danger_from
+                                 && styleData.value.toFixed(fix_decimal) <= root.danger_to))
                                 || (!root.danger_reverse
-                                    &&(styleData.value <= root.danger_from || styleData.value >= root.danger_to))) {
+                                    &&(styleData.value.toFixed(fix_decimal) <= root.danger_from
+                                       || styleData.value.toFixed(fix_decimal) >= root.danger_to))) {
                             return appTheme.badColor
                         }
 
@@ -215,22 +220,6 @@ ResizableRectangle {
                             break;
                         }
                     }
-
-                    //                    onWidthChanged: {
-                    //                        switch (styleData.index) {
-                    //                        case 0:
-                    //                            gauge.from_label_width = width;
-                    //                            break;
-                    //                        case 9:
-                    //                            gauge.to_label_width = width;
-                    //                            break;
-                    //                        }
-                    //                    }
-                    //                    onHeightChanged: {
-                    //                        if (styleData.index === 9) {
-                    //                            gauge.anchors.topMargin = height/2;
-                    //                        }
-                    //                    }
                 }
                 tickmark: Rectangle {
                     x: gauge.label_offset
@@ -242,16 +231,14 @@ ResizableRectangle {
                             return appTheme.fontColor
 
                         if ((root.danger_reverse
-                             && (styleData.value >= root.danger_from && styleData.value <= root.danger_to))
+                             && (styleData.value.toFixed(fix_decimal) >= root.danger_from
+                                 && styleData.value.toFixed(fix_decimal) <= root.danger_to))
                                 || (!root.danger_reverse
-                                    &&(styleData.value <= root.danger_from || styleData.value >= root.danger_to))) {
+                                    &&(styleData.value.toFixed(fix_decimal) <= root.danger_from
+                                       || styleData.value.toFixed(fix_decimal) >= root.danger_to))) {
                             return appTheme.badColor
                         }
 
-                        //                        if (styleData.value >= root.base && styleData.value <= gauge.value.toFixed(root.decimal)
-                        //                                || styleData.value <= root.base && styleData.value >= gauge.value.toFixed(root.decimal))
-                        //                            value_menu.attr.color
-                        //                        else
                         return appTheme.fontColor
                     }
                 }
@@ -265,16 +252,13 @@ ResizableRectangle {
                             return appTheme.fontColorTips
 
                         if ((root.danger_reverse
-                             && (styleData.value >= root.danger_from && styleData.value <= root.danger_to))
+                             && (styleData.value.toFixed(fix_decimal) >= root.danger_from
+                                 && styleData.value.toFixed(fix_decimal) <= root.danger_to))
                                 || (!root.danger_reverse
-                                    &&(styleData.value <= root.danger_from || styleData.value >= root.danger_to))) {
+                                    &&(styleData.value.toFixed(fix_decimal) <= root.danger_from
+                                       || styleData.value.toFixed(fix_decimal) >= root.danger_to))) {
                             return appTheme.badColor
                         }
-
-                        //                        if (styleData.value >= root.base && styleData.value <= gauge.value.toFixed(root.decimal)
-                        //                                || styleData.value <= root.base && styleData.value >= gauge.value.toFixed(root.decimal))
-                        //                            value_menu.attr.color
-                        //                        else
                         return appTheme.fontColorTips
                     }
                 }
@@ -285,23 +269,7 @@ ResizableRectangle {
                                    - g_settings.applyHScale(6)
                                    - g_settings.applyHScale(2)
 
-                }/*Rectangle {
-                        id: rectangle
-                        x: gauge.label_offset + g_settings.applyHScale(2)
-                        implicitWidth: root_item.width - gauge.label_offset - g_settings.applyHScale(18)
-                        color: value_menu.attr.color
-                        onHeightChanged: {
-                            console.log(y, parent.y, height)
-                        }
-
-                    // Glow {
-                    //     anchors.fill: rectangle
-                    //     radius: 8
-                    //     samples: 12
-                    //     color: "white"
-                    //     source: rectangle
-                    // }
-                }*/
+                }
                 foreground: Item {
                     id: value_bar_container
                     x: gauge.label_offset + g_settings.applyHScale(2)
@@ -313,18 +281,17 @@ ResizableRectangle {
                             right: parent.right
                         }
                         y: {
-                            if (gauge.value.toFixed(root.decimal) > root.base) {
-                                parent.height * (root.to - gauge.value.toFixed(root.decimal)) / (root.to - root.from)
+                            if (gauge.value.toFixed(root.fix_decimal) > root.base) {
+                                parent.height * (root.to - gauge.value.toFixed(root.fix_decimal)) / (root.to - root.from)
                             } else {
                                 parent.height * (root.to - root.base) / (root.to - root.from)
                             }
                         }
                         height: {
-                            if (gauge.value.toFixed(root.decimal) > root.base) {
-                                parent.height * (gauge.value.toFixed(root.decimal) - root.base) / (root.to - root.from)
-                                //                                parent.height * (root.to - root.base) / (root.to - root.from) - y
+                            if (gauge.value.toFixed(root.fix_decimal) > root.base) {
+                                parent.height * (gauge.value.toFixed(root.fix_decimal) - root.base) / (root.to - root.from)
                             } else {
-                                parent.height * (root.base - gauge.value.toFixed(root.decimal)) / (root.to - root.from)
+                                parent.height * (root.base - gauge.value.toFixed(root.fix_decimal)) / (root.to - root.from)
                             }
                         }
                         color: value_menu.attr.color
@@ -335,6 +302,7 @@ ResizableRectangle {
                             ListElement {
                                 z: 2
                                 ratio: "base_ratio"
+                                value: "base"
                                 x_pos: 0.5
                                 line_color: "base_line_color"
                             }
@@ -342,6 +310,7 @@ ResizableRectangle {
                             ListElement {
                                 z: 1
                                 ratio: "danger_from_ratio"
+                                value: "danger_from"
                                 max: "danger_to_ratio"
                                 line_color: "danger_from_line_color"
                                 visible: "danger_on"
@@ -351,6 +320,7 @@ ResizableRectangle {
                             ListElement {
                                 z: 1
                                 ratio: "danger_to_ratio"
+                                value: "danger_to"
                                 min: "danger_from_ratio"
                                 line_color: "danger_to_line_color"
                                 visible: "danger_on"
@@ -367,20 +337,11 @@ ResizableRectangle {
                                 else
                                     root[model.visible]
                             }
-                            //                            z: model.z
-                            //                            visible: root.mouse.containsMouse ||
-                            //                                     root.mouse.pressed ||
-                            //                                     ratio_rect_mouse.containsMouse ||
-                            //                                     ratio_rect_mouse.pressed
                             parent: value_bar_container
                             anchors.fill: parent
                             Rectangle {
                                 id: ratio_rect
                                 radius: height/2
-                                //                                visible: root.mouse.pressed ||
-                                //                                         root.mouse.containsMouse ||
-                                //                                         ratio_rect_mouse.pressed ||
-                                //                                         ratio_rect_mouse.containsMouse
                                 opacity: 0.7
                                 z:-1
                                 height: g_settings.applyVScale(2) * root.scale
@@ -411,7 +372,7 @@ ResizableRectangle {
                                 layer.enabled: true
                                 layer.effect: MyDropShadow {}
                                 MyToolTip {
-                                    text: "" + (root.from + (root.to - root.from) * root[model.ratio]).toFixed(root.decimal)
+                                    text: "" + root[model.value]
                                     visible: ratio_rect_mouse.containsMouse || ratio_rect_mouse.pressed
                                 }
                             }
@@ -467,7 +428,7 @@ ResizableRectangle {
                                             tmp_ratio = Math.max(0, tmp_ratio)
                                         }
 
-                                        root[model.ratio] = tmp_ratio.toFixed(2);
+                                        fix_ratio(model.ratio, tmp_ratio);
                                     }
                                 }
                             }
@@ -521,6 +482,70 @@ ResizableRectangle {
         }
     }
 
+    Component {
+        id: ratio_menu_component
+        MyMenu {
+            id: ratio_menu
+            property string property: "base_ratio"
+            property string value_property: "base"
+            property real max: 1.0
+            property real min: 0.0
+            text_center: true
+            title: qsTr("基线位置")
+
+            MyMenuItem {
+                text_center: true
+                text: qsTr("相对位置") + ":"
+                plus_minus_on: true
+                value_text: "" + root[ratio_menu.property]
+                value_editable: true
+                onPlus_triggered: {
+                    fix_ratio(ratio_menu.property, root[ratio_menu.property] + 0.02, true, ratio_menu.min, ratio_menu.max);
+                }
+                onMinus_triggered: {
+                    fix_ratio(ratio_menu.property, root[ratio_menu.property] - 0.02, true, ratio_menu.min, ratio_menu.max);
+                }
+                onValue_inputed: {
+                    var value = parseFloat(text);
+                    if (isNaN(value))
+                        value = 0;
+                    fix_ratio(ratio_menu.property, value, true, ratio_menu.min, ratio_menu.max);
+                }
+            }
+
+            MyMenuItem {
+                text_center: true
+                text: qsTr("对应数值") + ":"
+                plus_minus_on: true
+                value_text: "" + root[ratio_menu.value_property]
+                value_editable: true
+                onPlus_triggered: {
+                    var step = (root.to - root.from)/50;
+                    var tmp_value = (root[ratio_menu.value_property] + step);
+                    var tmp_ratio = (tmp_value - root.from) / (root.to - root.from);
+
+                    fix_ratio(ratio_menu.property, tmp_ratio, true, ratio_menu.min, ratio_menu.max);
+                }
+                onMinus_triggered: {
+                    var step = (root.to - root.from)/50;
+                    var tmp_value = (root[ratio_menu.value_property] - step);
+                    var tmp_ratio = (tmp_value - root.from) / (root.to - root.from);
+
+                    fix_ratio(ratio_menu.property, tmp_ratio, true, ratio_menu.min, ratio_menu.max);
+                }
+                onValue_inputed: {
+                    var value = parseFloat(text);
+                    if (isNaN(value))
+                        value = root.from;
+                    var tmp_value = value;
+                    var tmp_ratio = (tmp_value - root.from) / (root.to - root.from);
+
+                    fix_ratio(ratio_menu.property, tmp_ratio, false, ratio_menu.min, ratio_menu.max);
+                }
+            }
+        }
+    }
+
     MyIconMenu {
         id: menu
         DeleteMenuItem {
@@ -537,6 +562,7 @@ ResizableRectangle {
         MyMenuSeparator {}
 
         SettingsMenu {
+            id: settings_menu
             MyMenuItem {
                 text_center: true
                 text: qsTr("重置")
@@ -593,64 +619,18 @@ ResizableRectangle {
                 }
             }
 
-            MyMenu {
-                text_center: true
-                title: qsTr("基线位置")
-
-                MyMenuItem {
-                    text_center: true
-                    text: qsTr("通过相对位置设置") + ":"
-                    plus_minus_on: true
-                    value_text: "" + root.base_ratio
-                    value_editable: true
-                    onPlus_triggered: {
-                        root.base_ratio = Math.min(1, (root.base_ratio + 0.1).toFixed(1));
-                    }
-                    onMinus_triggered: {
-                        root.base_ratio = Math.max(0, (root.base_ratio - 0.1).toFixed(1));
-                    }
-                    onValue_inputed: {
-                        var value = parseFloat(text);
-                        if (isNaN(value))
-                            value = 0;
-                        root.base_ratio = Math.min(1, Math.max(0, value));
-                    }
-                }
-
-                MyMenuItem {
-                    text_center: true
-                    text: qsTr("通过绝对数值设置") + ":"
-                    plus_minus_on: true
-                    value_text: "" + root.base
-                    value_editable: true
-                    onPlus_triggered: {
-                        var step = Math.pow(10, -root.decimal);
-                        var tmp_value = (root.base + step).toFixed(root.decimal);
-                        var tmp_ratio = (tmp_value - root.from) / (root.to - root.from);
-                        tmp_ratio = tmp_ratio.toFixed(6);
-
-                        root.base_ratio = Math.min(1, Math.max(0, tmp_ratio));
-                    }
-                    onMinus_triggered: {
-                        var step = Math.pow(10, -root.decimal);
-                        var tmp_value = (root.base - step).toFixed(root.decimal);
-                        var tmp_ratio = (tmp_value - root.from) / (root.to - root.from);
-                        tmp_ratio = tmp_ratio.toFixed(6);
-
-                        root.base_ratio = Math.min(1, Math.max(0, tmp_ratio));
-                    }
-                    onValue_inputed: {
-                        var value = parseFloat(text);
-                        if (isNaN(value))
-                            value = root.from;
-                        var tmp_value = value.toFixed(root.decimal);
-                        var tmp_ratio = (tmp_value - root.from) / (root.to - root.from);
-                        tmp_ratio = tmp_ratio.toFixed(6);
-
-                        root.base_ratio = Math.min(1, Math.max(0, tmp_ratio));
-                    }
+            Loader {
+                sourceComponent: ratio_menu_component
+                onLoaded: {
+                    item.property ="base_ratio"
+                    item.value_property ="base"
+                    item.title = Qt.binding(function(){
+                        return qsTr("基线位置")
+                    })
+                    settings_menu.insertMenu(3, item);
                 }
             }
+
             MyMenuSeparator {
                 margins: g_settings.applyHScale(10)
             }
@@ -717,121 +697,32 @@ ResizableRectangle {
                     root.danger_reverse = !root.danger_reverse;
                 }
             }
-
-            MyMenu {
-                text_center: true
-                title: qsTr("警告上限")
-                MyMenuItem {
-                    text_center: true
-                    text: qsTr("通过相对位置设置") + ":"
-                    plus_minus_on: true
-                    value_text: "" + root.danger_to_ratio
-                    value_editable: true
-                    onPlus_triggered: {
-                        root.danger_to_ratio = Math.min(1, (root.danger_to_ratio + 0.01).toFixed(2));
-                    }
-                    onMinus_triggered: {
-                        root.danger_to_ratio = Math.max(root.danger_from_ratio, (root.danger_to_ratio - 0.01).toFixed(2));
-                    }
-                    onValue_inputed: {
-                        var value = parseFloat(text);
-                        if (isNaN(value))
-                            value = 0;
-                        root.danger_to_ratio = Math.min(1, Math.max(root.danger_from_ratio, value));
-                    }
-                }
-
-                MyMenuItem {
-                    text_center: true
-                    text: qsTr("通过绝对数值设置") + ":"
-                    plus_minus_on: true
-                    value_text: "" + root.danger_to
-                    value_editable: true
-                    onPlus_triggered: {
-                        var step = Math.pow(10, -root.decimal);
-                        var tmp_value = (root.danger_to + step).toFixed(root.decimal);
-                        var tmp_ratio = (tmp_value - root.from) / (root.to - root.from);
-                        tmp_ratio = tmp_ratio.toFixed(6);
-
-                        root.danger_to_ratio = Math.min(1, Math.max(root.danger_from_ratio, tmp_ratio));
-
-                    }
-                    onMinus_triggered: {
-                        var step = Math.pow(10, -root.decimal);
-                        var tmp_value = (root.danger_to - step).toFixed(root.decimal);
-                        var tmp_ratio = (tmp_value - root.from) / (root.to - root.from);
-                        tmp_ratio = tmp_ratio.toFixed(6);
-
-                        root.danger_to_ratio = Math.min(1, Math.max(root.danger_from_ratio, tmp_ratio));
-                    }
-                    onValue_inputed: {
-                        var value = parseFloat(text);
-                        if (isNaN(value))
-                            value = root.to;
-                        var tmp_value = value.toFixed(root.decimal);
-                        var tmp_ratio = (tmp_value - root.from) / (root.to - root.from);
-                        tmp_ratio = tmp_ratio.toFixed(6);
-
-                        root.danger_to_ratio = Math.min(1, Math.max(root.danger_from_ratio, tmp_ratio));
-                    }
+            Loader {
+                sourceComponent: ratio_menu_component
+                onLoaded: {
+                    item.property ="danger_from_ratio"
+                    item.value_property ="danger_from"
+                    item.max = Qt.binding(function(){
+                        return root.danger_to_ratio;
+                    })
+                    item.title = Qt.binding(function(){
+                        return qsTr("警告下限")
+                    })
+                    settings_menu.addMenu(item);
                 }
             }
-
-            MyMenu {
-                text_center: true
-                title: qsTr("警告下限")
-                MyMenuItem {
-                    text_center: true
-                    text: qsTr("通过相对位置设置") + ":"
-                    plus_minus_on: true
-                    value_text: "" + root.danger_from_ratio
-                    value_editable: true
-                    onPlus_triggered: {
-                        root.danger_from_ratio = Math.min(root.danger_to_ratio, (root.danger_from_ratio + 0.01).toFixed(2));
-                    }
-                    onMinus_triggered: {
-                        root.danger_from_ratio = Math.max(0, (root.danger_from_ratio - 0.01).toFixed(2));
-                    }
-                    onValue_inputed: {
-                        var value = parseFloat(text);
-                        if (isNaN(value))
-                            value = 0;
-                        root.danger_from_ratio = Math.min(root.danger_to_ratio, Math.max(0, value));
-                    }
-                }
-
-                MyMenuItem {
-                    text_center: true
-                    text: qsTr("通过绝对数值设置") + ":"
-                    plus_minus_on: true
-                    value_text: "" + root.danger_from
-                    value_editable: true
-                    onPlus_triggered: {
-                        var step = Math.pow(10, -root.decimal);
-                        var tmp_value = (root.danger_from + step).toFixed(root.decimal);
-                        var tmp_ratio = (tmp_value - root.from) / (root.to - root.from);
-                        tmp_ratio = tmp_ratio.toFixed(6);
-
-                        root.danger_from_ratio = Math.min(root.danger_to_ratio, Math.max(0, tmp_ratio));
-                    }
-                    onMinus_triggered: {
-                        var step = Math.pow(10, -root.decimal);
-                        var tmp_value = (root.danger_from - step).toFixed(root.decimal);
-                        var tmp_ratio = (tmp_value - root.from) / (root.to - root.from);
-                        tmp_ratio = tmp_ratio.toFixed(6);
-
-                        root.danger_from_ratio = Math.min(root.danger_to_ratio, Math.max(0, tmp_ratio));
-                    }
-                    onValue_inputed: {
-                        var value = parseFloat(text);
-                        if (isNaN(value))
-                            value = root.from;
-                        var tmp_value = value.toFixed(root.decimal);
-                        var tmp_ratio = (tmp_value - root.from) / (root.to - root.from);
-                        tmp_ratio = tmp_ratio.toFixed(6);
-
-                        root.danger_from_ratio = Math.min(root.danger_to_ratio, Math.max(0, tmp_ratio));
-                    }
+            Loader {
+                sourceComponent: ratio_menu_component
+                onLoaded: {
+                    item.property ="danger_to_ratio"
+                    item.value_property ="danger_to"
+                    item.min = Qt.binding(function(){
+                        return root.danger_from_ratio;
+                    })
+                    item.title = Qt.binding(function(){
+                        return qsTr("警告上限")
+                    })
+                    settings_menu.addMenu(item);
                 }
             }
         }
@@ -920,6 +811,23 @@ ResizableRectangle {
                 }
             }
         }
+    }
+
+
+    function fix_ratio(ratio_name, target_ratio, stick_to_mark=true, min=undefined, max=undefined) {
+        var target_value = parseFloat((root.from + (root.to - root.from) * target_ratio).toFixed(Math.max(6,root.decimal)));
+        target_ratio = (target_value - root.from)/(root.to - root.from)
+        if (max === undefined)
+            max = 1.0;
+        if (min === undefined)
+            min = 0.0;
+        target_ratio = Math.min(max, Math.max(min, target_ratio));
+
+        if (stick_to_mark) {
+            var count = Math.round(target_ratio/0.02)
+            target_ratio = 0.02 * count;
+        }
+        root[ratio_name] = target_ratio.toFixed(6);
     }
 
     //数据保存恢复
