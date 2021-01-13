@@ -4,77 +4,72 @@
 <context>
     <name>bound_bt</name>
     <message>
-        <location filename="../bound_bt/bound_bt.qml" line="165"/>
+        <location filename="../bound_bt/bound_bt.qml" line="170"/>
         <source>绑定命令</source>
         <translation>綁定命令</translation>
     </message>
     <message>
-        <location filename="../bound_bt/bound_bt.qml" line="180"/>
+        <location filename="../bound_bt/bound_bt.qml" line="185"/>
         <source>按下</source>
         <translation>按下</translation>
     </message>
     <message>
-        <location filename="../bound_bt/bound_bt.qml" line="187"/>
+        <location filename="../bound_bt/bound_bt.qml" line="192"/>
         <source>抬起</source>
         <translation>抬起</translation>
     </message>
     <message>
-        <location filename="../bound_bt/bound_bt.qml" line="198"/>
-        <source>主题</source>
-        <translation>主題</translation>
-    </message>
-    <message>
-        <location filename="../bound_bt/bound_bt.qml" line="200"/>
+        <location filename="../bound_bt/bound_bt.qml" line="204"/>
         <source>重置</source>
         <translation>重置</translation>
     </message>
     <message>
-        <location filename="../bound_bt/bound_bt.qml" line="202"/>
+        <location filename="../bound_bt/bound_bt.qml" line="206"/>
         <source>恢复默认配色</source>
         <translation>恢復默認配色</translation>
     </message>
     <message>
-        <location filename="../bound_bt/bound_bt.qml" line="211"/>
+        <location filename="../bound_bt/bound_bt.qml" line="215"/>
         <source>边框宽度:</source>
         <translation>邊框寬度:</translation>
     </message>
     <message>
-        <location filename="../bound_bt/bound_bt.qml" line="235"/>
+        <location filename="../bound_bt/bound_bt.qml" line="239"/>
         <source>不透明度:</source>
         <translation>不透明度:</translation>
     </message>
     <message>
-        <location filename="../bound_bt/bound_bt.qml" line="261"/>
+        <location filename="../bound_bt/bound_bt.qml" line="265"/>
         <source>颜色1</source>
         <translation>顏色1</translation>
     </message>
     <message>
-        <location filename="../bound_bt/bound_bt.qml" line="266"/>
+        <location filename="../bound_bt/bound_bt.qml" line="270"/>
         <source>颜色2</source>
         <translation>顏色2</translation>
     </message>
     <message>
-        <location filename="../bound_bt/bound_bt.qml" line="271"/>
+        <location filename="../bound_bt/bound_bt.qml" line="275"/>
         <source>边框</source>
         <translation>邊框</translation>
     </message>
     <message>
-        <location filename="../bound_bt/bound_bt.qml" line="284"/>
+        <location filename="../bound_bt/bound_bt.qml" line="288"/>
         <source>自定义</source>
         <translation>自定義</translation>
     </message>
     <message>
-        <location filename="../bound_bt/bound_bt.qml" line="293"/>
+        <location filename="../bound_bt/bound_bt.qml" line="297"/>
         <source>已选中，再点击可修改颜色</source>
         <translation>已選中，再點擊可修改顏色</translation>
     </message>
     <message>
-        <location filename="../bound_bt/bound_bt.qml" line="294"/>
+        <location filename="../bound_bt/bound_bt.qml" line="298"/>
         <source>点击可选中自定义颜色，再点击可修改颜色</source>
         <translation>點擊可選中自定義顏色，再點擊可修改顏色</translation>
     </message>
     <message>
-        <location filename="../bound_bt/bound_bt.qml" line="310"/>
+        <location filename="../bound_bt/bound_bt.qml" line="314"/>
         <source>跟随</source>
         <translation>跟隨</translation>
     </message>
@@ -82,77 +77,82 @@
 <context>
     <name>circular_gauge</name>
     <message>
-        <location filename="../circular_gauge/circular_gauge.qml" line="281"/>
-        <source>设置</source>
-        <translation>設置</translation>
-    </message>
-    <message>
-        <location filename="../circular_gauge/circular_gauge.qml" line="284"/>
+        <location filename="../circular_gauge/circular_gauge.qml" line="419"/>
         <source>重置</source>
         <translation>重置</translation>
     </message>
     <message>
-        <location filename="../circular_gauge/circular_gauge.qml" line="303"/>
+        <location filename="../circular_gauge/circular_gauge.qml" line="437"/>
         <source>最小值</source>
         <translation>最小值</translation>
     </message>
     <message>
-        <location filename="../circular_gauge/circular_gauge.qml" line="322"/>
+        <location filename="../circular_gauge/circular_gauge.qml" line="456"/>
         <source>最大值</source>
         <translation>最大值</translation>
     </message>
     <message>
-        <location filename="../circular_gauge/circular_gauge.qml" line="344"/>
-        <source>警告值</source>
-        <translation>警告值</translation>
+        <location filename="../circular_gauge/circular_gauge.qml" line="478"/>
+        <source>警告线</source>
+        <translation>警告線</translation>
     </message>
     <message>
-        <location filename="../circular_gauge/circular_gauge.qml" line="363"/>
-        <source>逻辑反向</source>
-        <translation>反向邏輯</translation>
+        <location filename="../circular_gauge/circular_gauge.qml" line="481"/>
+        <source>相对位置</source>
+        <translation>相對位置</translation>
     </message>
     <message>
-        <location filename="../circular_gauge/circular_gauge.qml" line="376"/>
-        <source>小数位数</source>
-        <translation>小數位數</translation>
+        <location filename="../circular_gauge/circular_gauge.qml" line="501"/>
+        <source>对应数值</source>
+        <translation>對應數值</translation>
     </message>
     <message>
-        <location filename="../circular_gauge/circular_gauge.qml" line="396"/>
-        <source>字体比例</source>
-        <translation>字體比例</translation>
+        <location filename="../circular_gauge/circular_gauge.qml" line="531"/>
+        <source>开启警告</source>
+        <translation>開啟警告</translation>
     </message>
     <message>
-        <location filename="../circular_gauge/circular_gauge.qml" line="416"/>
-        <source>数字位置</source>
-        <translation>數字位置</translation>
+        <location filename="../circular_gauge/circular_gauge.qml" line="540"/>
+        <source>警告反向</source>
+        <translation>警告反向</translation>
     </message>
     <message>
-        <location filename="../circular_gauge/circular_gauge.qml" line="453"/>
-        <source>主题</source>
-        <translation>主題</translation>
+        <location filename="../circular_gauge/circular_gauge.qml" line="553"/>
+        <source>刻度小数位数</source>
+        <translation>刻度小數位數</translation>
     </message>
     <message>
-        <location filename="../circular_gauge/circular_gauge.qml" line="456"/>
+        <location filename="../circular_gauge/circular_gauge.qml" line="573"/>
+        <source>刻度数字缩放</source>
+        <translation>刻度數字縮放</translation>
+    </message>
+    <message>
+        <location filename="../circular_gauge/circular_gauge.qml" line="593"/>
+        <source>刻度数字位置</source>
+        <translation>刻度數字位置</translation>
+    </message>
+    <message>
+        <location filename="../circular_gauge/circular_gauge.qml" line="646"/>
         <source>隐藏外框</source>
         <translation>隱藏外框</translation>
     </message>
     <message>
-        <location filename="../circular_gauge/circular_gauge.qml" line="464"/>
+        <location filename="../circular_gauge/circular_gauge.qml" line="654"/>
         <source>背景颜色</source>
         <translation>背景顏色</translation>
     </message>
     <message>
-        <location filename="../circular_gauge/circular_gauge.qml" line="468"/>
+        <location filename="../circular_gauge/circular_gauge.qml" line="658"/>
         <source>跟随</source>
         <translation>跟隨</translation>
     </message>
     <message>
-        <location filename="../circular_gauge/circular_gauge.qml" line="476"/>
+        <location filename="../circular_gauge/circular_gauge.qml" line="666"/>
         <source>自定义颜色...</source>
         <translation>自定義顏色...</translation>
     </message>
     <message>
-        <location filename="../circular_gauge/circular_gauge.qml" line="486"/>
+        <location filename="../circular_gauge/circular_gauge.qml" line="676"/>
         <source>背景不透明度：</source>
         <translation>背景不透明度：</translation>
     </message>
@@ -191,251 +191,246 @@
         <translation>右鍵:彈出設置菜單</translation>
     </message>
     <message>
-        <location filename="../cube/cube.qml" line="172"/>
-        <location filename="../cube/cube.qml" line="174"/>
+        <location filename="../cube/cube.qml" line="178"/>
+        <location filename="../cube/cube.qml" line="180"/>
         <source>四元数模式</source>
         <translation>四元數模式</translation>
     </message>
     <message>
-        <location filename="../cube/cube.qml" line="172"/>
-        <location filename="../cube/cube.qml" line="174"/>
+        <location filename="../cube/cube.qml" line="178"/>
+        <location filename="../cube/cube.qml" line="180"/>
         <source>欧拉角模式</source>
         <translation>歐拉角模式</translation>
     </message>
     <message>
-        <location filename="../cube/cube.qml" line="173"/>
+        <location filename="../cube/cube.qml" line="179"/>
         <source>点击可切换为</source>
         <translation>點擊可切換為</translation>
     </message>
     <message>
-        <location filename="../cube/cube.qml" line="187"/>
+        <location filename="../cube/cube.qml" line="193"/>
         <source>单位:角度</source>
         <translation>單位:角度</translation>
     </message>
     <message>
-        <location filename="../cube/cube.qml" line="187"/>
+        <location filename="../cube/cube.qml" line="193"/>
         <source>单位:弧度</source>
         <translation>單位:弧度</translation>
     </message>
     <message>
-        <location filename="../cube/cube.qml" line="188"/>
+        <location filename="../cube/cube.qml" line="194"/>
         <source>点击可切换单位为</source>
         <translation>點擊可切換單位為</translation>
     </message>
     <message>
-        <location filename="../cube/cube.qml" line="189"/>
+        <location filename="../cube/cube.qml" line="195"/>
         <source>弧度</source>
         <translation>弧度</translation>
     </message>
     <message>
-        <location filename="../cube/cube.qml" line="189"/>
+        <location filename="../cube/cube.qml" line="195"/>
         <source>角度</source>
         <translation>角度</translation>
     </message>
     <message>
-        <location filename="../cube/cube.qml" line="237"/>
+        <location filename="../cube/cube.qml" line="240"/>
         <source>模型文件</source>
         <translation>模型文件</translation>
     </message>
     <message>
-        <location filename="../cube/cube.qml" line="241"/>
+        <location filename="../cube/cube.qml" line="244"/>
         <source>cube</source>
         <translation>cube</translation>
     </message>
     <message>
-        <location filename="../cube/cube.qml" line="258"/>
+        <location filename="../cube/cube.qml" line="261"/>
         <source>模型视图</source>
         <translation>模型視圖</translation>
     </message>
     <message>
-        <location filename="../cube/cube.qml" line="261"/>
+        <location filename="../cube/cube.qml" line="264"/>
         <source>正视图</source>
         <translation>正視圖</translation>
     </message>
     <message>
-        <location filename="../cube/cube.qml" line="263"/>
+        <location filename="../cube/cube.qml" line="266"/>
         <source>前</source>
         <translation>前</translation>
     </message>
     <message>
-        <location filename="../cube/cube.qml" line="269"/>
+        <location filename="../cube/cube.qml" line="272"/>
         <source>后</source>
         <translation>後</translation>
     </message>
     <message>
-        <location filename="../cube/cube.qml" line="275"/>
+        <location filename="../cube/cube.qml" line="278"/>
         <source>左</source>
         <translation>左</translation>
     </message>
     <message>
-        <location filename="../cube/cube.qml" line="281"/>
+        <location filename="../cube/cube.qml" line="284"/>
         <source>右</source>
         <translation>右</translation>
     </message>
     <message>
-        <location filename="../cube/cube.qml" line="287"/>
+        <location filename="../cube/cube.qml" line="290"/>
         <source>上</source>
         <translation>上</translation>
     </message>
     <message>
-        <location filename="../cube/cube.qml" line="293"/>
+        <location filename="../cube/cube.qml" line="296"/>
         <source>下</source>
         <translation>下</translation>
     </message>
     <message>
-        <location filename="../cube/cube.qml" line="336"/>
+        <location filename="../cube/cube.qml" line="339"/>
         <source>斜视图</source>
         <translation>斜視圖</translation>
     </message>
     <message>
-        <location filename="../cube/cube.qml" line="338"/>
+        <location filename="../cube/cube.qml" line="341"/>
         <source>左前上</source>
         <translation>左前上</translation>
     </message>
     <message>
-        <location filename="../cube/cube.qml" line="344"/>
+        <location filename="../cube/cube.qml" line="347"/>
         <source>右前上</source>
         <translation>右前上</translation>
     </message>
     <message>
-        <location filename="../cube/cube.qml" line="351"/>
+        <location filename="../cube/cube.qml" line="354"/>
         <source>左前下</source>
         <translation>左前下</translation>
     </message>
     <message>
-        <location filename="../cube/cube.qml" line="357"/>
+        <location filename="../cube/cube.qml" line="360"/>
         <source>右前下</source>
         <translation>右前下</translation>
     </message>
     <message>
-        <location filename="../cube/cube.qml" line="363"/>
+        <location filename="../cube/cube.qml" line="366"/>
         <source>右后上</source>
         <translation>右後上</translation>
     </message>
     <message>
-        <location filename="../cube/cube.qml" line="369"/>
+        <location filename="../cube/cube.qml" line="372"/>
         <source>左后上</source>
         <translation>左後上</translation>
     </message>
     <message>
-        <location filename="../cube/cube.qml" line="376"/>
+        <location filename="../cube/cube.qml" line="379"/>
         <source>右后下</source>
         <translation>右後下</translation>
     </message>
     <message>
-        <location filename="../cube/cube.qml" line="382"/>
+        <location filename="../cube/cube.qml" line="385"/>
         <source>左后下</source>
         <translation>左後下</translation>
     </message>
     <message>
-        <location filename="../cube/cube.qml" line="394"/>
+        <location filename="../cube/cube.qml" line="397"/>
         <source>居中模型</source>
         <translation>居中模型</translation>
     </message>
     <message>
-        <location filename="../cube/cube.qml" line="395"/>
+        <location filename="../cube/cube.qml" line="398"/>
         <source>自动计算模型的偏置和比例</source>
         <translation>自動計算模型的偏置和比例</translation>
     </message>
     <message>
-        <location filename="../cube/cube.qml" line="402"/>
+        <location filename="../cube/cube.qml" line="405"/>
         <source>原始文件位姿</source>
         <translation>原始文件位姿</translation>
     </message>
     <message>
-        <location filename="../cube/cube.qml" line="413"/>
+        <location filename="../cube/cube.qml" line="416"/>
         <source>拖入时自动居中</source>
         <translation>拖入時自動居中</translation>
     </message>
     <message>
-        <location filename="../cube/cube.qml" line="421"/>
+        <location filename="../cube/cube.qml" line="424"/>
         <source>显示模型坐标轴</source>
         <translation>顯示模型坐標軸</translation>
     </message>
     <message>
-        <location filename="../cube/cube.qml" line="429"/>
+        <location filename="../cube/cube.qml" line="432"/>
         <source>显示世界坐标轴</source>
         <translation>顯示世界坐標軸</translation>
     </message>
     <message>
-        <location filename="../cube/cube.qml" line="439"/>
-        <source>主题</source>
-        <translation>主題</translation>
-    </message>
-    <message>
-        <location filename="../cube/cube.qml" line="441"/>
+        <location filename="../cube/cube.qml" line="443"/>
         <source>模型颜色</source>
         <translation>模型顏色</translation>
     </message>
     <message>
-        <location filename="../cube/cube.qml" line="445"/>
+        <location filename="../cube/cube.qml" line="447"/>
         <source>跟随</source>
         <translation>跟隨</translation>
     </message>
     <message>
-        <location filename="../cube/cube.qml" line="456"/>
+        <location filename="../cube/cube.qml" line="458"/>
         <source>自定义颜色...</source>
         <translation>自定義顏色...</translation>
     </message>
     <message>
-        <location filename="../cube/cube.qml" line="458"/>
+        <location filename="../cube/cube.qml" line="460"/>
         <source>已选中，再点击可修改颜色</source>
         <translation>已選中，再點擊可修改顏色</translation>
     </message>
     <message>
-        <location filename="../cube/cube.qml" line="459"/>
+        <location filename="../cube/cube.qml" line="461"/>
         <source>点击可选中自定义颜色，再点击可修改颜色</source>
         <translation>點擊可選中自定義顏色，再點擊可修改顏色</translation>
     </message>
     <message>
-        <location filename="../cube/cube.qml" line="472"/>
+        <location filename="../cube/cube.qml" line="474"/>
         <source>背景颜色</source>
         <translation>背景顏色</translation>
     </message>
     <message>
-        <location filename="../cube/cube.qml" line="485"/>
+        <location filename="../cube/cube.qml" line="487"/>
         <source>背景不透明度：</source>
         <translation>背景不透明度：</translation>
     </message>
     <message>
-        <location filename="../cube/cube.qml" line="505"/>
+        <location filename="../cube/cube.qml" line="507"/>
         <source>隐藏外框</source>
         <translation>隱藏外框</translation>
     </message>
     <message>
-        <location filename="../cube/cube.qml" line="521"/>
-        <location filename="../cube/cube.qml" line="522"/>
+        <location filename="../cube/cube.qml" line="523"/>
+        <location filename="../cube/cube.qml" line="524"/>
         <source>位姿偏置设置窗口</source>
         <translation>位姿偏置設置窗口</translation>
     </message>
     <message>
-        <location filename="../cube/cube.qml" line="523"/>
+        <location filename="../cube/cube.qml" line="525"/>
         <source>直接在控件中间双击</source>
         <translation>直接在控件中間雙擊</translation>
     </message>
     <message>
-        <location filename="../cube/cube.qml" line="524"/>
+        <location filename="../cube/cube.qml" line="526"/>
         <source>也可以显示/隐藏位姿偏置设置窗口</source>
         <translation>也可以顯示/隱藏位姿偏置設置窗口</translation>
     </message>
     <message>
-        <location filename="../cube/cube.qml" line="403"/>
+        <location filename="../cube/cube.qml" line="406"/>
         <source>模型将按照原始文件的位姿放置</source>
         <translation>模型將按照原始文件的位姿放置</translation>
     </message>
     <message>
-        <location filename="../cube/cube.qml" line="896"/>
+        <location filename="../cube/cube.qml" line="898"/>
         <source>角度偏置 </source>
         <translation>角度偏置 </translation>
     </message>
     <message>
-        <location filename="../cube/cube.qml" line="900"/>
-        <location filename="../cube/cube.qml" line="972"/>
+        <location filename="../cube/cube.qml" line="902"/>
+        <location filename="../cube/cube.qml" line="974"/>
         <source>直接输入或鼠标滚轮设置</source>
         <translation>直接輸入或鼠標滾輪設置</translation>
     </message>
     <message>
-        <location filename="../cube/cube.qml" line="968"/>
+        <location filename="../cube/cube.qml" line="970"/>
         <source>位置偏置 </source>
         <translation>位置偏置 </translation>
     </message>
@@ -454,6 +449,95 @@
     </message>
 </context>
 <context>
+    <name>gauge</name>
+    <message>
+        <location filename="../gauge/gauge.qml" line="494"/>
+        <location filename="../gauge/gauge.qml" line="628"/>
+        <source>基线位置</source>
+        <translation>基線位置</translation>
+    </message>
+    <message>
+        <location filename="../gauge/gauge.qml" line="498"/>
+        <source>相对位置</source>
+        <translation>相對位置</translation>
+    </message>
+    <message>
+        <location filename="../gauge/gauge.qml" line="518"/>
+        <source>对应数值</source>
+        <translation>對應數值</translation>
+    </message>
+    <message>
+        <location filename="../gauge/gauge.qml" line="568"/>
+        <source>重置</source>
+        <translation>重置</translation>
+    </message>
+    <message>
+        <location filename="../gauge/gauge.qml" line="584"/>
+        <source>上限</source>
+        <translation>上限</translation>
+    </message>
+    <message>
+        <location filename="../gauge/gauge.qml" line="604"/>
+        <source>下限</source>
+        <translation>下限</translation>
+    </message>
+    <message>
+        <location filename="../gauge/gauge.qml" line="640"/>
+        <source>刻度小数位数</source>
+        <translation>刻度小數位數</translation>
+    </message>
+    <message>
+        <location filename="../gauge/gauge.qml" line="661"/>
+        <source>刻度数字缩放</source>
+        <translation>刻度數字縮放</translation>
+    </message>
+    <message>
+        <location filename="../gauge/gauge.qml" line="685"/>
+        <source>开启警告</source>
+        <translation>開啟警告</translation>
+    </message>
+    <message>
+        <location filename="../gauge/gauge.qml" line="694"/>
+        <source>警告反向</source>
+        <translation>警告反向</translation>
+    </message>
+    <message>
+        <location filename="../gauge/gauge.qml" line="709"/>
+        <source>警告下限</source>
+        <translation>警告下限</translation>
+    </message>
+    <message>
+        <location filename="../gauge/gauge.qml" line="723"/>
+        <source>警告上限</source>
+        <translation>警告上限</translation>
+    </message>
+    <message>
+        <location filename="../gauge/gauge.qml" line="764"/>
+        <source>隐藏外框</source>
+        <translation>隱藏外框</translation>
+    </message>
+    <message>
+        <location filename="../gauge/gauge.qml" line="772"/>
+        <source>背景颜色</source>
+        <translation>背景顏色</translation>
+    </message>
+    <message>
+        <location filename="../gauge/gauge.qml" line="776"/>
+        <source>跟随</source>
+        <translation>跟隨</translation>
+    </message>
+    <message>
+        <location filename="../gauge/gauge.qml" line="784"/>
+        <source>自定义颜色...</source>
+        <translation>自定義顏色...</translation>
+    </message>
+    <message>
+        <location filename="../gauge/gauge.qml" line="794"/>
+        <source>背景不透明度：</source>
+        <translation>背景不透明度：</translation>
+    </message>
+</context>
+<context>
     <name>image</name>
     <message>
         <location filename="../image/image.qml" line="84"/>
@@ -461,32 +545,32 @@
         <translation>點擊此處可修改圖片標題</translation>
     </message>
     <message>
-        <location filename="../image/image.qml" line="145"/>
+        <location filename="../image/image.qml" line="151"/>
         <source>指定图片</source>
         <translation>指定圖片</translation>
     </message>
     <message>
-        <location filename="../image/image.qml" line="149"/>
+        <location filename="../image/image.qml" line="155"/>
         <source>特效</source>
         <translation>特效</translation>
     </message>
     <message>
-        <location filename="../image/image.qml" line="153"/>
+        <location filename="../image/image.qml" line="159"/>
         <source>None</source>
         <translation>None</translation>
     </message>
     <message>
-        <location filename="../image/image.qml" line="161"/>
+        <location filename="../image/image.qml" line="167"/>
         <source>显示特效参数</source>
         <translation>顯示特效參數</translation>
     </message>
     <message>
-        <location filename="../image/image.qml" line="170"/>
+        <location filename="../image/image.qml" line="176"/>
         <source>隐藏标题</source>
         <translation>隱藏標題</translation>
     </message>
     <message>
-        <location filename="../image/image.qml" line="179"/>
+        <location filename="../image/image.qml" line="185"/>
         <source>隐藏外框</source>
         <translation>隱藏外框</translation>
     </message>
@@ -509,112 +593,112 @@
         <translation>閾值2</translation>
     </message>
     <message>
-        <location filename="../light/light.qml" line="229"/>
+        <location filename="../light/light.qml" line="250"/>
         <source>绑定命令</source>
         <translation>綁定命令</translation>
     </message>
     <message>
-        <location filename="../light/light.qml" line="259"/>
+        <location filename="../light/light.qml" line="270"/>
         <source>亮灭模式 灯灭时点击</source>
         <translation>亮滅模式 燈滅時點擊</translation>
     </message>
     <message>
-        <location filename="../light/light.qml" line="266"/>
+        <location filename="../light/light.qml" line="277"/>
         <source>亮灭模式 灯亮时点击</source>
         <translation>亮滅模式 燈亮時點擊</translation>
     </message>
     <message>
-        <location filename="../light/light.qml" line="273"/>
+        <location filename="../light/light.qml" line="284"/>
         <source>三色模式 颜色1时点击</source>
         <translation>三色模式 顏色1時點擊</translation>
     </message>
     <message>
-        <location filename="../light/light.qml" line="280"/>
+        <location filename="../light/light.qml" line="291"/>
         <source>三色模式 颜色2时点击</source>
         <translation>三色模式 顏色2時點擊</translation>
     </message>
     <message>
-        <location filename="../light/light.qml" line="287"/>
+        <location filename="../light/light.qml" line="298"/>
         <source>三色模式 颜色3时点击</source>
         <translation>三色模式 顏色3時點擊</translation>
     </message>
     <message>
-        <location filename="../light/light.qml" line="303"/>
+        <location filename="../light/light.qml" line="319"/>
         <source>指示灯模式配置</source>
         <translation>指示燈模式配置</translation>
     </message>
     <message>
-        <location filename="../light/light.qml" line="309"/>
+        <location filename="../light/light.qml" line="325"/>
         <source>模式:</source>
         <translation>模式:</translation>
     </message>
     <message>
-        <location filename="../light/light.qml" line="309"/>
+        <location filename="../light/light.qml" line="325"/>
         <source>三色</source>
         <translation>三色</translation>
     </message>
     <message>
-        <location filename="../light/light.qml" line="309"/>
+        <location filename="../light/light.qml" line="325"/>
         <source>亮灭</source>
         <translation>亮滅</translation>
     </message>
     <message>
-        <location filename="../light/light.qml" line="311"/>
+        <location filename="../light/light.qml" line="327"/>
         <source>点击可切换为亮灭模式</source>
         <translation>點擊可切換為亮滅模式</translation>
     </message>
     <message>
-        <location filename="../light/light.qml" line="312"/>
+        <location filename="../light/light.qml" line="328"/>
         <source>点击可切换为三色模式</source>
         <translation>點擊可切換為三色模式</translation>
     </message>
     <message>
-        <location filename="../light/light.qml" line="320"/>
+        <location filename="../light/light.qml" line="336"/>
         <source>逻辑:</source>
         <translation>邏輯:</translation>
     </message>
     <message>
-        <location filename="../light/light.qml" line="321"/>
+        <location filename="../light/light.qml" line="337"/>
         <source>阈值时,灯亮</source>
         <translation>閾值時,燈亮</translation>
     </message>
     <message>
-        <location filename="../light/light.qml" line="322"/>
+        <location filename="../light/light.qml" line="338"/>
         <source>点击可切换逻辑</source>
         <translation>點擊可切換邏輯</translation>
     </message>
     <message>
-        <location filename="../light/light.qml" line="354"/>
+        <location filename="../light/light.qml" line="370"/>
         <source>自定义颜色</source>
         <translation>自定義顏色</translation>
     </message>
     <message>
-        <location filename="../light/light.qml" line="356"/>
+        <location filename="../light/light.qml" line="372"/>
         <source>已选中，再点击可修改颜色</source>
         <translation>已選中，再點擊可修改顏色</translation>
     </message>
     <message>
-        <location filename="../light/light.qml" line="357"/>
+        <location filename="../light/light.qml" line="373"/>
         <source>点击可选中自定义颜色，再点击可修改颜色</source>
         <translation>點擊可選中自定義顏色，再點擊可修改顏色</translation>
     </message>
     <message>
-        <location filename="../light/light.qml" line="374"/>
+        <location filename="../light/light.qml" line="390"/>
         <source>颜色跟随已绑定频道</source>
         <translation>顏色跟隨已綁定頻道</translation>
     </message>
     <message>
-        <location filename="../light/light.qml" line="385"/>
+        <location filename="../light/light.qml" line="401"/>
         <source>颜色 ( -∞ ,阈值1)</source>
         <translation>顏色 ( -∞ ,閾值1)</translation>
     </message>
     <message>
-        <location filename="../light/light.qml" line="401"/>
+        <location filename="../light/light.qml" line="417"/>
         <source>颜色 [阈值1,阈值2)</source>
         <translation>顏色 [閾值1,閾值2)</translation>
     </message>
     <message>
-        <location filename="../light/light.qml" line="417"/>
+        <location filename="../light/light.qml" line="433"/>
         <source>颜色 (阈值2, +∞ )</source>
         <translation>顏色 (閾值2, +∞ )</translation>
     </message>
@@ -622,57 +706,72 @@
 <context>
     <name>slider</name>
     <message>
-        <location filename="../slider/slider.qml" line="257"/>
+        <location filename="../slider/slider.qml" line="367"/>
         <source>绑定命令</source>
         <translation>綁定命令</translation>
     </message>
     <message>
-        <location filename="../slider/slider.qml" line="286"/>
+        <location filename="../slider/slider.qml" line="386"/>
         <source>滑动条更新时发送数值，当前</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../slider/slider.qml" line="293"/>
+        <location filename="../slider/slider.qml" line="393"/>
         <source>结束滑动即鼠标弹起时发送数值，当前</source>
         <translation>結束滑動即鼠標彈起時發送數值，當前</translation>
     </message>
     <message>
-        <location filename="../slider/slider.qml" line="300"/>
+        <location filename="../slider/slider.qml" line="400"/>
         <source>操作输入框时发送数值，当前</source>
         <translation>操作輸入框時發送數值，當前</translation>
     </message>
     <message>
-        <location filename="../slider/slider.qml" line="315"/>
-        <source>主题</source>
-        <translation>主題</translation>
+        <location filename="../slider/slider.qml" line="258"/>
+        <source>重置</source>
+        <translation>重置</translation>
     </message>
     <message>
-        <location filename="../slider/slider.qml" line="318"/>
+        <location filename="../slider/slider.qml" line="270"/>
+        <source>最小值</source>
+        <translation>最小值</translation>
+    </message>
+    <message>
+        <location filename="../slider/slider.qml" line="297"/>
+        <source>最大值</source>
+        <translation>最大值</translation>
+    </message>
+    <message>
+        <location filename="../slider/slider.qml" line="322"/>
+        <source>步进</source>
+        <translation>步進</translation>
+    </message>
+    <message>
+        <location filename="../slider/slider.qml" line="424"/>
         <source>不透明度:</source>
         <translation>不透明度:</translation>
     </message>
     <message>
-        <location filename="../slider/slider.qml" line="339"/>
+        <location filename="../slider/slider.qml" line="445"/>
         <source>自定义背景颜色</source>
         <translation>自定義背景顏色</translation>
     </message>
     <message>
-        <location filename="../slider/slider.qml" line="344"/>
+        <location filename="../slider/slider.qml" line="450"/>
         <source>已选中，再点击可修改颜色</source>
         <translation>已選中，再點擊可修改顏色</translation>
     </message>
     <message>
-        <location filename="../slider/slider.qml" line="345"/>
+        <location filename="../slider/slider.qml" line="451"/>
         <source>点击可选中自定义颜色，再点击可修改颜色</source>
         <translation>點擊可選中自定義顏色，再點擊可修改顏色</translation>
     </message>
     <message>
-        <location filename="../slider/slider.qml" line="360"/>
+        <location filename="../slider/slider.qml" line="466"/>
         <source>跟随</source>
         <translation>跟隨</translation>
     </message>
     <message>
-        <location filename="../slider/slider.qml" line="369"/>
+        <location filename="../slider/slider.qml" line="475"/>
         <source>隐藏外框</source>
         <translation>隱藏外框</translation>
     </message>
