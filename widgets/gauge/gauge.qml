@@ -146,11 +146,12 @@ ResizableRectangle {
             minorTickmarkCount :4
             tickmarkStepSize:(root.to-root.from)/10
             tickmarkAlignment: Qt.AlignLeft
-            // Behavior on value {
-            //     NumberAnimation {
-            //         duration: 80
-            //     }
-            // }
+            Behavior on value {
+                enabled: !sys_manager.connected
+                NumberAnimation {
+                    duration: 200
+                }
+            }
             property int from_label_width
             property int from_label_height
             property int to_label_width
@@ -175,7 +176,7 @@ ResizableRectangle {
                     x: gauge.label_offset
                     text:""+styleData.value.toFixed(decimal)
                     font.pixelSize: label_scale*g_settings.fontPixelSizeSmall
-                    font.family: g_settings.fontFamilyNumber
+                    font.family: g_settings.fontFamilyAxis
                     color: {
                         if (!root.danger_on)
                             return appTheme.fontColor
@@ -490,6 +491,7 @@ ResizableRectangle {
                   ch_menu.bind_obj.value.toFixed(value_menu.attr.decimal):
                   "0"
         visible: value_menu.attr.visible
+        font.family: g_settings.fontFamilyNumber
         font.pixelSize: value_menu.attr.font_size
         color: value_menu.attr.color
     }

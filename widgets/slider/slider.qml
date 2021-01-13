@@ -109,6 +109,7 @@ ResizableRectangle {
                        slider_inside.value).toFixed(value_menu.attr.decimal)
             color: value_menu.attr.color
             enabled: !sys_manager.lock
+            font.family: g_settings.fontFamilyNumber
             font.pixelSize: value_menu.attr.font_size
             anchors {
                 verticalCenter: parent.verticalCenter

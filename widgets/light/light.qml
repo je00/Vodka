@@ -193,6 +193,7 @@ ResizableRectangle {
                   ch_menu.bind_obj.value.toFixed(value_menu.attr.decimal):
                   "0"
         visible: value_menu.attr.visible
+        font.family: g_settings.fontFamilyNumber
         font.pixelSize: value_menu.attr.font_size
         color: value_menu.attr.color
     }
