@@ -151,9 +151,10 @@ ResizableRectangle {
         ]
         function send(index=0, use_force_value=false, force_value=0) {
             var send_value;
-            if (use_force_value)
+            if (use_force_value) {
                 send_value = force_value;
-            else
+                target_value = send_value;
+            } else
                 send_value = slider_inside.value;
             var value_string = send_value.toFixed(value_menu.attr.decimal)
             root_spinbox.value = value_string;
@@ -163,7 +164,7 @@ ResizableRectangle {
             }
 
             var argument = argument_model.get(index);
-            if (!loading) {
+            if (!loading && sys_manager.connected) {
                 sys_manager.send_command(name_menu.attr.name,
                                          cmd_menu.bind_obj,
                                          argument,
@@ -173,14 +174,20 @@ ResizableRectangle {
         }
 
         onValueChanged: {
-            if (!ch_menu.bind_obj && pressed) {
+            if (!ch_menu.bind_obj) {
                 target_value = value;
                 root_spinbox.value = value.toFixed(value_menu.attr.decimal);
+
+                if (!root_spinbox.hovered) {
+                    send(0);
+                }
+            } else {
+                if (pressed || hovered) {
+                    send(0);
+                }
             }
 
-            if (pressed) {
-                send(0);
-            } else if (!root_spinbox.hovered){
+            if (!root_spinbox.hovered) {
                 root_spinbox.value = value.toFixed(value_menu.attr.decimal);
             }
         }
@@ -484,7 +491,7 @@ ResizableRectangle {
     }
 
     MyToolTip {
-        text: slider_inside.mouseValue
+        text: qsTr("鼠标位置数值") + ": " + slider_inside.mouseValue
         visible: slider_inside.hovered && !slider_inside.pressed
     }
 
@@ -500,7 +507,7 @@ ResizableRectangle {
                     'step_size' : step_size,
                 },
                 'slider_inside': {
-                    'target_value': slider_inside.target_value
+                    'target_value': (Math.max(root.from, Math.min(root.to, slider_inside.target_value)))
                 },
 
                 'argument_menu': {

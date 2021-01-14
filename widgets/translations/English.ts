@@ -77,82 +77,82 @@
 <context>
     <name>circular_gauge</name>
     <message>
-        <location filename="../circular_gauge/circular_gauge.qml" line="419"/>
+        <location filename="../circular_gauge/circular_gauge.qml" line="420"/>
         <source>重置</source>
         <translation>Reset</translation>
     </message>
     <message>
-        <location filename="../circular_gauge/circular_gauge.qml" line="437"/>
+        <location filename="../circular_gauge/circular_gauge.qml" line="438"/>
         <source>最小值</source>
         <translation>To</translation>
     </message>
     <message>
-        <location filename="../circular_gauge/circular_gauge.qml" line="456"/>
+        <location filename="../circular_gauge/circular_gauge.qml" line="457"/>
         <source>最大值</source>
         <translation>From</translation>
     </message>
     <message>
-        <location filename="../circular_gauge/circular_gauge.qml" line="478"/>
+        <location filename="../circular_gauge/circular_gauge.qml" line="479"/>
         <source>警告线</source>
         <translation>Warning line</translation>
     </message>
     <message>
-        <location filename="../circular_gauge/circular_gauge.qml" line="481"/>
+        <location filename="../circular_gauge/circular_gauge.qml" line="482"/>
         <source>相对位置</source>
         <translation>Relative position</translation>
     </message>
     <message>
-        <location filename="../circular_gauge/circular_gauge.qml" line="501"/>
+        <location filename="../circular_gauge/circular_gauge.qml" line="502"/>
         <source>对应数值</source>
         <translation>Corresponding value</translation>
     </message>
     <message>
-        <location filename="../circular_gauge/circular_gauge.qml" line="531"/>
+        <location filename="../circular_gauge/circular_gauge.qml" line="532"/>
         <source>开启警告</source>
         <translation>Turn on warning</translation>
     </message>
     <message>
-        <location filename="../circular_gauge/circular_gauge.qml" line="540"/>
+        <location filename="../circular_gauge/circular_gauge.qml" line="541"/>
         <source>警告反向</source>
         <translation>Warning reverse</translation>
     </message>
     <message>
-        <location filename="../circular_gauge/circular_gauge.qml" line="553"/>
+        <location filename="../circular_gauge/circular_gauge.qml" line="554"/>
         <source>刻度小数位数</source>
         <translation>Label decimal</translation>
     </message>
     <message>
-        <location filename="../circular_gauge/circular_gauge.qml" line="573"/>
+        <location filename="../circular_gauge/circular_gauge.qml" line="574"/>
         <source>刻度数字缩放</source>
         <translation>Label scale</translation>
     </message>
     <message>
-        <location filename="../circular_gauge/circular_gauge.qml" line="593"/>
+        <location filename="../circular_gauge/circular_gauge.qml" line="594"/>
         <source>刻度数字位置</source>
         <translation>Label position</translation>
     </message>
     <message>
-        <location filename="../circular_gauge/circular_gauge.qml" line="646"/>
+        <location filename="../circular_gauge/circular_gauge.qml" line="647"/>
         <source>隐藏外框</source>
         <translation>Hide frame</translation>
     </message>
     <message>
-        <location filename="../circular_gauge/circular_gauge.qml" line="654"/>
+        <location filename="../circular_gauge/circular_gauge.qml" line="655"/>
         <source>背景颜色</source>
         <translation>Background color</translation>
     </message>
     <message>
-        <location filename="../circular_gauge/circular_gauge.qml" line="658"/>
+        <location filename="../circular_gauge/circular_gauge.qml" line="659"/>
         <source>跟随</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../circular_gauge/circular_gauge.qml" line="666"/>
+        <location filename="../circular_gauge/circular_gauge.qml" line="667"/>
         <source>自定义颜色...</source>
         <translation>Custom color ...</translation>
     </message>
     <message>
-        <location filename="../circular_gauge/circular_gauge.qml" line="676"/>
+        <location filename="../circular_gauge/circular_gauge.qml" line="677"/>
         <source>背景不透明度：</source>
         <translation>Background opacity:</translation>
     </message>
@@ -423,18 +423,18 @@ Pose the original file</translation>
         <translation>The model will be placed according to the pose of the original file</translation>
     </message>
     <message>
-        <location filename="../cube/cube.qml" line="898"/>
+        <location filename="../cube/cube.qml" line="899"/>
         <source>角度偏置 </source>
         <translation>Angle offset </translation>
     </message>
     <message>
-        <location filename="../cube/cube.qml" line="902"/>
-        <location filename="../cube/cube.qml" line="974"/>
+        <location filename="../cube/cube.qml" line="903"/>
+        <location filename="../cube/cube.qml" line="975"/>
         <source>直接输入或鼠标滚轮设置</source>
         <translation>Input or mouse wheel setting</translation>
     </message>
     <message>
-        <location filename="../cube/cube.qml" line="970"/>
+        <location filename="../cube/cube.qml" line="971"/>
         <source>位置偏置 </source>
         <translation>Position offset </translation>
     </message>
@@ -455,88 +455,88 @@ Pose the original file</translation>
 <context>
     <name>gauge</name>
     <message>
-        <location filename="../gauge/gauge.qml" line="494"/>
-        <location filename="../gauge/gauge.qml" line="628"/>
+        <location filename="../gauge/gauge.qml" line="495"/>
+        <location filename="../gauge/gauge.qml" line="629"/>
         <source>基线位置</source>
         <translation>Baseline position</translation>
     </message>
     <message>
-        <location filename="../gauge/gauge.qml" line="498"/>
+        <location filename="../gauge/gauge.qml" line="499"/>
         <source>相对位置</source>
         <translation>Relative position</translation>
     </message>
     <message>
-        <location filename="../gauge/gauge.qml" line="518"/>
+        <location filename="../gauge/gauge.qml" line="519"/>
         <source>对应数值</source>
         <translation>Corresponding value</translation>
     </message>
     <message>
-        <location filename="../gauge/gauge.qml" line="568"/>
+        <location filename="../gauge/gauge.qml" line="569"/>
         <source>重置</source>
         <translation>Reset</translation>
     </message>
     <message>
-        <location filename="../gauge/gauge.qml" line="584"/>
+        <location filename="../gauge/gauge.qml" line="585"/>
         <source>上限</source>
         <translation>To</translation>
     </message>
     <message>
-        <location filename="../gauge/gauge.qml" line="604"/>
+        <location filename="../gauge/gauge.qml" line="605"/>
         <source>下限</source>
         <translation>From</translation>
     </message>
     <message>
-        <location filename="../gauge/gauge.qml" line="640"/>
+        <location filename="../gauge/gauge.qml" line="641"/>
         <source>刻度小数位数</source>
         <translation>Label decimal</translation>
     </message>
     <message>
-        <location filename="../gauge/gauge.qml" line="661"/>
+        <location filename="../gauge/gauge.qml" line="662"/>
         <source>刻度数字缩放</source>
         <translation>Label scale</translation>
     </message>
     <message>
-        <location filename="../gauge/gauge.qml" line="685"/>
+        <location filename="../gauge/gauge.qml" line="686"/>
         <source>开启警告</source>
         <translation>Turn on warning</translation>
     </message>
     <message>
-        <location filename="../gauge/gauge.qml" line="694"/>
+        <location filename="../gauge/gauge.qml" line="695"/>
         <source>警告反向</source>
         <translation>Warning reverse</translation>
     </message>
     <message>
-        <location filename="../gauge/gauge.qml" line="709"/>
+        <location filename="../gauge/gauge.qml" line="710"/>
         <source>警告下限</source>
         <translation>Lower warning line</translation>
     </message>
     <message>
-        <location filename="../gauge/gauge.qml" line="723"/>
+        <location filename="../gauge/gauge.qml" line="724"/>
         <source>警告上限</source>
         <translation>Upper warning line</translation>
     </message>
     <message>
-        <location filename="../gauge/gauge.qml" line="764"/>
+        <location filename="../gauge/gauge.qml" line="765"/>
         <source>隐藏外框</source>
         <translation>Hide frame</translation>
     </message>
     <message>
-        <location filename="../gauge/gauge.qml" line="772"/>
+        <location filename="../gauge/gauge.qml" line="773"/>
         <source>背景颜色</source>
         <translation>Background color</translation>
     </message>
     <message>
-        <location filename="../gauge/gauge.qml" line="776"/>
+        <location filename="../gauge/gauge.qml" line="777"/>
         <source>跟随</source>
         <translation>Follow</translation>
     </message>
     <message>
-        <location filename="../gauge/gauge.qml" line="784"/>
+        <location filename="../gauge/gauge.qml" line="785"/>
         <source>自定义颜色...</source>
         <translation>Custom color ...</translation>
     </message>
     <message>
-        <location filename="../gauge/gauge.qml" line="794"/>
+        <location filename="../gauge/gauge.qml" line="795"/>
         <source>背景不透明度：</source>
         <translation>Background opacity:</translation>
     </message>
@@ -710,75 +710,80 @@ Pose the original file</translation>
 <context>
     <name>slider</name>
     <message>
-        <location filename="../slider/slider.qml" line="367"/>
+        <location filename="../slider/slider.qml" line="385"/>
         <source>绑定命令</source>
         <translation>Bind command</translation>
     </message>
     <message>
-        <location filename="../slider/slider.qml" line="386"/>
+        <location filename="../slider/slider.qml" line="404"/>
         <source>滑动条更新时发送数值，当前</source>
         <translatorcomment>滑動條更新時發送數值，當前</translatorcomment>
         <translation>Send the slider value when the it&apos;s updated, the current</translation>
     </message>
     <message>
-        <location filename="../slider/slider.qml" line="393"/>
+        <location filename="../slider/slider.qml" line="411"/>
         <source>结束滑动即鼠标弹起时发送数值，当前</source>
         <translation>Send the slider value when the mouse released, the current</translation>
     </message>
     <message>
-        <location filename="../slider/slider.qml" line="400"/>
+        <location filename="../slider/slider.qml" line="418"/>
         <source>操作输入框时发送数值，当前</source>
         <translation>Send value when operating input box, the current</translation>
     </message>
     <message>
-        <location filename="../slider/slider.qml" line="258"/>
+        <location filename="../slider/slider.qml" line="276"/>
         <source>重置</source>
         <translation>Reset</translation>
     </message>
     <message>
-        <location filename="../slider/slider.qml" line="270"/>
+        <location filename="../slider/slider.qml" line="288"/>
         <source>最小值</source>
         <translation>To</translation>
     </message>
     <message>
-        <location filename="../slider/slider.qml" line="297"/>
+        <location filename="../slider/slider.qml" line="315"/>
         <source>最大值</source>
         <translation>From</translation>
     </message>
     <message>
-        <location filename="../slider/slider.qml" line="322"/>
+        <location filename="../slider/slider.qml" line="340"/>
         <source>步进</source>
         <translation>Step</translation>
     </message>
     <message>
-        <location filename="../slider/slider.qml" line="424"/>
+        <location filename="../slider/slider.qml" line="442"/>
         <source>不透明度:</source>
         <translation>Opacity:</translation>
     </message>
     <message>
-        <location filename="../slider/slider.qml" line="445"/>
+        <location filename="../slider/slider.qml" line="463"/>
         <source>自定义背景颜色</source>
         <translation>Custom background color</translation>
     </message>
     <message>
-        <location filename="../slider/slider.qml" line="450"/>
+        <location filename="../slider/slider.qml" line="468"/>
         <source>已选中，再点击可修改颜色</source>
         <translation>Selected, click again to modify color</translation>
     </message>
     <message>
-        <location filename="../slider/slider.qml" line="451"/>
+        <location filename="../slider/slider.qml" line="469"/>
         <source>点击可选中自定义颜色，再点击可修改颜色</source>
         <translation>Click to select a custom color, and then click to modify it</translation>
     </message>
     <message>
-        <location filename="../slider/slider.qml" line="466"/>
+        <location filename="../slider/slider.qml" line="484"/>
         <source>跟随</source>
         <translation>Follows</translation>
     </message>
     <message>
-        <location filename="../slider/slider.qml" line="475"/>
+        <location filename="../slider/slider.qml" line="493"/>
         <source>隐藏外框</source>
         <translation>Hide frame</translation>
+    </message>
+    <message>
+        <location filename="../slider/slider.qml" line="505"/>
+        <source>鼠标位置数值</source>
+        <translation>Mouse position value</translation>
     </message>
 </context>
 </TS>
