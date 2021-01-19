@@ -313,10 +313,10 @@ ResizableRectangle {
             id: value_menu
             ch_menu: ch_menu
         }
-        MyMenu {
+        SettingsMenu {
             id: light_menu
             text_center: false
-            title: qsTr("指示灯模式配置")
+            title: qsTr("模式配置")
 //            tips_text: ((light_color_menuitem.binded&&
 //                         !three_color_mode)?
 //                           qsTr("颜色<C>由已绑定频道决定"):"")
