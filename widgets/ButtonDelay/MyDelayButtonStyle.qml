@@ -84,6 +84,8 @@ CircularButtonStyle {
     */
     property color progressBarDropShadowColor: "#ff6666"
 
+    property bool resizing: false
+
     signal updateStyle();
 
     background: Item {
@@ -178,7 +180,9 @@ CircularButtonStyle {
             visible: false
             width: Math.min(parent.width, parent.height) + progressBarDropShadow.radius * 3 * 2
             height: width
-            anchors.centerIn: parent
+//            anchors.centerIn: parent
+            x: (parent.width - width)/2
+            y: (parent.height - height)/2
             antialiasing: true
             barWidth: __buttonHelper.outerArcLineWidth
             inset: progressBarDropShadow.radius * 3
@@ -186,6 +190,18 @@ CircularButtonStyle {
             maximumValueAngle: 180
 
             progress: control.progress
+
+            states: [
+                State {
+                    when: resizing
+                    PropertyChanges {
+                        explicit: true
+                        target: progressBar
+                        width: progressBar.width
+                        height: progressBar.height
+                    }
+                }
+            ]
 
             // TODO: Add gradient property if/when we drop support for building with 5.1.
             function updateGradient() {
@@ -212,6 +228,7 @@ CircularButtonStyle {
 
         DropShadow {
             id: progressBarDropShadow
+            visible: !resizing
             anchors.fill: progressBar
             // QTBUG-33747
 //            cached: !control.pressed

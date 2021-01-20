@@ -12,6 +12,8 @@ import "./"
 
 ResizableRectangle {
     id: root
+    property string path: "cube"
+    height_width_ratio: 1
     property Item ref: Loader {
         active: false
         sourceComponent: Component {
@@ -54,7 +56,6 @@ ResizableRectangle {
 
     width: g_settings.applyHScale(226)
     height: g_settings.applyHScale(226)
-    property string path: "cube"
     property bool not_support_change_window_: true
     property int default_width: width
     property int default_height: height

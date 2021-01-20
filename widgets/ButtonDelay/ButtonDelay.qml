@@ -8,7 +8,9 @@ import "."
 
 ResizableRectangle {
     id: root
+    height_width_ratio: 1
     color: "transparent"
+    property string path:  "ButtonDelay"
     property Item ref: Loader {
         active: false
         sourceComponent: Component {
@@ -26,12 +28,11 @@ ResizableRectangle {
     property int delay: 3000
 
     full_parent_enabled: true
-    width: g_settings.applyHScale(80)
-    height: g_settings.applyVScale(80)
+    width: g_settings.applyHScale(100)
+    height: g_settings.applyVScale(100)
     minimumWidth: g_settings.applyHScale(80)
     minimumHeight: g_settings.applyHScale(80)
     radius: g_settings.applyHScale(5)
-    property string path:  "delay_button"
 
     border.width: ((!hovered
                     &&!main_mouse.containsMouse)?
@@ -124,16 +125,16 @@ ResizableRectangle {
         function get_ctx() {
             var ctx = {
                 '.': {
-                    'colorBt'                : ""+colorBt             ,
-                    'colorText'                : ""+colorText             ,
+                    'colorBt'               : ""+colorBt            ,
+                    'colorText'             : ""+colorText          ,
                     'colorBorder'           : ""+colorBorder        ,
                     'colorLight'            : ""+colorLight         ,
-                    'colorBtFollow'          : colorBtFollow          ,
-                    'colorTextFollow'          : colorTextFollow          ,
+                    'colorBtFollow'         : colorBtFollow         ,
+                    'colorTextFollow'       : colorTextFollow       ,
                     'colorBorderFollow'     : colorBorderFollow     ,
                     'colorLightFollow'      : colorLightFollow      ,
-                    'colorBtFollowCh'        : colorBtFollowCh        ,
-                    'colorTextFollowCh'        : colorTextFollowCh        ,
+                    'colorBtFollowCh'       : colorBtFollowCh       ,
+                    'colorTextFollowCh'     : colorTextFollowCh     ,
                     'colorBorderFollowCh'   : colorBorderFollowCh   ,
                     'colorLightFollowCh'    : colorLightFollowCh    ,
                 }
@@ -178,6 +179,7 @@ ResizableRectangle {
         anchors.margins: g_settings.applyHScale(10)
         style: MyDelayButtonStyle {
             id: button_style
+            resizing: root.mouse.pressed
             property var __appTheme: appTheme
             progressBarGradient: __progressBarGradient
             progressBarDropShadowColor: theme.colorLight_
@@ -242,7 +244,7 @@ ResizableRectangle {
                         target_color = theme.colorBt_;
 
                     if (sys_manager.lightness(target_color) > 0.5) {
-                        return Qt.darker(target_color, 2);
+                        return Qt.darker(target_color, 3.5);
                     } else {
                         return target_color;
                     }

@@ -6,6 +6,8 @@ import MyModules 1.0
 
 ResizableRectangle {
     id: root
+    property string path:  "light"
+    height_width_ratio: 1
     border.width: ((hovered||ligth_mouse.containsMouse))?
                       g_settings.applyHScale(1):0
     property Item ref: Loader {
@@ -32,9 +34,7 @@ ResizableRectangle {
         color: "#D0D0D0"
         width: hovered?g_settings.applyHScale(1):0
     }
-    height_width_ratio: 1
 
-    property string path:  "light"
     property real bottom_value: -1
     property real top_value: 1
     property var command: null
@@ -95,7 +95,7 @@ ResizableRectangle {
 
         anchors {
             fill: parent
-            margins: 5
+            margins: g_settings.applyHScale(5)
         }
 
         color: {

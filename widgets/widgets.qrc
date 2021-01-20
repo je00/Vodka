@@ -51,7 +51,9 @@
         <file>example/example.qml</file>
         <file>circular_gauge/circular_gauge.qml</file>
         <file>gauge/gauge.qml</file>
-        <file>delay_button/delay_button.qml</file>
-        <file>delay_button/MyDelayButtonStyle.qml</file>
+        <file>ButtonDelay/ButtonDelay.qml</file>
+        <file>ButtonDelay/MyDelayButtonStyle.qml</file>
+        <file>ButtonToggle/ButtonToggle.qml</file>
+        <file>ButtonToggle/ToggleButtonStyle.qml</file>
     </qresource>
 </RCC>

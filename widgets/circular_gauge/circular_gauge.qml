@@ -8,6 +8,7 @@ import QtGraphicalEffects 1.14
 
 ResizableRectangle {
     id: root
+    height_width_ratio: 1
     color: "transparent"
     // path属性是每个控件都需要指定的，务必保证它们与你的控件目录名字一致
     property string path:  "circular_gauge"
