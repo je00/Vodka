@@ -393,7 +393,6 @@ ResizableRectangle {
             MyMenuItem {
                 text: qsTr("重置")
                 text_center: true
-                tips_text: qsTr("恢复默认配色")
                 onTriggered: {
                     reverse_logic   = false
                     threshold       = 0
@@ -401,7 +400,6 @@ ResizableRectangle {
             }
 
             MyMenuSeparator {
-                visible: ch_menu.bind_obj !== null
             }
 
             MyMenuItem {
@@ -582,9 +580,8 @@ ResizableRectangle {
                         }
                     }
                     MyMenuItem {
-                        text: ch_menu.bind_obj?
-                                  qsTr("跟随已绑定通道"):
-                                  qsTr("跟随已绑定通道（暂无）")
+                        text: qsTr("跟随已绑定通道")
+                              + (ch_menu.bind_obj?qsTr("（暂无）"):"")
                         text_center: true
                         checked: theme[model.parameter + "FollowCh"]
                         color_mark_on: true
