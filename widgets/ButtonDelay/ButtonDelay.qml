@@ -233,7 +233,7 @@ ResizableRectangle {
                     if (sys_manager.lightness(target_color) > 0.5) {
                         return target_color;
                     } else {
-                        return Qt.lighter(target_color, 2);
+                        return Qt.lighter(target_color, 3.5);
                     }
                 })
                 __buttonHelper.buttonColorUpBottom = Qt.binding(function(){
@@ -244,7 +244,7 @@ ResizableRectangle {
                         target_color = theme.colorBt_;
 
                     if (sys_manager.lightness(target_color) > 0.5) {
-                        return Qt.darker(target_color, 3.5);
+                        return Qt.darker(target_color, 2);
                     } else {
                         return target_color;
                     }
