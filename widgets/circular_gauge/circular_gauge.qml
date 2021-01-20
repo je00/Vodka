@@ -20,10 +20,13 @@ ResizableRectangle {
                 // ref_<对象id>：对象id
                 property var ref_ch_menu: ch_menu
                 property var ref_name_menu: name_menu
-                property var ref_value_menu    :   value_menu
+                property var ref_value_menu:   value_menu
             }
         }
     }
+    property real from_angle: -145
+    property real to_angle: 145
+    property int tick_count: 10
     property real from: -1
     property real to: 1
     property real danger_ratio: 0.9
@@ -35,6 +38,7 @@ ResizableRectangle {
     readonly property real scale: (Math.min(gauge.width, gauge.height)/(g_settings.applyHScale(190)))
     readonly property real danger: parseFloat((root.from + (root.to - root.from)*danger_ratio).toFixed(fix_decimal))
     readonly property int fix_decimal: Math.max(6, decimal)
+    readonly property real minTickRatioStep: 1.0/(root.tick_count*5);
     //    border.width: g_settings.applyHScale(1)
 
     border.width: (((theme.hideBorder
@@ -84,6 +88,7 @@ ResizableRectangle {
         z: -1
         anchors.fill: parent
         color: theme.bgColorFollow?appTheme.bgColor:theme.bgColor
+        opacity: theme.bgOpacity
         radius: root.radius
     }
 
@@ -97,7 +102,7 @@ ResizableRectangle {
         Item {
             id: danger_ratio_item
             opacity: 0.7
-            rotation: -145 + danger_ratio*290
+            rotation: root.from_angle + danger_ratio*(root.to_angle - root.from_angle)
             height: parent.height
             width: g_settings.applyVScale(2) * root.scale
             anchors.centerIn: parent
@@ -191,25 +196,20 @@ ResizableRectangle {
                         angle = 360 - angle;
                     }
 
-                    angle = (360-angle) - 125;
+                    angle = 180 - Math.abs((angle + 90) %360)
+                    console.log("angle", angle)
 
-                    if (angle < 0)
-                        angle = 360+angle;
-
-                    if (angle > 290) {
-                        if (angle < (290 + 35))
-                            angle = 290;
-                        else
-                            angle = 0;
-                    }
-
-                    var target_danger_ratio = angle/290;
+                    var target_danger_ratio = (angle - root.from_angle)/(root.to_angle - root.from_angle);
                     fix_danger(target_danger_ratio);
                 }
             }
         }
     }
 
+
+    onTo_angleChanged: {
+        console.log(Math.abs(to_angle%360), Math.abs(from_angle%360))
+    }
 
     CircularGauge {
         id: gauge
@@ -245,8 +245,26 @@ ResizableRectangle {
         }
         style: CircularGaugeStyle {
             id: circular_gauge_style
+            labelStepSize: (root.to - root.from)/root.tick_count
+            tickmarkStepSize : (root.to-root.from)/root.tick_count
+            minimumValueAngle: root.from_angle
+            maximumValueAngle: root.to_angle
             labelInset: outerRadius * label_inset
             tickmarkLabel: Label {
+                visible: {
+                    if (styleData.index !== 0)
+                        return true;
+                    else {
+                        var from_angle = root.from_angle % 360;
+                        var to_angle = root.to_angle % 360;
+                        if (from_angle < 0)
+                            from_angle += 360;
+                        if (to_angle < 0)
+                            to_angle += 360;
+                        return (from_angle !== to_angle);
+                    }
+                }
+
                 text: "" + styleData.value.toFixed(root.decimal)
                 font.pixelSize: g_settings.fontPixelSizeSmall
                                 * root.scale
@@ -268,8 +286,6 @@ ResizableRectangle {
                     }
                 }
             }
-            labelStepSize: (root.to-root.from)/10
-            tickmarkStepSize : (root.to-root.from)/10
 
             tickmark: Rectangle {
                 radius: implicitWidth/2
@@ -300,8 +316,6 @@ ResizableRectangle {
                 color: {
                     if (!root.danger_on)
                         return appTheme.fontColorTips;
-                    if (styleData.index.toFixed(root.fix_decimal) === 5)
-                        console.log("styleData.value", styleData.value)
 
                     if (root.danger_reverse) {
                         (styleData.value.toFixed(root.fix_decimal) <= root.danger)?
@@ -420,10 +434,13 @@ ResizableRectangle {
                 text_center: true
                 text: qsTr("重置")
                 onTriggered: {
+                    root.from_angle = -145;
+                    root.to_angle = 145;
+                    root.tick_count = 10;
                     root.from = -1;
                     root.to = 1;
-                    root.danger = 0.8;
-                    root.danger_on = false;
+                    root.danger_ratio = 0.9;
+                    root.danger_on = true;
                     root.danger_reverse = false;
                     root.decimal = 1;
                     root.font_scale = 0.9;
@@ -434,6 +451,25 @@ ResizableRectangle {
 
             MyMenuSeparator { }
 
+            MyMenuItem {
+                text_center: true
+                text: qsTr("刻度数量") + ":"
+                plus_minus_on: true
+                value_text: "" + root.tick_count
+                value_editable: true
+                onPlus_triggered: {
+                    root.tick_count = root.tick_count + 1;
+                }
+                onMinus_triggered: {
+                    root.tick_count = Math.max(0, root.tick_count - 1);
+                }
+                onValue_inputed: {
+                    var value = parseInt(text);
+                    if (!value)
+                        value = 0;
+                    root.tick_count = Math.max(0, value);
+                }
+            }
             MyMenuItem {
                 text_center: true
                 text: qsTr("最小值") + ":"
@@ -472,6 +508,47 @@ ResizableRectangle {
                     root.to = value;
                 }
             }
+
+            MyMenuItem {
+                text_center: true
+                text: qsTr("最小角度") + ":"
+                plus_minus_on: true
+                value_text: "" + root.from_angle
+                value_editable: true
+                onPlus_triggered: {
+                    root.from_angle = root.from_angle + 1;
+                }
+                onMinus_triggered: {
+                    root.from_angle = root.from_angle - 1;
+                }
+                onValue_inputed: {
+                    var value = parseFloat(text);
+                    if (!value)
+                        value = 0;
+                    root.from_angle = value;
+                }
+            }
+
+            MyMenuItem {
+                text_center: true
+                text: qsTr("最大角度") + ":"
+                plus_minus_on: true
+                value_text: "" + root.to_angle
+                value_editable: true
+                onPlus_triggered: {
+                    root.to_angle = root.to_angle + 1;
+                }
+                onMinus_triggered: {
+                    root.to_angle = root.to_angle - 1;
+                }
+                onValue_inputed: {
+                    var value = parseFloat(text);
+                    if (!value)
+                        value = 0;
+                    root.to_angle = value;
+                }
+            }
+
             MyMenuSeparator {
                 margins: g_settings.applyHScale(10)
             }
@@ -485,10 +562,10 @@ ResizableRectangle {
                     value_text: "" + root.danger_ratio
                     value_editable: true
                     onPlus_triggered: {
-                        fix_danger(root.danger_ratio + 0.02);
+                        fix_danger(root.danger_ratio + root.minTickRatioStep);
                     }
                     onMinus_triggered: {
-                        fix_danger(root.danger_ratio - 0.02);
+                        fix_danger(root.danger_ratio - root.minTickRatioStep);
                     }
                     onValue_inputed: {
                         var value = parseFloat(text);
@@ -703,8 +780,8 @@ ResizableRectangle {
         target_danger_ratio = (target_danger - root.from)/(root.to - root.from)
         target_danger_ratio = Math.min(1, Math.max(0, target_danger_ratio));
         if (stick_to_mark) {
-            var count = Math.round(target_danger_ratio/0.02)
-            target_danger_ratio = 0.02 * count;
+            var count = Math.round(target_danger_ratio/root.minTickRatioStep)
+            target_danger_ratio = root.minTickRatioStep * count;
         }
 
         root.danger_ratio = target_danger_ratio.toFixed(6);
@@ -716,6 +793,9 @@ ResizableRectangle {
             'path': path,
             'ctx': {
                 '.': {  'ctx': get_ctx()   ,
+                    'from_angle'    : from_angle    ,
+                    'to_angle'      : to_angle      ,
+                    'tick_count'    : tick_count    ,
                     'from'          : from          ,
                     'to'            : to            ,
                     'danger_ratio'  : danger_ratio  ,
