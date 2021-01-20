@@ -47,42 +47,42 @@ ResizableRectangle {
 
     Item {
         id: theme
-        property bool color1Follow: true
+        property bool colorBtFollow: true
         property bool colorBorderFollow: true
-        property bool color2Follow: false
+        property bool colorTextFollow: false
         property bool colorLightFollow: false
 
-        property bool color1FollowCh: false
+        property bool colorBtFollowCh: false
         property bool colorBorderFollowCh: false
-        property bool color2FollowCh: true
+        property bool colorTextFollowCh: true
         property bool colorLightFollowCh: true
 
-        property color color1: appTheme.bgColor
-        property color color2: appTheme.fontColor
+        property color colorBt: appTheme.bgColor
+        property color colorText: appTheme.fontColor
         property color colorBorder: appTheme.lineColor
         property color colorLight: appTheme.goodColor
 
-        property color color1_: {
-            if (color1FollowCh) {
+        property color colorBt_: {
+            if (colorBtFollowCh) {
                 if (ch_menu.bind_obj)
                     ch_menu.bind_obj.color
                 else
                     appTheme.bgColor
-            } else if (color1Follow)
+            } else if (colorBtFollow)
                 appTheme.bgColor
             else
-                color1
+                colorBt
         }
-        property color color2_: {
-            if (color2FollowCh) {
+        property color colorText_: {
+            if (colorTextFollowCh) {
                 if (ch_menu.bind_obj)
                     ch_menu.bind_obj.color
                 else
                     appTheme.fontColor
-            } else if (color2Follow)
+            } else if (colorTextFollow)
                 appTheme.fontColor
             else
-                color2
+                colorText
 
         }
         property color colorBorder_: {
@@ -110,30 +110,30 @@ ResizableRectangle {
         property var ctx
 
         function reset() {
-            color1Follow        = true
+            colorBtFollow        = true
             colorBorderFollow   = true
-            color2Follow        = true
+            colorTextFollow        = true
             colorLightFollow    = true
 
-            color1FollowCh      = false
+            colorBtFollowCh      = false
             colorBorderFollowCh = false
-            color2FollowCh      = true
+            colorTextFollowCh      = true
             colorLightFollowCh  = true
         }
 
         function get_ctx() {
             var ctx = {
                 '.': {
-                    'color1'                : ""+color1             ,
-                    'color2'                : ""+color2             ,
+                    'colorBt'                : ""+colorBt             ,
+                    'colorText'                : ""+colorText             ,
                     'colorBorder'           : ""+colorBorder        ,
                     'colorLight'            : ""+colorLight         ,
-                    'color1Follow'          : color1Follow          ,
-                    'color2Follow'          : color2Follow          ,
+                    'colorBtFollow'          : colorBtFollow          ,
+                    'colorTextFollow'          : colorTextFollow          ,
                     'colorBorderFollow'     : colorBorderFollow     ,
                     'colorLightFollow'      : colorLightFollow      ,
-                    'color1FollowCh'        : color1FollowCh        ,
-                    'color2FollowCh'        : color2FollowCh        ,
+                    'colorBtFollowCh'        : colorBtFollowCh        ,
+                    'colorTextFollowCh'        : colorTextFollowCh        ,
                     'colorBorderFollowCh'   : colorBorderFollowCh   ,
                     'colorLightFollowCh'    : colorLightFollowCh    ,
                 }
@@ -192,7 +192,6 @@ ResizableRectangle {
                     color: theme.colorLight_
                 }
             }
-            //            progressBarDropShadowColor: Qt.lighter(appTheme.mainColor, 0.2)
 
 
             on__AppThemeChanged: {
@@ -209,7 +208,7 @@ ResizableRectangle {
                     button_style.updateStyle();
                 }
 
-                onColor1_Changed: {
+                onColorBt_Changed: {
                     updateStyle();
                 }
 
@@ -225,10 +224,10 @@ ResizableRectangle {
             Component.onCompleted: {
                 __buttonHelper.buttonColorUpTop = Qt.binding(function(){
                     var target_color;
-                    if (sys_manager.lightness(theme.color1_) === 0)
+                    if (sys_manager.lightness(theme.colorBt_) === 0)
                         target_color = Qt.rgba(0.05, 0.05, 0.05, 1);
                     else
-                        target_color = theme.color1_;
+                        target_color = theme.colorBt_;
                     if (sys_manager.lightness(target_color) > 0.5) {
                         return target_color;
                     } else {
@@ -237,10 +236,10 @@ ResizableRectangle {
                 })
                 __buttonHelper.buttonColorUpBottom = Qt.binding(function(){
                     var target_color;
-                    if (sys_manager.lightness(theme.color1_) === 0)
+                    if (sys_manager.lightness(theme.colorBt_) === 0)
                         target_color = Qt.rgba(0.05, 0.05, 0.05, 1);
                     else
-                        target_color = theme.color1_;
+                        target_color = theme.colorBt_;
 
                     if (sys_manager.lightness(target_color) > 0.5) {
                         return Qt.darker(target_color, 2);
@@ -334,9 +333,9 @@ ResizableRectangle {
         id: name_text
         style: Text.Outline
         styleColor: Qt.rgba(
-                        theme.color1_.r,
-                        theme.color1_.g,
-                        theme.color1_.b,
+                        theme.colorBt_.r,
+                        theme.colorBt_.g,
+                        theme.colorBt_.b,
                         0.5
                         )
         width: button.width
@@ -346,7 +345,7 @@ ResizableRectangle {
         anchors.verticalCenter: parent.verticalCenter
         anchors.horizontalCenter: parent.horizontalCenter
         text: name_menu.attr.name
-        color: theme.color2_
+        color: theme.colorText_
         visible: name_menu.attr.visible
         font.bold: true
         font.pixelSize: name_menu.attr.font_size
@@ -504,7 +503,7 @@ ResizableRectangle {
                 model: ListModel {
                     ListElement {
                         text: qsTr("字体颜色")
-                        parameter: "color2"
+                        parameter: "colorText"
                         follow: "fontColor"
                     }
                     ListElement {
@@ -514,7 +513,7 @@ ResizableRectangle {
                     }
                     ListElement {
                         text: qsTr("按钮颜色")
-                        parameter: "color1"
+                        parameter: "colorBt"
                         follow: "bgColor"
                     }
                     ListElement {
