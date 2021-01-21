@@ -10,7 +10,7 @@ ResizableRectangle {
     id: root
     height_width_ratio: 1
     color: "transparent"
-    property string path:  "ButtonDelay"
+    property string path:  "ExtraButtonDelay"
     property Item ref: Loader {
         active: false
         sourceComponent: Component {
@@ -34,8 +34,7 @@ ResizableRectangle {
     minimumHeight: g_settings.applyHScale(80)
     radius: g_settings.applyHScale(5)
 
-    border.width: ((!hovered
-                    &&!main_mouse.containsMouse)?
+    border.width: (!hovered?
                        0:g_settings.applyHScale(1))
 
     Connections {
@@ -177,7 +176,7 @@ ResizableRectangle {
         checked: false
         anchors.fill: parent
         anchors.margins: g_settings.applyHScale(10)
-        style: MyDelayButtonStyle {
+        style: DelayButtonStyle {
             id: button_style
             resizing: root.mouse.pressed
             property var __appTheme: appTheme

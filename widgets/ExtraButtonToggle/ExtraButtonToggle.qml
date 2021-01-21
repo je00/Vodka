@@ -10,7 +10,7 @@ ResizableRectangle {
     id: root
     height_width_ratio: 1
     color: "transparent"
-    property string path:  "ButtonToggle"
+    property string path:  "ExtraButtonToggle"
     property Item ref: Loader {
         active: false
         sourceComponent: Component {
@@ -33,8 +33,7 @@ ResizableRectangle {
     minimumHeight: g_settings.applyHScale(80)
     radius: g_settings.applyHScale(5)
 
-    border.width: ((!hovered
-                    &&!main_mouse.containsMouse)?
+    border.width: (!hovered?
                        0:g_settings.applyHScale(1))
 
     Connections {

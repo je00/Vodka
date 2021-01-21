@@ -51,9 +51,11 @@
         <file>example/example.qml</file>
         <file>circular_gauge/circular_gauge.qml</file>
         <file>gauge/gauge.qml</file>
-        <file>ButtonDelay/ButtonDelay.qml</file>
-        <file>ButtonDelay/MyDelayButtonStyle.qml</file>
-        <file>ButtonToggle/ButtonToggle.qml</file>
-        <file>ButtonToggle/ToggleButtonStyle.qml</file>
+        <file>ExtraButtonDelay/ExtraButtonDelay.qml</file>
+        <file>ExtraButtonDelay/DelayButtonStyle.qml</file>
+        <file>ExtraButtonToggle/ExtraButtonToggle.qml</file>
+        <file>ExtraButtonToggle/ExtraToggleButtonStyle.qml</file>
+        <file>ExtraDial/ExtraDial.qml</file>
+        <file>ExtraDial/DialStyle.qml</file>
     </qresource>
 </RCC>
