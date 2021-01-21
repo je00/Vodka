@@ -8,7 +8,7 @@ import QtGraphicalEffects 1.14
 
 ResizableRectangle {
     id: root
-    height_width_ratio: 1
+//    height_width_ratio: 1
     color: "transparent"
     // path属性是每个控件都需要指定的，务必保证它们与你的控件目录名字一致
     property string path:  "circular_gauge"
@@ -48,10 +48,10 @@ ResizableRectangle {
 
     // 这里界定它们的最小宽、高均为100像素
     minimumWidth: g_settings.applyHScale(200)
-    minimumHeight: g_settings.applyVScale(200)
+    minimumHeight: g_settings.applyVScale(100)
     width: minimumWidth
-    height: minimumHeight
-
+    height: minimumWidth
+//    radius: width/2
     Item {
         id: theme
         property bool hideBorder: false
@@ -85,6 +85,7 @@ ResizableRectangle {
     }
 
     Rectangle {
+        id: bg_rect
         z: -1
         anchors.fill: parent
         color: theme.bgColorFollow?appTheme.bgColor:theme.bgColor
@@ -109,7 +110,7 @@ ResizableRectangle {
             Rectangle {
                 id: danger_ratio_rect
                 visible: root.danger_on
-                height: parent.height/3
+                height: parent.height/4
                 anchors {
                     top: parent.top
                     left: parent.left
@@ -197,7 +198,6 @@ ResizableRectangle {
                     }
 
                     angle = 180 - Math.abs((angle + 90) %360)
-                    console.log("angle", angle)
 
                     var target_danger_ratio = (angle - root.from_angle)/(root.to_angle - root.from_angle);
                     fix_danger(target_danger_ratio);
@@ -207,28 +207,15 @@ ResizableRectangle {
     }
 
 
-    onTo_angleChanged: {
-        console.log(Math.abs(to_angle%360), Math.abs(from_angle%360))
-    }
-
     CircularGauge {
         id: gauge
         anchors {
             top: parent.top
-            bottom: {
-                if (value_text.visible) {
-                    value_text.top
-                } else {
-                    parent.bottom
-                }
-            }
-            left: parent.left
-            right: parent.right
-            leftMargin: root.width*0.025
-            rightMargin: root.width*0.025
-            topMargin: root.height*0.025
-            bottomMargin: -root.height/6 * 0.3
+            topMargin: root.height*0.02
+            horizontalCenter: parent.horizontalCenter
         }
+        width: root.width*0.96
+        height: width
 
         minimumValue : root.from
         maximumValue : root.to
@@ -288,7 +275,7 @@ ResizableRectangle {
             }
 
             tickmark: Rectangle {
-                radius: implicitWidth/2
+//                radius: implicitWidth/2
                 implicitWidth: outerRadius * 0.025
                 antialiasing: true
                 implicitHeight: outerRadius * 0.05
@@ -309,9 +296,9 @@ ResizableRectangle {
                 }
             }
             minorTickmark: Rectangle {
-                radius: implicitWidth/2
-                implicitWidth: outerRadius * 0.025
+//                radius: implicitWidth/2
                 antialiasing: true
+                implicitWidth: outerRadius * 0.025
                 implicitHeight: outerRadius * 0.04
                 color: {
                     if (!root.danger_on)
@@ -353,6 +340,7 @@ ResizableRectangle {
                 layer.effect: MyDropShadow {
                 }
             }
+
             foreground: Item {
                 Rectangle {
                     width: outerRadius * 0.2
@@ -372,11 +360,27 @@ ResizableRectangle {
 
     MyText {
         id: value_text
-        anchors {
-            bottom: parent.bottom
-            bottomMargin: root.height*0.025
-            horizontalCenter: parent.horizontalCenter
+        style: Text.Outline
+        styleColor: Qt.rgba(
+                        bg_rect.color.r,
+                        bg_rect.color.g,
+                        bg_rect.color.b,
+                        0.5
+                        )
+        z: 10
+        Rectangle {
+            z: -1
+            anchors.fill: parent
+            color: bg_rect.color
+            opacity: 0.5
+            radius: height/2
         }
+        anchors {
+            horizontalCenter: gauge_actual_border.horizontalCenter
+            top: gauge_actual_border.top
+            topMargin: gauge_actual_border.height*0.58
+        }
+
         text: ch_menu.bind_obj?
                   ch_menu.bind_obj.value.toFixed(value_menu.attr.decimal):
                   "0"

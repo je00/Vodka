@@ -285,82 +285,97 @@
 <context>
     <name>circular_gauge</name>
     <message>
-        <location filename="../circular_gauge/circular_gauge.qml" line="421"/>
+        <location filename="../circular_gauge/circular_gauge.qml" line="439"/>
         <source>重置</source>
         <translation>重置</translation>
     </message>
     <message>
-        <location filename="../circular_gauge/circular_gauge.qml" line="439"/>
+        <location filename="../circular_gauge/circular_gauge.qml" line="460"/>
+        <source>刻度数量</source>
+        <translation>刻度數量</translation>
+    </message>
+    <message>
+        <location filename="../circular_gauge/circular_gauge.qml" line="479"/>
         <source>最小值</source>
         <translation>最小值</translation>
     </message>
     <message>
-        <location filename="../circular_gauge/circular_gauge.qml" line="458"/>
+        <location filename="../circular_gauge/circular_gauge.qml" line="498"/>
         <source>最大值</source>
         <translation>最大值</translation>
     </message>
     <message>
-        <location filename="../circular_gauge/circular_gauge.qml" line="480"/>
+        <location filename="../circular_gauge/circular_gauge.qml" line="518"/>
+        <source>最小角度</source>
+        <translation>最小角度</translation>
+    </message>
+    <message>
+        <location filename="../circular_gauge/circular_gauge.qml" line="538"/>
+        <source>最大角度</source>
+        <translation>最大角度</translation>
+    </message>
+    <message>
+        <location filename="../circular_gauge/circular_gauge.qml" line="561"/>
         <source>警告线</source>
         <translation>警告線</translation>
     </message>
     <message>
-        <location filename="../circular_gauge/circular_gauge.qml" line="483"/>
+        <location filename="../circular_gauge/circular_gauge.qml" line="564"/>
         <source>相对位置</source>
         <translation>相對位置</translation>
     </message>
     <message>
-        <location filename="../circular_gauge/circular_gauge.qml" line="503"/>
+        <location filename="../circular_gauge/circular_gauge.qml" line="584"/>
         <source>对应数值</source>
         <translation>對應數值</translation>
     </message>
     <message>
-        <location filename="../circular_gauge/circular_gauge.qml" line="533"/>
+        <location filename="../circular_gauge/circular_gauge.qml" line="614"/>
         <source>开启警告</source>
         <translation>開啟警告</translation>
     </message>
     <message>
-        <location filename="../circular_gauge/circular_gauge.qml" line="542"/>
+        <location filename="../circular_gauge/circular_gauge.qml" line="623"/>
         <source>警告反向</source>
         <translation>警告反向</translation>
     </message>
     <message>
-        <location filename="../circular_gauge/circular_gauge.qml" line="555"/>
+        <location filename="../circular_gauge/circular_gauge.qml" line="636"/>
         <source>刻度小数位数</source>
         <translation>刻度小數位數</translation>
     </message>
     <message>
-        <location filename="../circular_gauge/circular_gauge.qml" line="575"/>
+        <location filename="../circular_gauge/circular_gauge.qml" line="656"/>
         <source>刻度数字缩放</source>
         <translation>刻度數字縮放</translation>
     </message>
     <message>
-        <location filename="../circular_gauge/circular_gauge.qml" line="595"/>
+        <location filename="../circular_gauge/circular_gauge.qml" line="676"/>
         <source>刻度数字位置</source>
         <translation>刻度數字位置</translation>
     </message>
     <message>
-        <location filename="../circular_gauge/circular_gauge.qml" line="648"/>
+        <location filename="../circular_gauge/circular_gauge.qml" line="729"/>
         <source>隐藏外框</source>
         <translation>隱藏外框</translation>
     </message>
     <message>
-        <location filename="../circular_gauge/circular_gauge.qml" line="656"/>
+        <location filename="../circular_gauge/circular_gauge.qml" line="737"/>
         <source>背景颜色</source>
         <translation>背景顏色</translation>
     </message>
     <message>
-        <location filename="../circular_gauge/circular_gauge.qml" line="660"/>
+        <location filename="../circular_gauge/circular_gauge.qml" line="741"/>
         <source>跟随</source>
         <translation>跟隨</translation>
     </message>
     <message>
-        <location filename="../circular_gauge/circular_gauge.qml" line="668"/>
+        <location filename="../circular_gauge/circular_gauge.qml" line="749"/>
         <source>自定义颜色...</source>
         <translation>自定義顏色...</translation>
     </message>
     <message>
-        <location filename="../circular_gauge/circular_gauge.qml" line="678"/>
+        <location filename="../circular_gauge/circular_gauge.qml" line="759"/>
         <source>背景不透明度：</source>
         <translation>背景不透明度：</translation>
     </message>
