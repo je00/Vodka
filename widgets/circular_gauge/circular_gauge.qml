@@ -8,7 +8,21 @@ import QtGraphicalEffects 1.14
 
 ResizableRectangle {
     id: root
-//    height_width_ratio: 1
+    readonly property real real_from_angle: {
+        var from_angle = root.from_angle % 360;
+        if (from_angle < 0)
+            from_angle += 360;
+        return from_angle;
+    }
+    readonly property real real_to_angle: {
+        var to_angle = root.to_angle % 360;
+        if (to_angle < 0)
+            to_angle += 360;
+        return to_angle;
+    }
+
+    height_width_ratio: Math.max(0.55, gauge.ratio)
+
     color: "transparent"
     // path属性是每个控件都需要指定的，务必保证它们与你的控件目录名字一致
     property string path:  "circular_gauge"
@@ -48,10 +62,10 @@ ResizableRectangle {
 
     // 这里界定它们的最小宽、高均为100像素
     minimumWidth: g_settings.applyHScale(200)
-    minimumHeight: g_settings.applyVScale(100)
+    minimumHeight: minimumWidth * height_width_ratio
     width: minimumWidth
     height: minimumWidth
-//    radius: width/2
+    //    radius: width/2
     Item {
         id: theme
         property bool hideBorder: false
@@ -209,13 +223,47 @@ ResizableRectangle {
 
     CircularGauge {
         id: gauge
+        property real ratio: {
+            var tmp_ratio = Math.max(-Math.cos(Math.PI/180*root.real_from_angle),
+                                     -Math.cos(Math.PI/180*root.real_to_angle))
+            if (root.from_angle < -180)
+                tmp_ratio = 1;
+            if (root.to_angle > 180)
+                tmp_ratio = 1;
+
+            return (1 + tmp_ratio)/2;
+        }
+
         anchors {
             top: parent.top
-            topMargin: root.height*0.02
+//            topMargin: (root.height - height)/2
+            topMargin: {
+//                var effective_height = Math.min(height, width)*ratio;
+//                console.log("effective_height", height, effective_height)
+//                return -(height - effective_height)/2 + (1-ratio)*effective_height/2
+                return -height/2 + Math.min(height, width)/2 + root.height*0.02
+            }
+
             horizontalCenter: parent.horizontalCenter
         }
         width: root.width*0.96
-        height: width
+//        width: {
+////            if (root.height_width_ratio === 1) {
+////                return root.height*0.96
+////            } else {
+//                var ratio = Math.max(-Math.cos(Math.PI/180*root.real_from_angle), -Math.cos(Math.PI/180*root.real_to_angle))
+//                console.log(root.real_from_angle,
+//                            -Math.cos(Math.PI/180*root.real_from_angle),
+//                            root.real_to_angle,
+//                            -Math.cos(Math.PI/180*root.real_to_angle))
+//                ratio = (1 + ratio)/2;
+//                console.log("ratio", ratio);
+//                return root.width*0.96*(1/ratio);
+////            }
+//        }
+        height: {
+            return root.height*0.96*(1/ratio);
+        }
 
         minimumValue : root.from
         maximumValue : root.to
@@ -275,7 +323,7 @@ ResizableRectangle {
             }
 
             tickmark: Rectangle {
-//                radius: implicitWidth/2
+                //                radius: implicitWidth/2
                 implicitWidth: outerRadius * 0.025
                 antialiasing: true
                 implicitHeight: outerRadius * 0.05
@@ -296,7 +344,7 @@ ResizableRectangle {
                 }
             }
             minorTickmark: Rectangle {
-//                radius: implicitWidth/2
+                //                radius: implicitWidth/2
                 antialiasing: true
                 implicitWidth: outerRadius * 0.025
                 implicitHeight: outerRadius * 0.04
@@ -378,7 +426,12 @@ ResizableRectangle {
         anchors {
             horizontalCenter: gauge_actual_border.horizontalCenter
             top: gauge_actual_border.top
-            topMargin: gauge_actual_border.height*0.58
+            topMargin: {
+                if (gauge.ratio > 0.7)
+                    return gauge_actual_border.height*0.58
+                else
+                    return gauge_actual_border.height*(1-0.58) - height
+            }
         }
 
         text: ch_menu.bind_obj?
