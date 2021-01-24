@@ -71,8 +71,6 @@ Item {
         color: root.control.handleColor
         scale: root.handlePressed ? 1.5 : 1
 
-//        layer.effect: MyDropShadow{}
-//        layer.enabled: true
         Behavior on scale {
             NumberAnimation {
                 duration: 250

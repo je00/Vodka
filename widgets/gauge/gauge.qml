@@ -1,9 +1,12 @@
 import QtQuick 2.12
-import QtQuick.Controls 2.12
-import QtQuick.Controls.Styles 1.4
-import QtGraphicalEffects 1.12
 import QtQuick.Extras 1.4
 import QtQml 2.13
+import QtGraphicalEffects 1.14
+import QtQuick.Controls 2.12
+import QtQuick.Controls.Styles 1.4
+import QtQuick.Controls.Material 2.12
+import QtQuick.Controls.Material.impl 2.12
+
 import MyModules 1.0
 
 ResizableRectangle {
@@ -358,6 +361,17 @@ ResizableRectangle {
                                     color: appTheme.bgColor
                                 }
                             }
+
+                            Ripple {
+                                anchors.centerIn: base_handle
+                                width: base_handle.width * 1.5
+                                height: width
+                                pressed: ratio_rect_mouse.pressed
+                                active: ratio_rect_mouse.pressed || ratio_rect_mouse.containsMouse
+                                color: appTheme.lineColorMain
+                                opacity: 0.5
+                            }
+
                             Rectangle {
                                 id: base_handle
                                 x: (parent.width - width) * model.x_pos
@@ -366,15 +380,23 @@ ResizableRectangle {
                                 anchors {
                                     verticalCenter: ratio_rect.verticalCenter
                                 }
-                                width: g_settings.applyHScale(12) * root.scale
+                                width: g_settings.applyHScale(10) * root.scale
                                 height: width
                                 radius: width/2
-                                color: appTheme.lineColor
-                                layer.enabled: true
+                                color: (ratio_rect_mouse.pressed || ratio_rect_mouse.containsMouse)?
+                                           value_menu.attr.color:appTheme.lineColor
+                                layer.enabled: !(ratio_rect_mouse.pressed || ratio_rect_mouse.containsMouse)
                                 layer.effect: MyDropShadow {}
                                 MyToolTip {
                                     text: "" + root[model.value]
                                     visible: ratio_rect_mouse.containsMouse || ratio_rect_mouse.pressed
+                                }
+                                scale: ratio_rect_mouse.pressed ? 1.5 : 1
+
+                                Behavior on scale {
+                                    NumberAnimation {
+                                        duration: 250
+                                    }
                                 }
                             }
 

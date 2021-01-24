@@ -63,5 +63,6 @@
         <file>Library/Extras/ToggleButtonStyle.qml</file>
         <file>Library/Extras/Dial.qml</file>
         <file>Library/Extras/DialStyle.qml</file>
+        <file>Library/Modules/MySlider.qml</file>
     </qresource>
 </RCC>

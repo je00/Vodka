@@ -1,10 +1,13 @@
 import QtQuick 2.12
-import QtQuick.Controls 2.12
-import QtQuick.Controls.Styles 1.4
 import QtQuick.Extras 1.4
 import QtQml 2.13
-import MyModules 1.0
 import QtGraphicalEffects 1.14
+import QtQuick.Controls 2.12
+import QtQuick.Controls.Styles 1.4
+import QtQuick.Controls.Material 2.12
+import QtQuick.Controls.Material.impl 2.12
+
+import MyModules 1.0
 
 ResizableRectangle {
     id: root
@@ -21,7 +24,7 @@ ResizableRectangle {
         return to_angle;
     }
 
-    height_width_ratio: Math.max(0.55, gauge.ratio)
+    height_width_ratio: Math.max(0.6, gauge.ratio)
 
     color: "transparent"
     // path属性是每个控件都需要指定的，务必保证它们与你的控件目录名字一致
@@ -110,13 +113,34 @@ ResizableRectangle {
 
     Item {
         id: gauge_actual_border
+        z: (ratio_rect_mouse.pressed || ratio_rect_mouse.containsMouse)?100:0
         height: Math.min(gauge.width, gauge.height)
         width: height
         anchors.centerIn: gauge
 
+        MyText {
+//            rotation: -danger_ratio_item.rotation
+            z: 20
+            visible: ratio_rect_mouse.containsMouse || ratio_rect_mouse.pressed
+            font.pixelSize: g_settings.fontPixelSizeSmall
+                            * root.scale
+                            * root.font_scale
+            font.family: g_settings.fontFamilyAxis
+            anchors.centerIn: parent
+            text: "" + root.danger
+            color: value_menu.attr.color
+            Rectangle {
+                z: -1
+                anchors.fill: parent
+                color: bg_rect.color
+                opacity: 0.5
+                radius: height/2
+            }
+        }
+
         Item {
             id: danger_ratio_item
-            opacity: 0.7
+//            opacity: 0.7
             rotation: root.from_angle + danger_ratio*(root.to_angle - root.from_angle)
             height: parent.height
             width: g_settings.applyVScale(2) * root.scale
@@ -139,30 +163,37 @@ ResizableRectangle {
                 layer.effect: MyDropShadow{}
                 layer.enabled: true
             }
+
+            Ripple {
+                anchors.centerIn: base_handle
+                width: base_handle.width * 1.5
+                height: width
+                pressed: ratio_rect_mouse.pressed
+                active: ratio_rect_mouse.pressed || ratio_rect_mouse.containsMouse
+                color: appTheme.lineColorMain
+                opacity: 0.5
+            }
+
             Rectangle {
                 id: base_handle
                 visible: ratio_rect_mouse.containsMouse || ratio_rect_mouse.pressed
-                anchors.bottom: danger_ratio_rect.bottom
+                anchors.top: danger_ratio_rect.bottom
                 anchors.horizontalCenter: parent.horizontalCenter
                 width: g_settings.applyHScale(12) * root.scale
                 height: width
                 radius: width/2
-                color: appTheme.lineColor
-                layer.enabled: true
+                color: (ratio_rect_mouse.pressed || ratio_rect_mouse.containsMouse)?
+                           value_menu.attr.color:appTheme.lineColor
+                scale: ratio_rect_mouse.pressed ? 1.5 : 1
+                Behavior on scale {
+                    NumberAnimation {
+                        duration: 250
+                    }
+                }
+                layer.enabled: !(ratio_rect_mouse.pressed || ratio_rect_mouse.containsMouse)
                 layer.effect: MyDropShadow {}
+            }
 
-            }
-            MyText {
-                rotation: -danger_ratio_item.rotation
-                z: 20
-                visible: ratio_rect_mouse.containsMouse || ratio_rect_mouse.pressed
-                font.pixelSize: g_settings.fontPixelSizeSmall
-                                * root.scale
-                                * root.font_scale
-                font.family: g_settings.fontFamilyAxis
-                anchors.centerIn: base_handle
-                text: "" + root.danger
-            }
 
             MyMouseArea {
                 id: ratio_rect_mouse
@@ -173,7 +204,7 @@ ResizableRectangle {
                 width: base_handle.width
 
                 y: danger_ratio_rect.y
-                height: danger_ratio_rect.height
+                height: danger_ratio_rect.height + base_handle.height
 
                 states: [
                     State {

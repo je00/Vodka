@@ -2,6 +2,7 @@
 import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
 import MyModules 1.0
+import "../Library/Modules"
 
 ResizableRectangle {
     id: root
@@ -124,6 +125,7 @@ ResizableRectangle {
 
     MySlider {
         id: slider_inside
+        z: 10
         color2: value_menu.attr.color
         property real target_value: 500
         height: root.height/6
