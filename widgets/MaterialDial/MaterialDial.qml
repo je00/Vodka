@@ -458,7 +458,7 @@ ResizableRectangle {
                         follow: "fontColor"
                     }
                     ListElement {
-                        text: qsTr("旋钮颜色")
+                        text: qsTr("手柄颜色")
                         parameter: "colorBt"
                         follow: "mainColor"
                     }

@@ -2,282 +2,475 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="zh_HK" sourcelanguage="zh_CN">
 <context>
-    <name>ButtonDelay</name>
+    <name>ExtraButtonDelay</name>
     <message>
-        <location filename="../ButtonDelay/ButtonDelay.qml" line="369"/>
-        <location filename="../ButtonDelay/ButtonDelay.qml" line="489"/>
+        <location filename="../ExtraButtonDelay/ExtraButtonDelay.qml" line="377"/>
+        <location filename="../ExtraButtonDelay/ExtraButtonDelay.qml" line="507"/>
         <source>重置</source>
         <translation>重置</translation>
     </message>
     <message>
-        <location filename="../ButtonDelay/ButtonDelay.qml" line="491"/>
-        <source>恢复默认配色</source>
-        <translation>恢復默認配色</translation>
+        <location filename="../ExtraButtonDelay/ExtraButtonDelay.qml" line="390"/>
+        <source>回弹</source>
+        <translation>回彈</translation>
     </message>
     <message>
-        <location filename="../ButtonDelay/ButtonDelay.qml" line="381"/>
+        <location filename="../ExtraButtonDelay/ExtraButtonDelay.qml" line="399"/>
         <source>延时(ms)：</source>
         <translation>延時(ms)：</translation>
     </message>
     <message>
-        <location filename="../ButtonDelay/ButtonDelay.qml" line="398"/>
+        <location filename="../ExtraButtonDelay/ExtraButtonDelay.qml" line="416"/>
         <source>通道数值</source>
         <translation>通道數值</translation>
     </message>
     <message>
-        <location filename="../ButtonDelay/ButtonDelay.qml" line="399"/>
+        <location filename="../ExtraButtonDelay/ExtraButtonDelay.qml" line="417"/>
         <source>阈值时,按钮激活</source>
         <translation>閾值時,按鈕激活</translation>
     </message>
     <message>
-        <location filename="../ButtonDelay/ButtonDelay.qml" line="400"/>
+        <location filename="../ExtraButtonDelay/ExtraButtonDelay.qml" line="418"/>
         <source>点击可切换逻辑</source>
         <translation>點擊可切換邏輯</translation>
     </message>
     <message>
-        <location filename="../ButtonDelay/ButtonDelay.qml" line="406"/>
+        <location filename="../ExtraButtonDelay/ExtraButtonDelay.qml" line="424"/>
         <source>阈值：</source>
         <translation>閾值：</translation>
     </message>
     <message>
-        <location filename="../ButtonDelay/ButtonDelay.qml" line="423"/>
+        <location filename="../ExtraButtonDelay/ExtraButtonDelay.qml" line="441"/>
         <source>绑定命令</source>
         <translation>綁定命令</translation>
     </message>
     <message>
-        <location filename="../ButtonDelay/ButtonDelay.qml" line="462"/>
+        <location filename="../ExtraButtonDelay/ExtraButtonDelay.qml" line="480"/>
         <source>请求激活</source>
         <translation>請求激活</translation>
     </message>
     <message>
-        <location filename="../ButtonDelay/ButtonDelay.qml" line="469"/>
+        <location filename="../ExtraButtonDelay/ExtraButtonDelay.qml" line="487"/>
         <source>请求关闭</source>
         <translation>請求關閉</translation>
     </message>
     <message>
-        <location filename="../ButtonDelay/ButtonDelay.qml" line="503"/>
+        <location filename="../ExtraButtonDelay/ExtraButtonDelay.qml" line="509"/>
+        <source>恢复默认配色</source>
+        <translation>恢復默認配色</translation>
+    </message>
+    <message>
+        <location filename="../ExtraButtonDelay/ExtraButtonDelay.qml" line="521"/>
         <source>字体颜色</source>
         <translation>字體顏色</translation>
     </message>
     <message>
-        <location filename="../ButtonDelay/ButtonDelay.qml" line="508"/>
+        <location filename="../ExtraButtonDelay/ExtraButtonDelay.qml" line="526"/>
         <source>激活颜色</source>
         <translation>激活顏色</translation>
     </message>
     <message>
-        <location filename="../ButtonDelay/ButtonDelay.qml" line="513"/>
+        <location filename="../ExtraButtonDelay/ExtraButtonDelay.qml" line="531"/>
         <source>按钮颜色</source>
         <translation>按鈕顏色</translation>
     </message>
     <message>
-        <location filename="../ButtonDelay/ButtonDelay.qml" line="518"/>
+        <location filename="../ExtraButtonDelay/ExtraButtonDelay.qml" line="536"/>
         <source>外环颜色</source>
         <translation>外環顏色</translation>
     </message>
     <message>
-        <location filename="../ButtonDelay/ButtonDelay.qml" line="531"/>
+        <location filename="../ExtraButtonDelay/ExtraButtonDelay.qml" line="549"/>
         <source>自定义</source>
         <translation>自定義</translation>
     </message>
     <message>
-        <location filename="../ButtonDelay/ButtonDelay.qml" line="540"/>
+        <location filename="../ExtraButtonDelay/ExtraButtonDelay.qml" line="558"/>
         <source>已选中，再点击可修改颜色</source>
         <translation>已選中，再點擊可修改顏色</translation>
     </message>
     <message>
-        <location filename="../ButtonDelay/ButtonDelay.qml" line="541"/>
+        <location filename="../ExtraButtonDelay/ExtraButtonDelay.qml" line="559"/>
         <source>点击可选中自定义颜色，再点击可修改颜色</source>
         <translation>點擊可選中自定義顏色，再點擊可修改顏色</translation>
     </message>
     <message>
-        <location filename="../ButtonDelay/ButtonDelay.qml" line="559"/>
+        <location filename="../ExtraButtonDelay/ExtraButtonDelay.qml" line="577"/>
         <source>跟随</source>
         <translation>跟隨</translation>
     </message>
     <message>
-        <location filename="../ButtonDelay/ButtonDelay.qml" line="570"/>
+        <location filename="../ExtraButtonDelay/ExtraButtonDelay.qml" line="588"/>
         <source>跟随已绑定通道</source>
         <translation>跟隨已綁定通道</translation>
     </message>
     <message>
-        <location filename="../ButtonDelay/ButtonDelay.qml" line="571"/>
+        <location filename="../ExtraButtonDelay/ExtraButtonDelay.qml" line="589"/>
         <source>（暂无）</source>
         <translation>（暫無）</translation>
     </message>
 </context>
 <context>
-    <name>ButtonToggle</name>
+    <name>ExtraButtonToggle</name>
     <message>
-        <location filename="../ButtonToggle/ButtonToggle.qml" line="394"/>
-        <location filename="../ButtonToggle/ButtonToggle.qml" line="497"/>
+        <location filename="../ExtraButtonToggle/ExtraButtonToggle.qml" line="393"/>
+        <location filename="../ExtraButtonToggle/ExtraButtonToggle.qml" line="496"/>
         <source>重置</source>
         <translation>重置</translation>
     </message>
     <message>
-        <location filename="../ButtonToggle/ButtonToggle.qml" line="499"/>
-        <source>恢复默认配色</source>
-        <translation>恢復默認配色</translation>
-    </message>
-    <message>
-        <location filename="../ButtonToggle/ButtonToggle.qml" line="406"/>
+        <location filename="../ExtraButtonToggle/ExtraButtonToggle.qml" line="405"/>
         <source>通道数值</source>
         <translation>通道數值</translation>
     </message>
     <message>
-        <location filename="../ButtonToggle/ButtonToggle.qml" line="407"/>
+        <location filename="../ExtraButtonToggle/ExtraButtonToggle.qml" line="406"/>
         <source>阈值时,按钮激活</source>
         <translation>閾值時,按鈕激活</translation>
     </message>
     <message>
-        <location filename="../ButtonToggle/ButtonToggle.qml" line="408"/>
+        <location filename="../ExtraButtonToggle/ExtraButtonToggle.qml" line="407"/>
         <source>点击可切换逻辑</source>
         <translation>點擊可切換邏輯</translation>
     </message>
     <message>
-        <location filename="../ButtonToggle/ButtonToggle.qml" line="414"/>
+        <location filename="../ExtraButtonToggle/ExtraButtonToggle.qml" line="413"/>
         <source>阈值：</source>
         <translation>閾值：</translation>
     </message>
     <message>
-        <location filename="../ButtonToggle/ButtonToggle.qml" line="431"/>
+        <location filename="../ExtraButtonToggle/ExtraButtonToggle.qml" line="430"/>
         <source>绑定命令</source>
         <translation>綁定命令</translation>
     </message>
     <message>
-        <location filename="../ButtonToggle/ButtonToggle.qml" line="470"/>
+        <location filename="../ExtraButtonToggle/ExtraButtonToggle.qml" line="469"/>
         <source>请求激活</source>
         <translation>請求激活</translation>
     </message>
     <message>
-        <location filename="../ButtonToggle/ButtonToggle.qml" line="477"/>
+        <location filename="../ExtraButtonToggle/ExtraButtonToggle.qml" line="476"/>
         <source>请求关闭</source>
         <translation>請求關閉</translation>
     </message>
     <message>
-        <location filename="../ButtonToggle/ButtonToggle.qml" line="511"/>
+        <location filename="../ExtraButtonToggle/ExtraButtonToggle.qml" line="498"/>
+        <source>恢复默认配色</source>
+        <translation>恢復默認配色</translation>
+    </message>
+    <message>
+        <location filename="../ExtraButtonToggle/ExtraButtonToggle.qml" line="510"/>
         <source>字体颜色</source>
         <translation>字體顏色</translation>
     </message>
     <message>
-        <location filename="../ButtonToggle/ButtonToggle.qml" line="516"/>
+        <location filename="../ExtraButtonToggle/ExtraButtonToggle.qml" line="515"/>
         <source>按钮颜色</source>
         <translation>按鈕顏色</translation>
     </message>
     <message>
-        <location filename="../ButtonToggle/ButtonToggle.qml" line="521"/>
+        <location filename="../ExtraButtonToggle/ExtraButtonToggle.qml" line="520"/>
         <source>外环颜色</source>
         <translation>外環顏色</translation>
     </message>
     <message>
-        <location filename="../ButtonToggle/ButtonToggle.qml" line="526"/>
+        <location filename="../ExtraButtonToggle/ExtraButtonToggle.qml" line="525"/>
         <source>关闭颜色</source>
         <translation>關閉顏色</translation>
     </message>
     <message>
-        <location filename="../ButtonToggle/ButtonToggle.qml" line="531"/>
+        <location filename="../ExtraButtonToggle/ExtraButtonToggle.qml" line="530"/>
         <source>激活颜色</source>
         <translation>激活顏色</translation>
     </message>
     <message>
-        <location filename="../ButtonToggle/ButtonToggle.qml" line="544"/>
+        <location filename="../ExtraButtonToggle/ExtraButtonToggle.qml" line="543"/>
         <source>自定义</source>
         <translation>自定義</translation>
     </message>
     <message>
-        <location filename="../ButtonToggle/ButtonToggle.qml" line="553"/>
+        <location filename="../ExtraButtonToggle/ExtraButtonToggle.qml" line="552"/>
         <source>已选中，再点击可修改颜色</source>
         <translation>已選中，再點擊可修改顏色</translation>
     </message>
     <message>
-        <location filename="../ButtonToggle/ButtonToggle.qml" line="554"/>
+        <location filename="../ExtraButtonToggle/ExtraButtonToggle.qml" line="553"/>
         <source>点击可选中自定义颜色，再点击可修改颜色</source>
         <translation>點擊可選中自定義顏色，再點擊可修改顏色</translation>
     </message>
     <message>
-        <location filename="../ButtonToggle/ButtonToggle.qml" line="572"/>
+        <location filename="../ExtraButtonToggle/ExtraButtonToggle.qml" line="571"/>
         <source>跟随</source>
         <translation>跟隨</translation>
     </message>
     <message>
-        <location filename="../ButtonToggle/ButtonToggle.qml" line="583"/>
+        <location filename="../ExtraButtonToggle/ExtraButtonToggle.qml" line="582"/>
         <source>跟随已绑定通道</source>
         <translation>跟隨已綁定通道</translation>
     </message>
     <message>
-        <location filename="../ButtonToggle/ButtonToggle.qml" line="584"/>
+        <location filename="../ExtraButtonToggle/ExtraButtonToggle.qml" line="583"/>
         <source>（暂无）</source>
         <translation>（暫無）</translation>
+    </message>
+</context>
+<context>
+    <name>ExtraDial</name>
+    <message>
+        <location filename="../ExtraDial/ExtraDial.qml" line="380"/>
+        <location filename="../ExtraDial/ExtraDial.qml" line="539"/>
+        <source>重置</source>
+        <translation>重置</translation>
+    </message>
+    <message>
+        <location filename="../ExtraDial/ExtraDial.qml" line="392"/>
+        <source>最小值</source>
+        <translation>最小值</translation>
+    </message>
+    <message>
+        <location filename="../ExtraDial/ExtraDial.qml" line="419"/>
+        <source>最大值</source>
+        <translation>最大值</translation>
+    </message>
+    <message>
+        <location filename="../ExtraDial/ExtraDial.qml" line="444"/>
+        <source>步进</source>
+        <translation>步進</translation>
+    </message>
+    <message>
+        <location filename="../ExtraDial/ExtraDial.qml" line="489"/>
+        <source>绑定命令</source>
+        <translation>綁定命令</translation>
+    </message>
+    <message>
+        <location filename="../ExtraDial/ExtraDial.qml" line="508"/>
+        <source>滑动条更新时发送数值，当前</source>
+        <translation>滑動條更新時發送數值，當前</translation>
+    </message>
+    <message>
+        <location filename="../ExtraDial/ExtraDial.qml" line="515"/>
+        <source>结束滑动即鼠标弹起时发送数值，当前</source>
+        <translation>結束滑動即鼠標彈起時發送數值，當前</translation>
+    </message>
+    <message>
+        <location filename="../ExtraDial/ExtraDial.qml" line="541"/>
+        <source>恢复默认配色</source>
+        <translation>恢復默認配色</translation>
+    </message>
+    <message>
+        <location filename="../ExtraDial/ExtraDial.qml" line="553"/>
+        <source>字体颜色</source>
+        <translation>字體顏色</translation>
+    </message>
+    <message>
+        <location filename="../ExtraDial/ExtraDial.qml" line="558"/>
+        <source>旋钮颜色</source>
+        <translation>旋鈕顏色</translation>
+    </message>
+    <message>
+        <location filename="../ExtraDial/ExtraDial.qml" line="563"/>
+        <source>外环颜色</source>
+        <translation>外環顏色</translation>
+    </message>
+    <message>
+        <location filename="../ExtraDial/ExtraDial.qml" line="576"/>
+        <source>自定义</source>
+        <translation>自定義</translation>
+    </message>
+    <message>
+        <location filename="../ExtraDial/ExtraDial.qml" line="585"/>
+        <source>已选中，再点击可修改颜色</source>
+        <translation>已選中，再點擊可修改顏色</translation>
+    </message>
+    <message>
+        <location filename="../ExtraDial/ExtraDial.qml" line="586"/>
+        <source>点击可选中自定义颜色，再点击可修改颜色</source>
+        <translation>點擊可選中自定義顏色，再點擊可修改顏色</translation>
+    </message>
+    <message>
+        <location filename="../ExtraDial/ExtraDial.qml" line="604"/>
+        <source>跟随</source>
+        <translation>跟隨</translation>
+    </message>
+    <message>
+        <location filename="../ExtraDial/ExtraDial.qml" line="615"/>
+        <source>跟随已绑定通道</source>
+        <translation>跟隨已綁定通道</translation>
+    </message>
+    <message>
+        <location filename="../ExtraDial/ExtraDial.qml" line="616"/>
+        <source>（暂无）</source>
+        <translation>（暫無）</translation>
+    </message>
+    <message>
+        <location filename="../ExtraDial/ExtraDial.qml" line="639"/>
+        <source>鼠标位置数值</source>
+        <translation>鼠標位置數值</translation>
+    </message>
+</context>
+<context>
+    <name>MaterialDial</name>
+    <message>
+        <location filename="../MaterialDial/MaterialDial.qml" line="283"/>
+        <location filename="../MaterialDial/MaterialDial.qml" line="442"/>
+        <source>重置</source>
+        <translation>重置</translation>
+    </message>
+    <message>
+        <location filename="../MaterialDial/MaterialDial.qml" line="295"/>
+        <source>最小值</source>
+        <translation>最小值</translation>
+    </message>
+    <message>
+        <location filename="../MaterialDial/MaterialDial.qml" line="322"/>
+        <source>最大值</source>
+        <translation>最大值</translation>
+    </message>
+    <message>
+        <location filename="../MaterialDial/MaterialDial.qml" line="347"/>
+        <source>步进</source>
+        <translation>步進</translation>
+    </message>
+    <message>
+        <location filename="../MaterialDial/MaterialDial.qml" line="392"/>
+        <source>绑定命令</source>
+        <translation>綁定命令</translation>
+    </message>
+    <message>
+        <location filename="../MaterialDial/MaterialDial.qml" line="411"/>
+        <source>滑动条更新时发送数值，当前</source>
+        <translation>滑動條更新時發送數值，當前</translation>
+    </message>
+    <message>
+        <location filename="../MaterialDial/MaterialDial.qml" line="418"/>
+        <source>结束滑动即鼠标弹起时发送数值，当前</source>
+        <translation>結束滑動即鼠標彈起時發送數值，當前</translation>
+    </message>
+    <message>
+        <location filename="../MaterialDial/MaterialDial.qml" line="444"/>
+        <source>恢复默认配色</source>
+        <translation>恢復默認配色</translation>
+    </message>
+    <message>
+        <location filename="../MaterialDial/MaterialDial.qml" line="456"/>
+        <source>字体颜色</source>
+        <translation>字體顏色</translation>
+    </message>
+    <message>
+        <location filename="../MaterialDial/MaterialDial.qml" line="461"/>
+        <source>手柄颜色</source>
+        <translation>手柄顏色</translation>
+    </message>
+    <message>
+        <location filename="../MaterialDial/MaterialDial.qml" line="466"/>
+        <source>外环颜色</source>
+        <translation>外環顏色</translation>
+    </message>
+    <message>
+        <location filename="../MaterialDial/MaterialDial.qml" line="479"/>
+        <source>自定义</source>
+        <translation>自定義</translation>
+    </message>
+    <message>
+        <location filename="../MaterialDial/MaterialDial.qml" line="488"/>
+        <source>已选中，再点击可修改颜色</source>
+        <translation>已選中，再點擊可修改顏色</translation>
+    </message>
+    <message>
+        <location filename="../MaterialDial/MaterialDial.qml" line="489"/>
+        <source>点击可选中自定义颜色，再点击可修改颜色</source>
+        <translation>點擊可選中自定義顏色，再點擊可修改顏色</translation>
+    </message>
+    <message>
+        <location filename="../MaterialDial/MaterialDial.qml" line="507"/>
+        <source>跟随</source>
+        <translation>跟隨</translation>
+    </message>
+    <message>
+        <location filename="../MaterialDial/MaterialDial.qml" line="518"/>
+        <source>跟随已绑定通道</source>
+        <translation>跟隨已綁定通道</translation>
+    </message>
+    <message>
+        <location filename="../MaterialDial/MaterialDial.qml" line="519"/>
+        <source>（暂无）</source>
+        <translation>（暫無）</translation>
+    </message>
+    <message>
+        <location filename="../MaterialDial/MaterialDial.qml" line="542"/>
+        <source>鼠标位置数值</source>
+        <translation>鼠標位置數值</translation>
     </message>
 </context>
 <context>
     <name>bound_bt</name>
     <message>
-        <location filename="../bound_bt/bound_bt.qml" line="170"/>
+        <location filename="../bound_bt/bound_bt.qml" line="178"/>
         <source>绑定命令</source>
         <translation>綁定命令</translation>
     </message>
     <message>
-        <location filename="../bound_bt/bound_bt.qml" line="185"/>
+        <location filename="../bound_bt/bound_bt.qml" line="193"/>
         <source>按下</source>
         <translation>按下</translation>
     </message>
     <message>
-        <location filename="../bound_bt/bound_bt.qml" line="192"/>
+        <location filename="../bound_bt/bound_bt.qml" line="200"/>
         <source>抬起</source>
         <translation>抬起</translation>
     </message>
     <message>
-        <location filename="../bound_bt/bound_bt.qml" line="204"/>
+        <location filename="../bound_bt/bound_bt.qml" line="212"/>
         <source>重置</source>
         <translation>重置</translation>
     </message>
     <message>
-        <location filename="../bound_bt/bound_bt.qml" line="206"/>
+        <location filename="../bound_bt/bound_bt.qml" line="214"/>
         <source>恢复默认配色</source>
         <translation>恢復默認配色</translation>
     </message>
     <message>
-        <location filename="../bound_bt/bound_bt.qml" line="215"/>
+        <location filename="../bound_bt/bound_bt.qml" line="223"/>
         <source>边框宽度:</source>
         <translation>邊框寬度:</translation>
     </message>
     <message>
-        <location filename="../bound_bt/bound_bt.qml" line="239"/>
+        <location filename="../bound_bt/bound_bt.qml" line="247"/>
         <source>不透明度:</source>
         <translation>不透明度:</translation>
     </message>
     <message>
-        <location filename="../bound_bt/bound_bt.qml" line="265"/>
+        <location filename="../bound_bt/bound_bt.qml" line="273"/>
         <source>颜色1</source>
         <translation>顏色1</translation>
     </message>
     <message>
-        <location filename="../bound_bt/bound_bt.qml" line="270"/>
+        <location filename="../bound_bt/bound_bt.qml" line="278"/>
         <source>颜色2</source>
         <translation>顏色2</translation>
     </message>
     <message>
-        <location filename="../bound_bt/bound_bt.qml" line="275"/>
+        <location filename="../bound_bt/bound_bt.qml" line="283"/>
         <source>边框</source>
         <translation>邊框</translation>
     </message>
     <message>
-        <location filename="../bound_bt/bound_bt.qml" line="288"/>
+        <location filename="../bound_bt/bound_bt.qml" line="296"/>
         <source>自定义</source>
         <translation>自定義</translation>
     </message>
     <message>
-        <location filename="../bound_bt/bound_bt.qml" line="297"/>
+        <location filename="../bound_bt/bound_bt.qml" line="305"/>
         <source>已选中，再点击可修改颜色</source>
         <translation>已選中，再點擊可修改顏色</translation>
     </message>
     <message>
-        <location filename="../bound_bt/bound_bt.qml" line="298"/>
+        <location filename="../bound_bt/bound_bt.qml" line="306"/>
         <source>点击可选中自定义颜色，再点击可修改颜色</source>
         <translation>點擊可選中自定義顏色，再點擊可修改顏色</translation>
     </message>
     <message>
-        <location filename="../bound_bt/bound_bt.qml" line="314"/>
+        <location filename="../bound_bt/bound_bt.qml" line="322"/>
         <source>跟随</source>
         <translation>跟隨</translation>
     </message>
@@ -285,97 +478,97 @@
 <context>
     <name>circular_gauge</name>
     <message>
-        <location filename="../circular_gauge/circular_gauge.qml" line="439"/>
+        <location filename="../circular_gauge/circular_gauge.qml" line="492"/>
         <source>重置</source>
         <translation>重置</translation>
     </message>
     <message>
-        <location filename="../circular_gauge/circular_gauge.qml" line="460"/>
+        <location filename="../circular_gauge/circular_gauge.qml" line="513"/>
         <source>刻度数量</source>
         <translation>刻度數量</translation>
     </message>
     <message>
-        <location filename="../circular_gauge/circular_gauge.qml" line="479"/>
+        <location filename="../circular_gauge/circular_gauge.qml" line="532"/>
         <source>最小值</source>
         <translation>最小值</translation>
     </message>
     <message>
-        <location filename="../circular_gauge/circular_gauge.qml" line="498"/>
+        <location filename="../circular_gauge/circular_gauge.qml" line="551"/>
         <source>最大值</source>
         <translation>最大值</translation>
     </message>
     <message>
-        <location filename="../circular_gauge/circular_gauge.qml" line="518"/>
+        <location filename="../circular_gauge/circular_gauge.qml" line="571"/>
         <source>最小角度</source>
         <translation>最小角度</translation>
     </message>
     <message>
-        <location filename="../circular_gauge/circular_gauge.qml" line="538"/>
+        <location filename="../circular_gauge/circular_gauge.qml" line="591"/>
         <source>最大角度</source>
         <translation>最大角度</translation>
     </message>
     <message>
-        <location filename="../circular_gauge/circular_gauge.qml" line="561"/>
+        <location filename="../circular_gauge/circular_gauge.qml" line="614"/>
         <source>警告线</source>
         <translation>警告線</translation>
     </message>
     <message>
-        <location filename="../circular_gauge/circular_gauge.qml" line="564"/>
+        <location filename="../circular_gauge/circular_gauge.qml" line="617"/>
         <source>相对位置</source>
         <translation>相對位置</translation>
     </message>
     <message>
-        <location filename="../circular_gauge/circular_gauge.qml" line="584"/>
+        <location filename="../circular_gauge/circular_gauge.qml" line="637"/>
         <source>对应数值</source>
         <translation>對應數值</translation>
     </message>
     <message>
-        <location filename="../circular_gauge/circular_gauge.qml" line="614"/>
+        <location filename="../circular_gauge/circular_gauge.qml" line="667"/>
         <source>开启警告</source>
         <translation>開啟警告</translation>
     </message>
     <message>
-        <location filename="../circular_gauge/circular_gauge.qml" line="623"/>
+        <location filename="../circular_gauge/circular_gauge.qml" line="676"/>
         <source>警告反向</source>
         <translation>警告反向</translation>
     </message>
     <message>
-        <location filename="../circular_gauge/circular_gauge.qml" line="636"/>
+        <location filename="../circular_gauge/circular_gauge.qml" line="689"/>
         <source>刻度小数位数</source>
         <translation>刻度小數位數</translation>
     </message>
     <message>
-        <location filename="../circular_gauge/circular_gauge.qml" line="656"/>
+        <location filename="../circular_gauge/circular_gauge.qml" line="709"/>
         <source>刻度数字缩放</source>
         <translation>刻度數字縮放</translation>
     </message>
     <message>
-        <location filename="../circular_gauge/circular_gauge.qml" line="676"/>
+        <location filename="../circular_gauge/circular_gauge.qml" line="729"/>
         <source>刻度数字位置</source>
         <translation>刻度數字位置</translation>
     </message>
     <message>
-        <location filename="../circular_gauge/circular_gauge.qml" line="729"/>
+        <location filename="../circular_gauge/circular_gauge.qml" line="782"/>
         <source>隐藏外框</source>
         <translation>隱藏外框</translation>
     </message>
     <message>
-        <location filename="../circular_gauge/circular_gauge.qml" line="737"/>
+        <location filename="../circular_gauge/circular_gauge.qml" line="790"/>
         <source>背景颜色</source>
         <translation>背景顏色</translation>
     </message>
     <message>
-        <location filename="../circular_gauge/circular_gauge.qml" line="741"/>
+        <location filename="../circular_gauge/circular_gauge.qml" line="794"/>
         <source>跟随</source>
         <translation>跟隨</translation>
     </message>
     <message>
-        <location filename="../circular_gauge/circular_gauge.qml" line="749"/>
+        <location filename="../circular_gauge/circular_gauge.qml" line="802"/>
         <source>自定义颜色...</source>
         <translation>自定義顏色...</translation>
     </message>
     <message>
-        <location filename="../circular_gauge/circular_gauge.qml" line="759"/>
+        <location filename="../circular_gauge/circular_gauge.qml" line="812"/>
         <source>背景不透明度：</source>
         <translation>背景不透明度：</translation>
     </message>
