@@ -4,7 +4,7 @@ import QtQuick.Controls.Styles 1.4
 import QtQml 2.13
 import QtGraphicalEffects 1.0
 import MyModules 1.0
-import "."
+import "../Library/Extras"
 
 ResizableRectangle {
     id: root
@@ -33,8 +33,8 @@ ResizableRectangle {
     minimumHeight: g_settings.applyHScale(80)
     radius: g_settings.applyHScale(5)
 
-    border.width: (!hovered?
-                       0:g_settings.applyHScale(1))
+    border.width: ((hovered||button.hovered)?
+                       g_settings.applyHScale(1):0)
 
     Connections {
         target: mouse

@@ -83,8 +83,8 @@ Control {
         The default value is \c{0.0}.
     */
     property alias value: range.value
-    property real mouseValue: mouse_range.value.toFixed(step_decimals)
-    property int step_decimals:{
+    property real mouseValue: mouse_range.value.toFixed(stepDecimals)
+    property int stepDecimals:{
         var stepSize_str = "" + stepSize;
         (stepSize_str.indexOf(".")<0?
              0:(stepSize_str.length -

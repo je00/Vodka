@@ -1,9 +1,9 @@
 ﻿import QtQuick 2.12;
-import QtQuick.Extras 1.4
+//import QtQuick.Extras 1.4
 //import QtQuick.Controls 2.12
 //import QtQuick.Layouts 1.12
 import MyModules 1.0
-import "../Library/Extras"
+import "../Library/Material"
 
 ResizableRectangle {
     id: root
@@ -24,13 +24,14 @@ ResizableRectangle {
         }
     }
 
-    property string path: "ExtraDial"
+    property string path: "MaterialDial"
     property real from: 0
     property real to: 1000
     property real step_size: 1
     property bool loading: false
     border.width: ((hovered||slider_inside.hovered)?
                        g_settings.applyHScale(1):0)
+
     width: g_settings.applyHScale(120)
     height: g_settings.applyVScale(120)
     minimumWidth: Math.max(value_menu.attr.visible?value_text.width:0, g_settings.applyHScale(100))
@@ -64,9 +65,9 @@ ResizableRectangle {
                 if (ch_menu.bind_obj)
                     ch_menu.bind_obj.color
                 else
-                    appTheme.bgColor
+                    appTheme.mainColor
             } else if (colorBtFollow)
-                appTheme.bgColor
+                appTheme.mainColor
             else
                 colorBt
         }
@@ -87,9 +88,9 @@ ResizableRectangle {
                 if (ch_menu.bind_obj)
                     ch_menu.bind_obj.color
                 else
-                    appTheme.lineColor
+                    appTheme.mainColor
             } else if (colorBorderFollow) {
-                appTheme.lineColor
+                appTheme.mainColor
             } else
                 colorBorder
         }
@@ -139,26 +140,28 @@ ResizableRectangle {
 
     Dial {
         id: slider_inside
-        //        color2: value_menu.attr.color
+        snapMode: Dial.SnapAlways
+        color: theme.colorBorder_
+        handleColor: theme.colorBt_
         property real target_value: 0
         //        height: root.height
-//        anchors.fill: parent
-//        anchors.margins: g_settings.applyHScale(10)
+        //        anchors.fill: parent
+        //        anchors.margins: g_settings.applyHScale(10)
+        width: Math.min(parent.width, parent.height)
         anchors {
             top: parent.top
-            left: parent.left
-            right: parent.right
+            horizontalCenter: parent.horizontalCenter
             bottom: value_menu.attr.visible?value_text.top:parent.bottom
 
-//            margins: g_settings.applyHScale(10)
+            //            margins: g_settings.applyHScale(10)
             topMargin: g_settings.applyHScale(10)
             leftMargin: g_settings.applyHScale(10)
             rightMargin: g_settings.applyHScale(10)
             bottomMargin: value_menu.attr.visible?0:g_settings.applyHScale(10)
         }
 
-        minimumValue: root.from
-        maximumValue: root.to
+        from: root.from
+        to: root.to
         stepSize: root.step_size
         value: target_value
         states: [
@@ -211,104 +214,11 @@ ResizableRectangle {
             }
         }
 
-        style: DialStyle {
-            id: dial_style
-            tickmarkStepSize: (root.to - root.from)
-            Connections {
-                target: theme
-                function updateStyle() {
-                    dial_style.updateStyle();
-                }
-
-                onColorBt_Changed: {
-                    updateStyle();
-                }
-
-                onColorBorder_Changed: {
-                    updateStyle();
-                }
-            }
-
-            Component.onCompleted: {
-                __backgroundHelper.buttonColorUpTop = Qt.binding(function(){
-                    var target_color;
-                    if (sys_manager.lightness(theme.colorBt_) === 0)
-                        target_color = Qt.rgba(0.05, 0.05, 0.05, 1);
-                    else
-                        target_color = theme.colorBt_;
-                    if (sys_manager.lightness(target_color) > 0.5) {
-                        return target_color;
-                    } else {
-                        return Qt.lighter(target_color, 2.5);
-                    }
-                })
-                __backgroundHelper.buttonColorUpBottom = Qt.binding(function(){
-                    var target_color;
-                    if (sys_manager.lightness(theme.colorBt_) === 0)
-                        target_color = Qt.rgba(0.05, 0.05, 0.05, 1);
-                    else
-                        target_color = theme.colorBt_;
-
-                    if (sys_manager.lightness(target_color) > 0.5) {
-                        return Qt.darker(target_color, 1.5);
-                    } else {
-                        return target_color;
-                    }
-                })
-                __backgroundHelper.buttonColorDownTop = Qt.binding(function(){
-                    return Qt.darker(__backgroundHelper.buttonColorUpBottom, 1.05);
-                })
-                __backgroundHelper.buttonColorDownBottom = Qt.binding(function(){
-                    return Qt.darker(__backgroundHelper.buttonColorUpTop, 1.05);
-                })
-
-                __backgroundHelper.outerArcColorTop = Qt.binding(function(){
-                    return theme.colorBorder_
-                })
-                __backgroundHelper.outerArcColorBottom = Qt.binding(function(){
-                    return Qt.rgba(
-                                theme.colorBorder_.r,
-                                theme.colorBorder_.g,
-                                theme.colorBorder_.b,
-                                0.29)
-                })
-                __backgroundHelper.innerArcColorTop = Qt.binding(function(){
-                    return Qt.darker(theme.colorBorder_, 1.5);
-                })
-                __backgroundHelper.innerArcColorBottom = Qt.binding(function(){
-                    var target_color = Qt.lighter(theme.colorBorder_, 1.5);
-                    return Qt.rgba(
-                                target_color.r,
-                                target_color.g,
-                                target_color.b,
-                                0.5);
-                })
-                __handleHelper.handleColorTop = Qt.binding(function(){
-                    return __backgroundHelper.buttonColorUpBottom;
-                })
-                __handleHelper.handleColorBottom = Qt.binding(function(){
-                    return __backgroundHelper.buttonColorUpTop;
-                })
-                __handleHelper.handleRingColorTop = Qt.binding(function(){
-                    return __backgroundHelper.innerArcColorTop;
-                })
-                __handleHelper.handleRingColorBottom = Qt.binding(function(){
-                    return __backgroundHelper.innerArcColorBottom;
-                })
-            }
-        }
 
     }
 
     MyText {
         id: value_text
-        style: Text.Outline
-        styleColor: Qt.rgba(
-                        theme.colorBt_.r,
-                        theme.colorBt_.g,
-                        theme.colorBt_.b,
-                        0.5
-                        )
         visible: value_menu.attr.visible
         //                && (slider_inside.pressed || slider_inside.hovered)
         //            visible: false
@@ -333,13 +243,6 @@ ResizableRectangle {
         id: name_text
         z: 10
         anchors.centerIn: slider_inside
-        style: Text.Outline
-        styleColor: Qt.rgba(
-                        theme.colorBt_.r,
-                        theme.colorBt_.g,
-                        theme.colorBt_.b,
-                        0.5
-                        )
         width: slider_inside.width
         editable: true
         enter_edit_mode_by_click: false
@@ -557,12 +460,12 @@ ResizableRectangle {
                     ListElement {
                         text: qsTr("旋钮颜色")
                         parameter: "colorBt"
-                        follow: "bgColor"
+                        follow: "mainColor"
                     }
                     ListElement {
                         text: qsTr("外环颜色")
                         parameter: "colorBorder"
-                        follow: "lineColor"
+                        follow: "mainColor"
                     }
                 }
                 onObjectAdded: theme_menu.addMenu(object);

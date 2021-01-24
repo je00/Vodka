@@ -52,10 +52,16 @@
         <file>circular_gauge/circular_gauge.qml</file>
         <file>gauge/gauge.qml</file>
         <file>ExtraButtonDelay/ExtraButtonDelay.qml</file>
-        <file>ExtraButtonDelay/DelayButtonStyle.qml</file>
         <file>ExtraButtonToggle/ExtraButtonToggle.qml</file>
-        <file>ExtraButtonToggle/ExtraToggleButtonStyle.qml</file>
         <file>ExtraDial/ExtraDial.qml</file>
-        <file>ExtraDial/DialStyle.qml</file>
+        <file>MaterialDial/MaterialDial.qml</file>
+    </qresource>
+    <qresource prefix="/Library">
+        <file>Library/Material/Dial.qml</file>
+        <file>Library/Material/SliderHandle.qml</file>
+        <file>Library/Extras/DelayButtonStyle.qml</file>
+        <file>Library/Extras/ToggleButtonStyle.qml</file>
+        <file>Library/Extras/Dial.qml</file>
+        <file>Library/Extras/DialStyle.qml</file>
     </qresource>
 </RCC>
