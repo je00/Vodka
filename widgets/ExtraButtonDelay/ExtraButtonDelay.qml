@@ -243,7 +243,7 @@ ResizableRectangle {
                         target_color = theme.colorBt_;
 
                     if (sys_manager.lightness(target_color) > 0.5) {
-                        return Qt.darker(target_color, 2);
+                        return Qt.darker(target_color, 1.5);
                     } else {
                         return target_color;
                     }

@@ -33,7 +33,7 @@ ResizableRectangle {
                        0:g_settings.applyHScale(1))
     width: g_settings.applyHScale(120)
     height: g_settings.applyVScale(120)
-    minimumWidth: Math.max(value_text.visible?value_text.width:0, g_settings.applyHScale(100))
+    minimumWidth: Math.max(value_menu.attr.visible?value_text.width:0, g_settings.applyHScale(100))
     minimumHeight: minimumWidth
 
     Connections {
@@ -140,7 +140,7 @@ ResizableRectangle {
     Dial {
         id: slider_inside
         //        color2: value_menu.attr.color
-        property real target_value: 500
+        property real target_value: 0
         //        height: root.height
 //        anchors.fill: parent
 //        anchors.margins: g_settings.applyHScale(10)
@@ -148,13 +148,13 @@ ResizableRectangle {
             top: parent.top
             left: parent.left
             right: parent.right
-            bottom: value_text.visible?value_text.top:parent.bottom
+            bottom: value_menu.attr.visible?value_text.top:parent.bottom
 
 //            margins: g_settings.applyHScale(10)
             topMargin: g_settings.applyHScale(10)
             leftMargin: g_settings.applyHScale(10)
             rightMargin: g_settings.applyHScale(10)
-            bottomMargin: value_text.visible?0:g_settings.applyHScale(10)
+            bottomMargin: value_menu.attr.visible?0:g_settings.applyHScale(10)
         }
 
         minimumValue: root.from
