@@ -90,8 +90,8 @@ ResizableRectangle {
 
     Rectangle {
         opacity: theme.opacity *
-                 ((bt_mouse.pressed||!root.enabled)?
-                      0.7:1)
+                 ((!root.enabled||bt_mouse.pressed)?
+                      0.9:1)
         anchors.fill: parent
         anchors.margins: theme.borderWidth
         color: ((bt_mouse.pressed||bt_mouse.containsMouse)?
@@ -134,6 +134,14 @@ ResizableRectangle {
 
     MyText {
         id: bound_bt_name
+        scale: {
+            if (bt_mouse.pressed)
+                1.1
+            else if (bt_mouse.containsMouse)
+                1.2
+            else
+                1
+        }
         width: root.width
         editable: true
         enter_edit_mode_by_click: false

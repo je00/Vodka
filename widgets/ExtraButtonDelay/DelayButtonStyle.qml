@@ -148,14 +148,14 @@ CircularButtonStyle {
                         target: foregroundItem
                         property: "opacity"
                         from: 0.8
-                        to: 0.3
+                        to: 0.5
                         duration: 500
                         easing.type: Easing.InOutSine
                     }
                     NumberAnimation {
                         target: foregroundItem
                         property: "opacity"
-                        from: 0.3
+                        from: 0.5
                         to: 0.8
                         duration: 500
                         easing.type: Easing.InOutSine

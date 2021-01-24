@@ -26,6 +26,7 @@ ResizableRectangle {
     property bool reverse_logic: false
     property real threshold: 0
     property int delay: 3000
+    property bool bound: false  // 回弹
 
     full_parent_enabled: true
     width: g_settings.applyHScale(100)
@@ -310,6 +311,13 @@ ResizableRectangle {
                 }
             }
         }
+        onPressedChanged: {
+            if (!pressed && root.bound) {
+                if (!ch_menu.bind_obj) {
+                    checked = false;
+                }
+            }
+        }
     }
    function send_command(argment_index) {
        var press_argument = argument_model.get(argment_index);
@@ -371,10 +379,20 @@ ResizableRectangle {
                     reverse_logic   = false
                     threshold       = 0
                     delay           = 3000
+                    bound           = false
                 }
             }
 
             MyMenuSeparator {}
+            MyMenuItem {
+                text_center: true
+                text: qsTr("回弹")
+                checked: root.bound
+                onTriggered: {
+                    root.bound = !root.bound;
+                }
+            }
+
             MyMenuItem {
                 text_center: true
                 text: qsTr("延时(ms)：")
@@ -598,6 +616,7 @@ ResizableRectangle {
                     'reverse_logic' : reverse_logic,
                     'threshold'     : threshold,
                     'delay'         : delay,
+                    'bound'         : bound,
                 },
                 "argument_menu" : {  'ctx': argument_menu.get_ctx()  },
                 "ch_menu"       : {  'ctx': ch_menu.get_ctx()       },
