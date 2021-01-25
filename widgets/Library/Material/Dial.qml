@@ -108,6 +108,7 @@ T.Dial {
 
     MyMouseArea {
         id: mouseArea
+        cursorShape: Qt.PointingHandCursor
         hoverEnabled: true
         parent: control.background.parent
         anchors.fill: parent
