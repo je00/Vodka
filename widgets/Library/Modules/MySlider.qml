@@ -1,8 +1,7 @@
 import QtQuick 2.0
 import QtQuick.Controls 2.5
-import QtQuick.Controls.Material 2.12
-import QtQuick.Controls.Material.impl 2.12
 import MyModules 1.0
+import "."
 
 Slider {
     id: root
@@ -63,20 +62,10 @@ Slider {
         y: root.topPadding + root.height / 2 - height / 2
         width: root.height
         height: root.height
-//        radius: root.height/2
-//        color: color2
-        //        color: appTheme.fontColor
-        //        opacity: root.pressed?0.7:1
 
-        Ripple {
-            x: (parent.width - width) / 2
-            y: (parent.height - height) / 2
-            width: parent.width * 1.5
-            height: width
+        MyRipple {
             pressed: slider_mouse.pressed
             active: slider_mouse.pressed || slider_mouse.containsMouse
-            color: appTheme.lineColorMain
-            opacity: 0.5
         }
 
         Rectangle {
@@ -84,7 +73,7 @@ Slider {
             anchors.fill: parent
             color: (slider_mouse.pressed||slider_mouse.containsMouse)?color2:color1
             radius: width/2
-            scale: slider_mouse.pressed ? 1.5 : 1
+            scale: slider_mouse.pressed ? 1.3 : 1
 
             Behavior on scale {
                 NumberAnimation {

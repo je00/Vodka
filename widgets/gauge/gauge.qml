@@ -8,6 +8,7 @@ import QtQuick.Controls.Material 2.12
 import QtQuick.Controls.Material.impl 2.12
 
 import MyModules 1.0
+import "../Library/Modules"
 
 ResizableRectangle {
     id: root
@@ -362,14 +363,12 @@ ResizableRectangle {
                                 }
                             }
 
-                            Ripple {
+                            MyRipple {
                                 anchors.centerIn: base_handle
                                 width: base_handle.width * 1.5
                                 height: width
                                 pressed: ratio_rect_mouse.pressed
                                 active: ratio_rect_mouse.pressed || ratio_rect_mouse.containsMouse
-                                color: appTheme.lineColorMain
-                                opacity: 0.5
                             }
 
                             Rectangle {
@@ -391,7 +390,7 @@ ResizableRectangle {
                                     text: "" + root[model.value]
                                     visible: ratio_rect_mouse.containsMouse || ratio_rect_mouse.pressed
                                 }
-                                scale: ratio_rect_mouse.pressed ? 1.5 : 1
+                                scale: ratio_rect_mouse.pressed ? 1.3 : 1
 
                                 Behavior on scale {
                                     NumberAnimation {

@@ -64,5 +64,6 @@
         <file>Library/Extras/Dial.qml</file>
         <file>Library/Extras/DialStyle.qml</file>
         <file>Library/Modules/MySlider.qml</file>
+        <file>Library/Modules/MyRipple.qml</file>
     </qresource>
 </RCC>

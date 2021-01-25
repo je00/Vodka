@@ -35,9 +35,8 @@
 ****************************************************************************/
 
 import QtQuick 2.12
-import QtQuick.Controls.Material 2.12
-import QtQuick.Controls.Material.impl 2.12
 import MyModules 1.0
+import "../Modules"
 
 Item {
     id: root
@@ -52,15 +51,9 @@ Item {
                                                 Math.min(control.width, control.height)*0.1)
     readonly property var control: parent
 
-    Ripple {
-        x: (parent.width - width) / 2
-        y: (parent.height - height) / 2
-        width: root.width * 1.5
-        height: width
+    MyRipple {
         pressed: root.handlePressed
         active: root.handlePressed || root.handleHasFocus || root.handleHovered
-        color: appTheme.lineColorMain
-        opacity: 0.5
     }
 
     Rectangle {
@@ -69,7 +62,7 @@ Item {
         height: parent.height
         radius: width / 2
         color: root.control.handleColor
-        scale: root.handlePressed ? 1.5 : 1
+        scale: root.handlePressed ? 1.3 : 1
 
         Behavior on scale {
             NumberAnimation {
