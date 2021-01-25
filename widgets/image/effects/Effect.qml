@@ -52,6 +52,7 @@ import QtQuick 2.12
 import QtQuick.Controls 2.5
 import QtGraphicalEffects 1.13
 import MyModules 1.0
+import "../../Library/Modules"
 
 ShaderEffect {
     id: root

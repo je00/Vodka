@@ -53,6 +53,7 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.5
 import MyModules 1.0
+import "../../Library/Modules"
 
 Item {
     id: root
