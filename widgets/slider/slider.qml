@@ -451,6 +451,7 @@ ResizableRectangle {
                 }
             }
             MyMenuItem {
+                text_center: true
                 text: qsTr("自定义背景颜色")
                 color_mark_on: true
                 //                    selected: sys_manager.color_dialog.target_obj === this
@@ -472,6 +473,7 @@ ResizableRectangle {
 
             }
             MyMenuItem {
+                text_center: true
                 text: qsTr("跟随") + g_settings.colorName["bgColor"]
                 color_mark_on: true
                 indicator_color: appTheme.bgColor
@@ -481,6 +483,7 @@ ResizableRectangle {
                 }
             }
             MyMenuItem {
+                text_center: true
                 text: qsTr("隐藏外框")
                 checked: theme.hideBorder
                 onTriggered: {
