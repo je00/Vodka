@@ -29,7 +29,7 @@ ResizableRectangle {
     property real to: 1000
     property real step_size: 1
     property bool loading: false
-    border.width: ((hovered||slider_inside.hovered)?
+    border.width: ((hovered)?
                        g_settings.applyHScale(1):0)
 
     width: g_settings.applyHScale(120)

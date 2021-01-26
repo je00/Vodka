@@ -33,7 +33,7 @@ ResizableRectangle {
     minimumHeight: g_settings.applyHScale(80)
     radius: g_settings.applyHScale(5)
 
-    border.width: ((hovered||button.hovered)?
+    border.width: ((hovered)?
                        g_settings.applyHScale(1):0)
 
     Connections {
