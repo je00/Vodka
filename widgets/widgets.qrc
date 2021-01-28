@@ -55,9 +55,11 @@
         <file>ExtraButtonToggle/ExtraButtonToggle.qml</file>
         <file>ExtraDial/ExtraDial.qml</file>
         <file>MaterialDial/MaterialDial.qml</file>
+        <file>MaterialJoystick/MaterialJoystick.qml</file>
     </qresource>
     <qresource prefix="/Library">
         <file>Library/Material/Dial.qml</file>
+        <file>Library/Material/Joystick.qml</file>
         <file>Library/Material/SliderHandle.qml</file>
         <file>Library/Extras/DelayButtonStyle.qml</file>
         <file>Library/Extras/ToggleButtonStyle.qml</file>

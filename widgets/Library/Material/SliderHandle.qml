@@ -43,12 +43,13 @@ Item {
     implicitWidth: initialSize
     implicitHeight: initialSize
 
+    property real ratio: 0.1
     property real value: 0
     property bool handleHasFocus: false
     property bool handlePressed: false
     property bool handleHovered: false
     readonly property int initialSize: Math.max(g_settings.applyHScale(10),
-                                                Math.min(control.width, control.height)*0.1)
+                                                Math.min(control.width, control.height)*ratio)
     readonly property var control: parent
 
     MyRipple {
