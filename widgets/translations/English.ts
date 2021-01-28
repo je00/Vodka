@@ -245,12 +245,12 @@
     <message>
         <location filename="../ExtraDial/ExtraDial.qml" line="508"/>
         <source>数值更新时发送，当前</source>
-        <translation>Sent when the value is updated, the current </translation>
+        <translation>Send when the value is updated, the current </translation>
     </message>
     <message>
         <location filename="../ExtraDial/ExtraDial.qml" line="515"/>
         <source>鼠标弹起时发送，当前</source>
-        <translation>Sent when the mouse is released, the current </translation>
+        <translation>Send when the mouse is released, the current </translation>
     </message>
     <message>
         <location filename="../ExtraDial/ExtraDial.qml" line="541"/>
@@ -339,12 +339,12 @@
     <message>
         <location filename="../MaterialDial/MaterialDial.qml" line="411"/>
         <source>数值更新时发送，当前</source>
-        <translation>Sent when the value is updated, the current </translation>
+        <translation>Send when the value is updated, the current </translation>
     </message>
     <message>
         <location filename="../MaterialDial/MaterialDial.qml" line="418"/>
         <source>鼠标弹起时发送，当前</source>
-        <translation>Sent when the mouse is released, the current </translation>
+        <translation>Send when the mouse is released, the current </translation>
     </message>
     <message>
         <location filename="../MaterialDial/MaterialDial.qml" line="444"/>
@@ -438,12 +438,12 @@
     <message>
         <location filename="../MaterialJoystick/MaterialJoystick.qml" line="332"/>
         <source>数值更新时发送，当前</source>
-        <translation>Sent when the value is updated, the current </translation>
+        <translation>Send when the value is updated, the current </translation>
     </message>
     <message>
         <location filename="../MaterialJoystick/MaterialJoystick.qml" line="354"/>
         <source>鼠标弹起时发送，当前</source>
-        <translation>Sent when the mouse is released, the current </translation>
+        <translation>Send when the mouse is released, the current </translation>
     </message>
     <message>
         <location filename="../MaterialJoystick/MaterialJoystick.qml" line="389"/>
@@ -1248,12 +1248,12 @@ Pose the original file</translation>
         <location filename="../slider/slider.qml" line="395"/>
         <source>滑块移动时发送，当前</source>
         <translatorcomment>滑塊移動時發送，當前</translatorcomment>
-        <translation>Sent when the slider moves, the current </translation>
+        <translation>Send when the slider moves, the current </translation>
     </message>
     <message>
         <location filename="../slider/slider.qml" line="402"/>
         <source>鼠标弹起时发送，当前</source>
-        <translation>Sent when the mouse is released, the current</translation>
+        <translation>Send when the mouse is released, the current</translation>
     </message>
     <message>
         <location filename="../slider/slider.qml" line="433"/>
