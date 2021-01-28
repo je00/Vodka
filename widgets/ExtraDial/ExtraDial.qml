@@ -505,14 +505,14 @@ ResizableRectangle {
             model: ListModel {
                 id: argument_model
                 ListElement {
-                    name: qsTr("滑动条更新时发送数值，当前")
+                    name: qsTr("数值更新时发送，当前")
                     float_value: 0
                     hex_value: "00 00 00 00"
                     enabled: true
                     changable: false
                 }
                 ListElement {
-                    name: qsTr("结束滑动即鼠标弹起时发送数值，当前")
+                    name: qsTr("鼠标弹起时发送，当前")
                     float_value: 0
                     hex_value: "00 00 00 00"
                     enabled: false

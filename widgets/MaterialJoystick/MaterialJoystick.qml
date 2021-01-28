@@ -50,11 +50,11 @@ ResizableRectangle {
 
         property bool colorBtFollow: true
         property bool colorBorderFollow: true
-        property bool colorTextFollow: false
+        property bool colorTextFollow: true
 
-        property color colorBt: appTheme.bgColor
+        property color colorBt: appTheme.mainColor
         property color colorText: appTheme.fontColor
-        property color colorBorder: appTheme.lineColor
+        property color colorBorder: appTheme.mainColor
 
         property color colorBt_: {
             if (colorBtFollow)
@@ -329,7 +329,7 @@ ResizableRectangle {
             model: ListModel {
                 id: argument_model
                 ListElement {
-                    name: qsTr("滑动条更新时发送数值，当前")
+                    name: qsTr("数值更新时发送，当前")
                     count: 2
                     float_values: [
                         ListElement{
@@ -351,7 +351,7 @@ ResizableRectangle {
                     changable: false
                 }
                 ListElement {
-                    name: qsTr("结束滑动即鼠标弹起时发送数值，当前")
+                    name: qsTr("鼠标弹起时发送，当前")
                     count: 2
                     float_values: [
                         ListElement{

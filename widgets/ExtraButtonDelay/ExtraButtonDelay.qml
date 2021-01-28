@@ -387,7 +387,7 @@ ResizableRectangle {
             MyMenuSeparator {}
             MyMenuItem {
                 text_center: true
-                text: qsTr("回弹")
+                text: qsTr("自动回弹")
                 checked: root.bound
                 onTriggered: {
                     root.bound = !root.bound;
