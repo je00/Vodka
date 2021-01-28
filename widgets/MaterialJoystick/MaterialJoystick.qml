@@ -50,10 +50,8 @@ ResizableRectangle {
 
         property bool colorBtFollow: true
         property bool colorBorderFollow: true
-        property bool colorTextFollow: true
 
         property color colorBt: appTheme.mainColor
-        property color colorText: appTheme.fontColor
         property color colorBorder: appTheme.mainColor
 
         property color colorBt_: {
@@ -61,13 +59,6 @@ ResizableRectangle {
                 appTheme.mainColor
             else
                 colorBt
-        }
-        property color colorText_: {
-            if (colorTextFollow)
-                appTheme.fontColor
-            else
-                colorText
-
         }
         property color colorBorder_: {
             if (colorBorderFollow) {
@@ -80,17 +71,14 @@ ResizableRectangle {
         function reset() {
             colorBtFollow        = true
             colorBorderFollow   = true
-            colorTextFollow        = true
         }
 
         function get_ctx() {
             var ctx = {
                 '.': {
                     'colorBt'               : ""+colorBt            ,
-                    'colorText'             : ""+colorText          ,
                     'colorBorder'           : ""+colorBorder        ,
                     'colorBtFollow'         : colorBtFollow         ,
-                    'colorTextFollow'       : colorTextFollow       ,
                     'colorBorderFollow'     : colorBorderFollow     ,
                 }
             }
@@ -180,7 +168,7 @@ ResizableRectangle {
         enter_edit_mode_by_click: false
         elide: Text.ElideMiddle
         text: name_menu.attr.name
-        color: theme.colorText_
+        color: name_menu.attr.color
         font.bold: true
         font.pixelSize: name_menu.attr.font_size
         onText_inputed: name_menu.set_name(text);
@@ -378,6 +366,7 @@ ResizableRectangle {
         NameMenu {
             id: name_menu
             cmd_menu: cmd_menu
+            ch_menu: null
         }
 
         ThemeMenu {
@@ -397,11 +386,6 @@ ResizableRectangle {
             }
             Instantiator {
                 model: ListModel {
-                    ListElement {
-                        text: qsTr("字体颜色")
-                        parameter: "colorText"
-                        follow: "fontColor"
-                    }
                     ListElement {
                         text: qsTr("手柄颜色")
                         parameter: "colorBt"
