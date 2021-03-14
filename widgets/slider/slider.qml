@@ -29,13 +29,12 @@ ResizableRectangle {
     property bool loading: false
     border.color: appTheme.lineColor
     border.width: (hovered||!theme.hideBorder)?g_settings.applyHScale(1):0
-    height: minimumHeight
-    width: g_settings.applyHScale(204)
+    uniform_height: minimumHeight
+    uniform_width: 204
     minimumHeight:
-        (name_text.height + g_settings.applyVScale(16) + radius +
-         value_text.height)/(5/6)
-    //    minimumWidth: g_settings.applyHScale(204)
-    minimumWidth: Math.max(g_settings.applyHScale(204), value_text.text_width)
+        g_settings.uniformHScale((name_text.height + g_settings.applyVScale(16) + radius +
+         value_text.height)/(5/6))
+    minimumWidth: Math.max(204, g_settings.uniformHScale(value_text.text_width))
     radius: g_settings.applyHScale(5)
 
     Connections {

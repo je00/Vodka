@@ -29,10 +29,10 @@ ResizableRectangle {
     property bool bound: false  // 回弹
 
     full_parent_enabled: true
-    width: g_settings.applyHScale(100)
-    height: g_settings.applyVScale(100)
-    minimumWidth: g_settings.applyHScale(80)
-    minimumHeight: g_settings.applyHScale(80)
+    uniform_width: 100
+    uniform_height: 100
+    minimumWidth: 80
+    minimumHeight: 80
     radius: g_settings.applyHScale(5)
 
     border.width: ((hovered)?

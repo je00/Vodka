@@ -19,10 +19,10 @@ ResizableRectangle {
     }
 
     full_parent_enabled: true
-    width: g_settings.applyHScale(74)
-    height: g_settings.applyVScale(54)
+    uniform_width: 74
+    uniform_height: 54
     minimumWidth: minimumHeight
-    minimumHeight: bt_mouse.anchors.margins * 3
+    minimumHeight: g_settings.uniformHScale(bt_mouse.anchors.margins * 3)
     radius: g_settings.applyHScale(5)
     property string path:  "bound_bt"
 

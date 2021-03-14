@@ -54,8 +54,8 @@ ResizableRectangle {
                        0:g_settings.applyHScale(1))
     color: "transparent"
 
-    width: g_settings.applyHScale(226)
-    height: g_settings.applyHScale(226)
+    uniform_width: 226
+    uniform_height: 226
     property bool not_support_change_window_: true
     property int default_width: width
     property int default_height: height

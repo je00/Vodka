@@ -31,10 +31,11 @@ ResizableRectangle {
     property bool loading: false
     border.width: ((hovered)?
                        g_settings.applyHScale(1):0)
-    width: g_settings.applyHScale(120)
-    height: g_settings.applyVScale(120)
-    minimumWidth: Math.max(value_menu.attr.visible?value_text.width:0, g_settings.applyHScale(100))
+    uniform_width: 120
+    uniform_height: 120
+    minimumWidth: Math.max(value_menu.attr.visible?g_settings.uniformHScale(value_text.width):0, 100)
     minimumHeight: minimumWidth
+
 
     Connections {
         target: mouse

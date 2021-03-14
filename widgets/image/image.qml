@@ -5,8 +5,8 @@ import "./effects"
 
 ResizableRectangle {
     id: root
-    width: g_settings.applyHScale(226)
-    height: g_settings.applyHScale(226)
+    uniform_width: 226
+    uniform_height: 226
     border.width: ((is_hide_border&&!hovered)?0:g_settings.applyHScale(1))
     property string path:  "image"
     property string title: "image"

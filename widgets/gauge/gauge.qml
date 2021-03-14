@@ -77,13 +77,15 @@ ResizableRectangle {
                        0:g_settings.applyHScale(1))
 
     // 这里界定它们的最小宽、高均为100像素
-    minimumWidth: Math.max(
-                      gauge.label_offset + g_settings.applyHScale(18) + g_settings.applyHScale(36),
-                      value_text.visible?value_text.width:0,
-                      name_text.visible?name_text.width:0)
-    minimumHeight: g_settings.applyVScale(210)
-    width: minimumWidth
-    height: minimumHeight
+    minimumWidth: g_settings.uniformHScale(
+                      Math.max(
+                          gauge.label_offset + g_settings.applyHScale(18) + g_settings.applyHScale(36),
+                          value_text.visible?value_text.width:0,
+                          name_text.visible?name_text.width:0)
+                      )
+    minimumHeight: 210
+    uniform_width: minimumWidth
+    uniform_height: minimumHeight
 
     property real scale: Math.min(root.width/minimumWidth, root.height/minimumHeight)
     Item {

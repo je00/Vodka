@@ -23,10 +23,10 @@ ResizableRectangle {
         }
     }
 
-    height: g_settings.applyHScale(40)
-    width: g_settings.applyHScale(40)
-    minimumWidth: g_settings.applyHScale(40)
-    minimumHeight: g_settings.applyHScale(40)
+    uniform_height: 40
+    uniform_width: 40
+    minimumWidth: 40
+    minimumHeight: 40
 //    full_parent_enabled: false
     radius: g_settings.applyHScale(5)
     color: "transparent"

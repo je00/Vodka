@@ -65,10 +65,10 @@ ResizableRectangle {
                        0:g_settings.applyHScale(1))
 
     // 这里界定它们的最小宽、高均为100像素
-    minimumWidth: g_settings.applyHScale(200)
+    minimumWidth: 200
     minimumHeight: minimumWidth * height_width_ratio
-    width: minimumWidth
-    height: minimumWidth
+    uniform_width: minimumWidth
+    uniform_height: minimumWidth
     //    radius: width/2
     Item {
         id: theme
