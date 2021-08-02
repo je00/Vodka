@@ -310,11 +310,12 @@ ResizableRectangle {
         }
         style: CircularGaugeStyle {
             id: circular_gauge_style
-            labelStepSize: (root.to - root.from)/root.tick_count
-            tickmarkStepSize : (root.to-root.from)/root.tick_count
+            labelStepSize: (gauge.maximumValue - gauge.minimumValue)/root.tick_count
+            tickmarkStepSize : (gauge.maximumValue-gauge.minimumValue)/root.tick_count
             minimumValueAngle: root.from_angle
             maximumValueAngle: root.to_angle
             labelInset: outerRadius * label_inset
+
             tickmarkLabel: Label {
                 visible: {
                     if (styleData.index !== 0)
@@ -879,7 +880,8 @@ ResizableRectangle {
         var ctx = {
             'path': path,
             'ctx': {
-                '.': {  'ctx': get_ctx()   ,
+                '.': {
+                    'ctx': get_ctx()   ,
                     'from_angle'    : from_angle    ,
                     'to_angle'      : to_angle      ,
                     'tick_count'    : tick_count    ,
