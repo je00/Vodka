@@ -26,3 +26,7 @@
 * **[前往官网](https://www.vofa.plus)**  
 * **[下载VOFA+](https://www.vofa.plus/downloads/)**  
 * **[阅读使用教程](https://www.vofa.plus/docs/learning)**  
+
+## Curve3D 三维轨迹控件
+
+[Curve3D](widgets/curve3d/README.md) 可在同一坐标系中显示 1、2 或 3 条三维轨迹，每条独立绑定 X、Y、Z 通道，支持旋转、缩放、平移和配置恢复。通信继续使用 VOFA+ 原有协议与接口，包含 JustFloat / FireWater 数据发送示例及测试。控件读取每次宿主刷新后的最新坐标，适合实时轨迹预览。

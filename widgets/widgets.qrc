@@ -1,5 +1,7 @@
 <RCC>
     <qresource prefix="/">
+        <file>curve3d/curve3d.qml</file>
+        <file>curve3d/CurveMath.js</file>
         <file>bound_bt/bound_bt.qml</file>
         <file>cube/Arrow.qml</file>
         <file>cube/cube.STL</file>

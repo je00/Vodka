@@ -1,0 +1,7 @@
+module MyModules
+ResizableRectangle 1.0 ResizableRectangle.qml
+MyMenu 1.0 MyMenu.qml
+ChMenu 1.0 ChMenu.qml
+MyMenuItem 1.0 MyMenuItem.qml
+DeleteMenuItem 1.0 DeleteMenuItem.qml
+MyMenuSeparator 1.0 MyMenuSeparator.qml
